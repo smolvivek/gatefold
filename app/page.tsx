@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { LandingHero } from "@/components/landing/LandingHero";
+import { SoundToggle } from "@/components/ui/SoundToggle";
 
 export default async function Home() {
   let user = null;
@@ -55,11 +56,18 @@ export default async function Home() {
         </Link>
         <div className="flex items-center gap-[24px]">
           <Link
+            href="/toolkit"
+            className="font-[var(--font-mono)] text-[13px] leading-[20px] text-text-secondary hover:text-text-primary transition-colors duration-[200ms] ease-out"
+          >
+            Toolkit
+          </Link>
+          <Link
             href="/pricing"
             className="font-[var(--font-mono)] text-[13px] leading-[20px] text-text-secondary hover:text-text-primary transition-colors duration-[200ms] ease-out"
           >
             Pricing
           </Link>
+          <SoundToggle />
           {user && profile ? (
             <Link
               href="/dashboard"

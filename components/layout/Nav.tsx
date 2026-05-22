@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { SoundToggle } from "@/components/ui/SoundToggle";
 
 interface NavLink {
   label: string;
@@ -34,7 +35,7 @@ function Nav({ links = [], user = null, tier }: NavProps) {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 h-[72px] bg-background/90 backdrop-blur-sm border-b border-white/5 px-[48px] md:px-[96px]">
+    <nav className="fixed top-0 left-0 right-0 z-50 h-[72px] bg-background/90 backdrop-blur-sm border-b border-border px-[48px] md:px-[96px]">
       <div className="max-w-[1200px] mx-auto h-full flex items-center">
       {/* Logo */}
       <Link
@@ -64,6 +65,7 @@ function Nav({ links = [], user = null, tier }: NavProps) {
         ))}
 
         <div className="flex items-center gap-[24px]">
+          <SoundToggle />
           {user ? (
             <>
               <Link
@@ -88,7 +90,7 @@ function Nav({ links = [], user = null, tier }: NavProps) {
               </button>
               <Link
                 href="/dashboard/pitches/create"
-                className="bg-text-primary text-background px-[24px] py-[10px] font-heading text-[15px] tracking-tighter uppercase font-bold hover:opacity-90 transition-opacity duration-[150ms]"
+                className="bg-pop text-text-on-pop px-[24px] py-[10px] font-heading text-[15px] tracking-tighter uppercase font-bold hover:bg-pop-hover transition-colors duration-[150ms]"
               >
                 New Project
               </Link>
@@ -103,7 +105,7 @@ function Nav({ links = [], user = null, tier }: NavProps) {
               </Link>
               <Link
                 href="/signup"
-                className="bg-text-primary text-background px-[24px] py-[10px] font-heading text-[15px] tracking-tighter uppercase font-bold hover:opacity-90 transition-opacity duration-[150ms]"
+                className="bg-pop text-text-on-pop px-[24px] py-[10px] font-heading text-[15px] tracking-tighter uppercase font-bold hover:bg-pop-hover transition-colors duration-[150ms]"
               >
                 Join
               </Link>
@@ -139,7 +141,7 @@ function Nav({ links = [], user = null, tier }: NavProps) {
 
       {/* Mobile menu — full-width, outside wrapper */}
       {mobileOpen && (
-        <div className="absolute top-[72px] left-0 right-0 bg-background border-b border-white/5 z-40 md:hidden animate-[fade-in_150ms_ease-out]">
+        <div className="absolute top-[72px] left-0 right-0 bg-background border-b border-border z-40 md:hidden animate-[fade-in_150ms_ease-out]">
           <div className="flex flex-col px-[24px] py-[16px] gap-[4px]">
             {links.map((link) => (
               <Link
@@ -147,7 +149,7 @@ function Nav({ links = [], user = null, tier }: NavProps) {
                 href={link.href}
                 className={`
                   py-[12px] font-heading text-[15px] tracking-tighter uppercase font-light
-                  transition-colors duration-[200ms] ease-out border-b border-white/5 last:border-0
+                  transition-colors duration-[200ms] ease-out border-b border-border last:border-0
                   ${link.active ? "text-text-primary" : "text-text-secondary hover:text-text-primary"}
                 `}
                 onClick={() => setMobileOpen(false)}
@@ -161,27 +163,27 @@ function Nav({ links = [], user = null, tier }: NavProps) {
                 <Link
                   href="/dashboard/account"
                   onClick={() => setMobileOpen(false)}
-                  className="py-[12px] font-heading text-[15px] tracking-tighter uppercase font-light text-text-secondary hover:text-text-primary transition-colors border-b border-white/5"
+                  className="py-[12px] font-heading text-[15px] tracking-tighter uppercase font-light text-text-secondary hover:text-text-primary transition-colors border-b border-border"
                 >
                   {user.name}
                 </Link>
                 <Link
                   href="/pricing"
                   onClick={() => setMobileOpen(false)}
-                  className="py-[12px] font-heading text-[15px] tracking-tighter uppercase font-light text-text-secondary hover:text-text-primary transition-colors border-b border-white/5"
+                  className="py-[12px] font-heading text-[15px] tracking-tighter uppercase font-light text-text-secondary hover:text-text-primary transition-colors border-b border-border"
                 >
                   {(!tier || tier === "free") ? "Upgrade" : "Pricing"}
                 </Link>
                 <button
                   onClick={handleSignOut}
-                  className="py-[12px] font-heading text-[15px] tracking-tighter uppercase font-light text-text-secondary hover:text-text-primary transition-colors text-left border-b border-white/5 cursor-pointer"
+                  className="py-[12px] font-heading text-[15px] tracking-tighter uppercase font-light text-text-secondary hover:text-text-primary transition-colors text-left border-b border-border cursor-pointer"
                 >
                   Sign Out
                 </button>
                 <Link
                   href="/dashboard/pitches/create"
                   onClick={() => setMobileOpen(false)}
-                  className="mt-[16px] bg-text-primary text-background px-[24px] py-[12px] font-heading text-[15px] tracking-tighter uppercase font-bold hover:opacity-90 transition-opacity text-center"
+                  className="mt-[16px] bg-pop text-text-on-pop px-[24px] py-[12px] font-heading text-[15px] tracking-tighter uppercase font-bold hover:bg-pop-hover transition-colors text-center"
                 >
                   New Project
                 </Link>
@@ -191,14 +193,14 @@ function Nav({ links = [], user = null, tier }: NavProps) {
                 <Link
                   href="/login"
                   onClick={() => setMobileOpen(false)}
-                  className="py-[12px] font-heading text-[15px] tracking-tighter uppercase font-light text-text-secondary hover:text-text-primary transition-colors text-center border-b border-white/5"
+                  className="py-[12px] font-heading text-[15px] tracking-tighter uppercase font-light text-text-secondary hover:text-text-primary transition-colors text-center border-b border-border"
                 >
                   Sign In
                 </Link>
                 <Link
                   href="/signup"
                   onClick={() => setMobileOpen(false)}
-                  className="bg-text-primary text-background px-[24px] py-[12px] font-heading text-[15px] tracking-tighter uppercase font-bold hover:opacity-90 transition-opacity text-center"
+                  className="bg-pop text-text-on-pop px-[24px] py-[12px] font-heading text-[15px] tracking-tighter uppercase font-bold hover:bg-pop-hover transition-colors text-center"
                 >
                   Join
                 </Link>

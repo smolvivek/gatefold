@@ -1,14 +1,14 @@
 # BRAND.md — Brand Personality & Voice
 
-## Who PitchCraft Is
+## Who We Are
 
-**"The editor who makes you look sharp"**
+**"The instrument on the producer's desk."**
 
-PitchCraft is the tool that gets creators ready for the producer's table.
+This product is the tool that gets creators ready for the table. Not a presentation app, not a deck builder, not a writing tool — a finished, considered instrument that turns creative work into something a funder, collaborator, or studio can sit with for ten minutes and understand.
 
 - **In service of the creator** — Amplifies their vision, never imposes our own
-- **Gives capabilities they didn't have** — AI tools for images and text
-- **Makes sharing effortless** — One link, shareable everywhere (social bios, emails, etc.)
+- **Gives capabilities they didn't have** — AI tools for images and text, integrated funding, version history
+- **Makes sharing effortless** — One link, shareable everywhere
 - **Enables professional fundraising** — Easy to use, never amateur-looking
 - **Trusted collaborator** — Knows what you need, doesn't second-guess your work
 
@@ -16,55 +16,59 @@ PitchCraft is the tool that gets creators ready for the producer's table.
 
 ## Voice & Tone
 
-**Foundation: David Ogilvy + British dry humor**
+**Foundation: David Ogilvy + dry British humour, slightly warmed for the new visual energy.**
 
 ### Core Principles
 
 1. **Sharp and economical** — No wasted words. Every sentence earns its place.
-2. **Specific and concrete** — "Eight fields" not "a few fields". "15 minutes" not "quickly".
-3. **Benefits-focused** — What the creator gets, not what the feature does.
-4. **Self-aware observational wit** — Warm, relatable, understated. Never snarky or condescending.
-5. **Friendly and warm** — Like an editor giving honest feedback, not a critic judging.
+2. **Specific and concrete** — "Eight fields" not "a few fields." "15 minutes" not "quickly."
+3. **Confident, not clipped** — The old voice was sometimes too curt for the warmer visual direction. Aim for *spare and self-assured*, not *terse*.
+4. **Benefits-focused** — What the creator gets, not what the feature does.
+5. **Self-aware observational wit** — Warm, relatable, understated. Never snarky or condescending.
+6. **Friendly without trying** — Like a senior editor reading your draft over coffee — direct, kind, never lecturing.
 
-### Examples (Approved)
+### Examples (Approved — slightly warmed register)
 
 **Project published:**
 ```
-Your work is ready. Now the hard part: sharing it.
+Your work is ready. Now the harder part — sharing it.
 ```
 
 **Empty state:**
 ```
-Nothing here. Time to fix that.
-```
-OR
-```
-No projects yet. Rectify this.
+Nothing yet. Start when you're ready.
 ```
 
 **After save:**
 ```
-Saved.
+Saved — looks good.
 ```
 
 **Character limit exceeded:**
 ```
-Too long. Edit.
+A touch long. Trim it.
 ```
 
 **Dashboard after deleting last project:**
 ```
-Back to square one.
+Back to a blank page. The good kind.
+```
+
+**Sign-up complete:**
+```
+You're in. Open your first project.
 ```
 
 ### What NOT to Say
 
-❌ "Share wisely" (condescending, parental)
-❌ "Send it to someone who matters" (judgmental, superior)
+❌ "Share wisely" (condescending)
+❌ "Send it to someone who matters" (judgmental)
 ❌ "Eight required fields" (highlighting friction, not value)
-❌ "Your first project starts here" (cliché, forgettable)
+❌ "Your first project starts here" (cliché)
 ❌ Exclamation marks (except critical errors)
-❌ Marketing speak ("game-changer", "seamless", "revolutionary")
+❌ Marketing speak ("game-changer," "seamless," "revolutionary," "powerful")
+❌ "AI-powered," "smart," "intelligent" — show the capability, don't label it
+❌ Emoji in UI copy (except a single ✓ on confirmations)
 
 ---
 
@@ -76,101 +80,129 @@ Back to square one.
 - "Your projects" (not "Your pitches")
 - "Share your work" (not "Share your pitch")
 
-**Why:** Product name "PitchCraft" is a working title and will change. Using "project" keeps UI copy neutral and adaptable.
+**Why:** The product name is a working title and will change. Using "project" keeps UI copy neutral and adaptable. The word also fits across creative disciplines — a film is a project, so is a game, an ad, a photo series.
 
-**Database/code** can use `pitches` table internally, but user-facing language = "project"
+Database and code can use `pitches` table internally. User-facing language = "project."
 
 ---
 
 ## Visual Personality
 
-**Maximum restraint. Confidence through subtraction.**
+**Warm dark, analog precision, one signature orange.**
 
-Inspired by: Teenage Engineering, Dieter Rams, A24, Apple (Jony Ive era)
+Inspired by, in order of weight: **Moog, Teenage Engineering, Linear, A24, Stranger Things (as flavour only).**
+
+The product should feel like an analog synthesiser sitting next to a director's laptop — warm wood casing, cream lettering, one orange knob glowing softly. Used by professionals. Confident. Alive but not loud.
 
 ### Core Traits
 
-1. **Negative space as active element** — Not just "clean", but breathing room that creates structure
+1. **Negative space as instrument panel** — Not minimalism, considered placement. Like a 909 with knobs spaced so your hand falls into the right place.
 2. **Typography as hierarchy** — Scale and weight do the work, not decoration
-3. **Monochrome + pop colour** — Limited palette, used with precision (`#AF2E1B` for accents, `#1A1A1A` for buttons)
+3. **Warm dark + one signature pop** — `#1A130E` walnut + `#FF6B1A` Moog orange. Used with precision, never as flourish.
 4. **Every element has purpose** — If you can't explain why it's there, remove it
-5. **Personality emerges from precision** — Not from decoration or cleverness
+5. **Personality emerges from craft** — Not from cleverness or decoration. From getting the LED pulse rate exactly right, the kerning on the wordmark exactly right, the curve of the magnetic hover exactly right.
 
 ---
 
-## Pop Colour Accent Strategy
+## Pop Colour Strategy
 
-**Use pop colour like Teenage Engineering uses orange: sparingly, structurally, purposefully.**
+**Use orange like Moog uses orange on a synthesiser: sparingly, structurally, purposefully — only on the live element.**
 
-The colour system splits intent: `pop` (`#AF2E1B`) is the visual accent, `btn` (`#1A1A1A`) is the action colour. Primary buttons are dark charcoal — trust through restraint, not brightness.
+The colour says "this is on." Strip every orange element from a screen and the structure must still read. Pop is the signal, not the scaffold.
 
-### Only Use Pop Colour (`#AF2E1B`) For:
+### Use Pop Orange (`#FF6B1A`) For:
 
-1. **Active states** — Current section in sidebar, selected item
-2. **Focus rings and progress indicators** — Completion marks, filled progress bars
-3. **Links and tertiary text actions** — Via `--color-link` (`#AF2E1B`)
-4. **User-created content markers** — Elements the creator added (not system UI)
+1. **Active states** — Current section in sidebar, selected item, focused input
+2. **Primary CTA** — One per page (the main action button)
+3. **Focus rings** — Keyboard navigation outline
+4. **Status indicators** — Specifically "looking" / actively raising
+5. **LED breathing pulse** — Subtle 4-second breath on live elements
+6. **Inline text links** — Within body copy
+7. **Completion marks** — ✓ on pricing tier features
 
-### Use Dark Charcoal (`#1A1A1A`) For:
+### Use Cream (`#F4EBDC`) For:
 
-1. **Primary action buttons** — ONE per page (the main CTA)
-2. **Button hover/active** — Darkens further (`#333333` → `#000000`)
+1. **All body text and headings**
+2. **Button text on dark backgrounds**
 
-### Never Use Pop Colour For:
+### Never Use Pop For:
 
-1. **Hover states** — Use subtle gray instead
-2. **Primary button backgrounds** — Buttons are dark charcoal, not pop
-3. **Decorative accents** — No pop colour borders, backgrounds, or flourishes
-4. **Non-interactive text** — Labels, body copy, metadata stay monochrome
-
-### The Test
-
-**If you remove all pop colour from the page, it should still work.**
-
-Pop colour is the **signal**, not the structure.
+1. **Hover states alone** — Use brightening of existing colour
+2. **Decorative accents** — No orange borders for the sake of decoration
+3. **Non-interactive body copy**
+4. **Background gradients or fills** (other than the CTA button)
 
 ---
 
 ## Motion Design Philosophy
 
-**Quality bar: Lando Norris website, Wall-E, Ghibli films, Ghost in the Shell**
+**Quality bar: Moog product videos, Linear app motion, Lando Norris site, Apple Vision Pro feature pages.**
 
 ### Principles
 
-1. **Cinematic patience** — Moves slowly, deliberately. Never rushes.
-2. **Reveals structure and meaning** — Animation shows how things work, not just decoration
-3. **Senior-level craft** — Every animation is considered, purposeful, polished
-4. **Earns its place** — If animation doesn't add understanding or delight, cut it
+1. **Motion reveals what's alive** — The LED pulse signals "this is on." Without it, nothing in the UI says it's animate.
+2. **Motion has cinematic patience** — Moves slowly, deliberately. The 600ms cinematic ease is the spine of the motion system.
+3. **Earns its place** — If a motion doesn't clarify, delight, or signal life, cut it.
+4. **Respects reduced motion** — Every animation has a `prefers-reduced-motion` fallback. Reduced-motion users get a static but still beautiful product.
+
+### Allowed Patterns
+
+- **LED breathing pulse** (4s opacity cycle) on active/live elements
+- **Scroll-triggered fade-up reveals** with cinematic 600ms ease
+- **Magnetic button hover** — subtle cursor pull (≤12px) on primary CTAs
+- **Active "light up"** — 200ms ramp when something becomes active, settles to static or pulsing
+- **Subtle hover state transitions** — opacity, colour, transform within 200ms
 
 ### Reference Points
 
-- **Lando Norris website** — Split-text reveals, smooth easing, large-scale typography in motion
-- **Wall-E** — Character through subtle movement, personality in micro-gestures
-- **Ghibli films** — Patience, weight, natural physics
-- **Ghost in the Shell** — Cinematic UI, information reveals, technical precision
+- **Moog** — product photography and video. The warmth of the wood, the glow of the orange power LED.
+- **Linear** — the way the active section in their sidebar breathes. The cinematic cadence of their landing page scroll.
+- **Apple Vision Pro feature pages** — the hover-to-expand callout pattern we're stealing for the landing hero.
+- **Lando Norris site** — large-scale typography in motion, smooth easing on hero text.
+- **Stranger Things** — only as flavour. The warmth of CRT light. The grain.
 
 ### Never
 
-- Generic fade-ins or slide-ups
-- Spring overshoot or bouncy effects
-- Glow effects or pulses
-- Ambient floating shapes (circles, dots, lines)
-- SVG stroke-draw animations (done to death)
-- Loading spinners (use skeleton screens)
+- Generic fade-ins or slide-ups for the sake of it
+- Spring overshoot or bouncy effects (kills the analog-precision feel)
+- Page transitions between routes (kills perceived speed)
+- Loading spinners — use skeleton screens with subtle opacity pulse
+- Ambient floating decorative shapes
+- SVG stroke-draw "logo reveal" animations
 - Motion for motion's sake
 
 ---
 
-## What PitchCraft Is NOT
+## Sound
+
+**One click sample, used sparingly, off by default, toggleable.**
+
+The sound is a soft click — like the click of a Moog button being pressed. It plays on:
+
+- Primary CTA actions (Publish, Save, Create your first project)
+- Modal opens (very soft)
+
+It does NOT play on:
+- Hover, focus, scroll
+- Secondary buttons or tertiary links
+
+**Default OFF.** Toggle reachable from main nav. Preference persisted.
+
+Sound is part of the analog-instrument language — but quiet enough that users who don't want it never know it exists.
+
+---
+
+## What We Are NOT
 
 Actively avoid these personalities:
 
-- ❌ **Generic SaaS** — No "seamless workflows" or "powerful dashboards"
-- ❌ **Tech startup** — No Silicon Valley energy or growth-hacking language
-- ❌ **Design tool** — Not a design or deck-building app (we're for presentation, not creation)
+- ❌ **Generic SaaS** — No "seamless workflows," "powerful dashboards," "AI-powered everything"
+- ❌ **Tech startup** — No Silicon Valley energy, no growth-hacking language
+- ❌ **Design tool** — Not a deck builder or canvas — we're for finished presentation
 - ❌ **Hollywood studio** — Not corporate, not bureaucratic
 - ❌ **Precious art gallery** — Not elitist or unapproachable
 - ❌ **Cold engineering tool** — Precise but warm, never sterile
+- ❌ **Synthwave kitsch** — We borrow analog warmth from synths; we don't dress up in chrome and neon. No Drive-style sunset gradients on every page. Restraint.
 
 ---
 
@@ -180,7 +212,7 @@ Actively avoid these personalities:
 - Confident
 - Precise
 - Warm
-- Understated
+- Considered
 - Intentional
 
 **Secondary traits:**
@@ -189,15 +221,17 @@ Actively avoid these personalities:
 - Grounded
 - Assured
 - Cinematic
+- Alive
 
 ---
 
 ## Implementation Notes
 
-- All new copy must pass the "Ogilvy test" — sharp, specific, benefit-focused
-- All new UI must pass the "pop colour test" — used sparingly and structurally
-- All new animations must pass the "senior craft test" — Lando/Wall-E quality bar
-- When in doubt, subtract. Restraint is the brand.
+- All new copy must pass the **"warmed Ogilvy test"** — sharp, specific, benefit-focused, kind without being soft
+- All new UI must pass the **"pop test"** — the signature orange used only where something is live
+- All new animations must pass the **"craft test"** — Moog/Linear/Apple-quality, not gimmicky
+- All new patterns must respect `prefers-reduced-motion`
+- When in doubt, subtract decoration. Restraint is still the brand. Just warmer.
 
 ---
 

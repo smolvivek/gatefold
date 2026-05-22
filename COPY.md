@@ -20,30 +20,34 @@ COPY.md thinks like a copy director doing a QA pass: not looking for beautiful w
 
 ## The Voice Standard
 
+**Foundation: David Ogilvy + dry British humour, slightly warmed for the new visual energy.**
+
 **Three influences, in order:**
 
-- **Dieter Rams:** Honest, functional, nothing extra. "Delete project" not "Are you absolutely sure you want to permanently delete this?"
-- **A24:** Confident, filmmaker-specific, no hand-holding. "Moonlight" not "Your film journey starts here."
-- **Teenage Engineering:** Terse, precise, monospace. "BPM 120" not "Set your tempo."
+- **Ogilvy:** Sharp, specific, benefit-focused. "15 minutes" not "quickly." "Eight fields" not "a few fields."
+- **A24:** Confident, creator-respectful, no hand-holding. "Moonlight" not "Your film journey starts here."
+- **Teenage Engineering / Moog:** Precise, considered, monospace where it earns it. "BPM 120" not "Set your tempo."
 
 **Core rules:**
-- Direct. No fluff.
-- Filmmaker language, not SaaS speak — and not sci-fi/cyberpunk either.
-- Confident but not cold.
+- Sharp and economical. No wasted words.
+- Spare and self-assured, not terse. The warmer visual direction means the copy can breathe slightly — without losing its edge.
+- Creator-respectful language. Multi-discipline (creator, not director-only).
+- Confident, kind, never lecturing.
 - Short sentences. Get to the point.
 - Labels are functional. Headings can be editorial. Never mix them up.
 
 **Never:**
 - Exclamation marks (except critical errors)
-- Emoji
-- Marketing speak ("game-changer", "seamless", "revolutionary")
+- Emoji in UI copy (a single ✓ on confirmations is fine)
+- Marketing speak ("game-changer", "seamless", "revolutionary", "powerful", "AI-powered")
 - Apology language ("Oops!", "Sorry about that!")
 - Corporate jargon ("leverage", "utilize", "synergy")
 - Sci-fi / cyberpunk register ("Protocol", "Transmission", "Unregistered", "Access Key")
 - Enterprise software register ("Suite", "Suite Access", "membership")
 - Government / bureaucratic register ("User Identification", "Request Membership")
+- "AI-powered," "smart," "intelligent" — show the capability, don't label it
 
-**The test:** Read the copy aloud. Does it sound like something a seasoned film editor would say to a colleague? If it sounds like a tech demo or a nightclub bouncer, it fails.
+**The test:** Read the copy aloud. Does it sound like a senior editor reading your draft over coffee — direct, kind, never lecturing? If it sounds like a tech demo, a nightclub bouncer, or a customer-service script, it fails.
 
 ---
 
@@ -83,10 +87,12 @@ These are the correct versions. Use them verbatim.
 
 | Element | Approved Copy |
 |---------|---------------|
-| Empty state heading | `Nothing here yet.` |
+| Empty state heading | `Nothing yet.` |
+| Empty state body | `Start when you're ready.` |
 | Empty state CTA | `Create your first project` |
 | Page label | `Projects` |
 | With projects heading | `[Name]'s Work` or `Your Projects` |
+| After deleting last project | `Back to a blank page. The good kind.` |
 
 ### Pitch View (recipient view)
 
@@ -102,10 +108,12 @@ These are the correct versions. Use them verbatim.
 
 | Element | Approved Copy |
 |---------|---------------|
-| Save indicator | `Saving...` → `Saved` |
+| Save indicator | `Saving...` → `Saved — looks good.` |
 | Delete button | `Delete project` |
 | Delete modal title | `Delete project?` |
 | Delete modal body | `This action can't be undone.` |
+| Character limit exceeded | `A touch long. Trim it.` |
+| Project published | `Your work is ready. Now the harder part — sharing it.` |
 
 ---
 

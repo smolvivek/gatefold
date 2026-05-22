@@ -1,32 +1,33 @@
 @import "tailwindcss";
 
-/* ── Design Tokens (A24 × Jony Ive — Dark) ── */
+/* ── Design Tokens (Warm Dark + Moog Orange) ── */
 
 @theme inline {
   /* Colors */
-  --color-background: #0A0A0A;
-  --color-surface: #141414;
-  --color-surface-hover: #1A1A1A;
-  --color-border: #262626;
-  --color-border-hover: #333333;
-  --color-text-primary: #F5F5F5;
-  --color-text-secondary: #999999;
-  --color-text-disabled: #666666;
-  --color-pop: #FFFFFF;
-  --color-pop-light: #CCCCCC;
-  --color-pop-hover: #E8E8E8;
-  --color-pop-active: #AAAAAA;
-  --color-link: #FFFFFF;
-  --color-text-on-surface: #e5e2e1;
-  --color-btn: #F5F5F5;
-  --color-btn-hover: #FFFFFF;
-  --color-btn-active: #CCCCCC;
-  --color-status-looking: #FF6B6B;
-  --color-status-progress: #FFCA28;
-  --color-status-complete: #66BB6A;
-  --color-error: #FF6B6B;
-  --color-success: #66BB6A;
-  --color-white: #F5F5F5;
+  --color-background: #1A130E;
+  --color-surface: #231A12;
+  --color-surface-hover: #2D2218;
+  --color-border: #3A2B1E;
+  --color-border-hover: #4A3828;
+  --color-hairline: rgba(255, 180, 120, 0.06);
+  --color-text-primary: #F4EBDC;
+  --color-text-secondary: #A69682;
+  --color-text-disabled: #6B5D4F;
+  --color-pop: #FF6B1A;
+  --color-pop-hover: #FF8038;
+  --color-pop-dim: #A0431B;
+  --color-pop-light: #FFB38A;
+  --color-link: #FF6B1A;
+  --color-text-on-pop: #1A130E;
+  --color-btn: #FF6B1A;
+  --color-btn-hover: #FF8038;
+  --color-status-looking: #FF6B1A;
+  --color-status-progress: #FFB627;
+  --color-status-complete: #7CB342;
+  --color-error: #E5494D;
+  --color-success: #7CB342;
+  --color-amber: #FFB627;
+  --color-white: #F4EBDC;
 
   /* Fonts */
   --font-heading: var(--font-newsreader), Georgia, serif;
@@ -50,8 +51,8 @@
   --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 150ms;
   --duration-normal: 200ms;
-  --duration-medium: 250ms;
-  --duration-slow: 300ms;
+  --duration-medium: 300ms;
+  --duration-slow: 600ms;
 
   /* Radius */
   --radius-sm: 0px;
@@ -67,7 +68,7 @@ body {
   line-height: 24px;
 }
 
-/* ── Grain Texture (analog film) ── */
+/* ── Grain Texture (warm analog film) ── */
 
 body::before {
   content: "";
@@ -75,7 +76,7 @@ body::before {
   inset: -256px;
   z-index: 1;
   pointer-events: none;
-  opacity: 0.055;
+  opacity: 0.07;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
@@ -85,7 +86,7 @@ body::before {
 
 *:focus-visible {
   outline: 2px solid var(--color-pop);
-  outline-offset: 2px;
+  outline-offset: 4px;
 }
 
 /* ── Typography Utilities ── */
@@ -97,9 +98,10 @@ body::before {
 
 .font-mono {
   font-family: var(--font-mono);
+  letter-spacing: 0.08em;
 }
 
-/* ── Scrollbar (subtle on dark) ── */
+/* ── Scrollbar (warm dark) ── */
 
 ::-webkit-scrollbar {
   width: 6px;
@@ -118,7 +120,7 @@ body::before {
   background: var(--color-border-hover);
 }
 
-/* ── Scrollbar Hide (for horizontal scroll containers) ── */
+/* ── Scrollbar Hide ── */
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
@@ -127,6 +129,67 @@ body::before {
 .scrollbar-hide {
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+
+/* ── LED Breathing Pulse ── */
+
+@keyframes led-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+.led-pulse {
+  animation: led-pulse 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .led-pulse {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* ── Scroll Reveal (IntersectionObserver adds .revealed) ── */
+
+.reveal-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-up.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Card Hover (warm orange-tinted glow) ── */
+
+.card-hover {
+  transition:
+    transform 250ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 250ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 200ms ease-out;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(255, 107, 26, 0.08), 0 1px 4px rgba(255, 107, 26, 0.04);
+  border-color: var(--color-border-hover);
+}
+
+.card-hover:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 /* ── Animation Keyframes ── */
@@ -148,21 +211,13 @@ body::before {
 }
 
 @keyframes draw-check {
-  from {
-    stroke-dashoffset: 24;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
+  from { stroke-dashoffset: 24; }
+  to { stroke-dashoffset: 0; }
 }
-
-/* ── Animation Utilities ── */
 
 .animate-draw-check {
   animation: draw-check 300ms ease-out forwards;
 }
-
-/* ── Page Animations ── */
 
 @keyframes fade-up {
   from {
@@ -198,7 +253,7 @@ body::before {
 }
 
 .animate-fade-up {
-  animation: fade-up 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fade-up 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-fade-up-subtle {
@@ -209,35 +264,8 @@ body::before {
   animation: slide-in-right 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* ── Noir Entrance ── */
+/* ── Text Rise ── */
 
-/* Projector flicker — the overlay cuts out in bursts like a stuck film gate */
-@keyframes noir-cut {
-  0%   { opacity: 1; }
-  40%  { opacity: 1; }
-  55%  { opacity: 0.15; }
-  65%  { opacity: 0.85; }
-  75%  { opacity: 0; }
-  80%  { opacity: 0.4; }
-  100% { opacity: 0; }
-}
-
-.animate-noir-cut {
-  animation: noir-cut 0.35s ease-out forwards;
-}
-
-/* Scan line progress bar for loading states */
-@keyframes scan-right {
-  from { transform: scaleX(0); }
-  to   { transform: scaleX(1); }
-}
-
-.animate-scan-right {
-  animation: scan-right 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  transform-origin: left;
-}
-
-/* Text slide-up from overflow mask — hard editorial reveal */
 @keyframes text-rise {
   from {
     transform: translateY(110%);
@@ -253,7 +281,8 @@ body::before {
   animation: text-rise 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* Witness line: horizontal rule that draws from left */
+/* ── Rule Draw ── */
+
 @keyframes rule-draw {
   from { transform: scaleX(0); opacity: 0; }
   to   { transform: scaleX(1); opacity: 1; }
@@ -264,7 +293,8 @@ body::before {
   transform-origin: left;
 }
 
-/* Stamp in — mono label punches onto the page */
+/* ── Stamp In ── */
+
 @keyframes stamp-in {
   0%   { opacity: 0; letter-spacing: 0.6em; }
   60%  { opacity: 1; }
@@ -275,28 +305,19 @@ body::before {
   animation: stamp-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* ── Card Hover (dark: subtle glow) ── */
+/* ── Scan Right (loading bar) ── */
 
-.card-hover {
-  transition:
-    transform 250ms cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 250ms cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 200ms ease-out;
+@keyframes scan-right {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
 }
 
-.card-hover:hover {
-  transform: translateY(-2px);
-  /* intentional white-glow on dark: no token needed — value tied to surface color */
-  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.02), 0 1px 4px rgba(255, 255, 255, 0.01);
-  border-color: var(--color-border-hover);
+.animate-scan-right {
+  animation: scan-right 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: left;
 }
 
-.card-hover:active {
-  transform: translateY(0);
-  box-shadow: none;
-}
-
-/* ── Mechanical Precision Motifs ── */
+/* ── Witness Draw ── */
 
 @keyframes witness-draw {
   from { transform: scaleX(0); }
@@ -308,11 +329,16 @@ body::before {
   transform-origin: left;
 }
 
-/* ── Pause constant animations for reduced motion */
+/* ── Reduced Motion Override ── */
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  .led-pulse {
+    animation: none !important;
+    opacity: 1 !important;
   }
 }

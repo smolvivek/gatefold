@@ -126,19 +126,22 @@ If a feature request conflicts with these constraints, the answer is no. Even if
 
 ## Constraint 7: No Surveillance or Attention Harvesting
 
-**We will not:** Use dark patterns, addictive UI, infinite scroll, push notifications, or any technique designed to harvest attention.
+**We will not:** Use dark patterns, addictive UI, infinite scroll, push notification spam, or any technique designed to harvest attention.
 
 **Why:**
-- Pitchcraft's business model is subscription + commission, not engagement/ad-driven.
+- The business model is subscription + commission, not engagement/ad-driven.
 - Attention harvesting erodes creator trust and autonomy.
 - It corrupts the tool's core purpose (clarity and control).
 
 **What we allow instead:**
 - Email notifications (opt-in, for important events: funding received, version viewed)
 - In-app notifications (only when something requires action)
-- Calm, intentional UI (animations that clarify, not distract)
+- Calm, intentional UI — animations that clarify, signal life, or delight without demanding attention
+- Subtle ambient motion (LED breathing, gentle pulse on active states) — these are craft, not addictive patterns. They tell the user what's alive without pulling them back.
 
-**Hard line:** No autoplay. No infinite scroll. No push notification spam. No red-dot badges designed to trigger anxiety. No addictive patterns.
+**Hard line:** No autoplay video. No infinite scroll. No push notification spam. No red-dot anxiety badges. No dark patterns around pricing or cancellation. No tricks engineered to pull users back when they tried to leave.
+
+**The test for any motion:** Does it clarify state or signal life? Or is it designed to capture attention the user didn't volunteer? If the latter, it doesn't ship.
 
 ---
 

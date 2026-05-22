@@ -38,7 +38,7 @@ function Sidebar({
   const hasMorePanel = allOptionalDefs.length > 0 && onToggleSection;
 
   return (
-    <aside className={`w-64 bg-[#0e0e0e] border-r border-white/5 h-full overflow-y-auto py-[14px] flex flex-col ${className}`}>
+    <aside className={`w-64 bg-surface border-r border-border h-full overflow-y-auto py-[14px] flex flex-col ${className}`}>
 
       {/* Required sections */}
       <ul className="flex flex-col" role="list">
@@ -54,8 +54,8 @@ function Sidebar({
                   font-bold uppercase tracking-[0.15em] text-[10px]
                   transition-colors duration-[150ms] ease-out cursor-pointer
                   ${isActive
-                    ? "border-l-2 border-pop text-pop bg-white/5"
-                    : "border-l-2 border-transparent text-text-disabled hover:text-text-primary hover:bg-white/[0.03]"
+                    ? "border-l-2 border-pop text-pop bg-surface-hover"
+                    : "border-l-2 border-transparent text-text-disabled hover:text-text-primary hover:bg-surface-hover"
                   }
                 `}
                 aria-current={isActive ? "step" : undefined}
@@ -85,8 +85,8 @@ function Sidebar({
                     font-bold uppercase tracking-[0.15em] text-[10px]
                     transition-colors duration-[150ms] ease-out cursor-pointer
                     ${isActive
-                      ? "border-l-2 border-pop text-pop bg-white/5"
-                      : "border-l-2 border-transparent text-text-disabled hover:text-text-primary hover:bg-white/[0.03]"
+                      ? "border-l-2 border-pop text-pop bg-surface-hover"
+                      : "border-l-2 border-transparent text-text-disabled hover:text-text-primary hover:bg-surface-hover"
                     }
                   `}
                   aria-current={isActive ? "step" : undefined}
@@ -112,7 +112,7 @@ function Sidebar({
       {/* + Add section */}
       {hasMorePanel && (
         <div className="mt-[8px]">
-          <div className="mx-[16px] border-t border-white/5" />
+          <div className="mx-[16px] border-t border-border" />
           <button
             type="button"
             onClick={() => setMoreOpen(!moreOpen)}

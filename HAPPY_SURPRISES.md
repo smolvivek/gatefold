@@ -196,6 +196,72 @@ Claude understands the product deeply and may spot opportunities the creator has
 
 ---
 
+### HS-MOTION-1: LED Breathing Pulse on Live Elements
+
+**Type:** Design / Motion
+**Problem:** The product had zero visible signal that anything was "alive" or active. Static UI = dead UI.
+**Solution:** A 4-second opacity pulse on the Moog orange pop colour, applied only to elements that are alive: active sidebar item, idle primary CTA, "looking" status badge, funding progress bar when raising.
+**Impact:** Tells the user what's currently in motion or awaiting action without screaming for attention. Strongest single piece of motion identity in the new system.
+**Implementation:** CSS keyframe animation, reduced-motion-safe, applied via `.led-pulse` utility class.
+**Status:** Approved (Design Overhaul interview, May 2026)
+
+---
+
+### HS-MOTION-2: Magnetic Primary CTAs
+
+**Type:** Design / Interaction
+**Problem:** Primary buttons felt static — no tactile feedback on hover.
+**Solution:** Subtle magnetic pull on hover. Cursor pulls the button up to 12px toward itself. Settles back smoothly on mouseleave. Touch devices excluded.
+**Impact:** Adds weight and personality to the most important button on every page. Calibrated to feel "considered" not "demoing magnetic buttons."
+**Implementation:** `MagneticButton` component wraps `Button`. Tracks cursor position relative to button center, applies bounded transform.
+**Status:** Approved (Design Overhaul interview, May 2026)
+
+---
+
+### HS-TOOLKIT-1: Studio Toolkit (Free Engagement Surface)
+
+**Type:** Feature / Strategy
+**Problem:** No reason for creators to visit the product outside of editing their own pitch. No SEO surface. No casual return visits.
+**Solution:** A `/toolkit` route with free creative utilities — Logline counter, Festival deadlines calendar, Budget breakdown template. Public, no login required.
+**Impact:** Drives organic search traffic ("festival deadlines 2026" / "indie film budget breakdown" / "logline word count"). Brings creatives to the brand without friction. SEO compounds over time.
+**Implementation:** Three new routes under `/toolkit/`, hand-curated data in JSON files, quarterly refresh cadence on festival data.
+**Status:** Approved for v1 (Design Overhaul interview, May 2026). Industry glossary deferred to v2.
+
+---
+
+### HS-TOOLKIT-2: Festival Calendar with .ics Export
+
+**Type:** Feature
+**Problem:** Filmmakers track festival deadlines across spreadsheets and FilmFreeway tabs. Missed deadlines lose opportunities.
+**Solution:** Each festival in the toolkit has an "Add to your calendar" button that downloads a .ics file. Email reminders optional (opt-in only).
+**Impact:** Sticky engagement loop without violating constraints. Monthly return reason. Creator-controlled (they choose what to track).
+**Implementation:** Generate .ics on the fly with festival deadline + 14-day-prior reminder. Email reminders use existing Resend infra.
+**Status:** Approved for v1 (Design Overhaul interview, May 2026)
+
+---
+
+### HS-SOUND-1: Optional Click on Primary Actions
+
+**Type:** Design / Sensory
+**Problem:** Creators don't get any audible feedback on actions. The product feels mute.
+**Solution:** One subtle click sample, ≤5KB, played on Primary CTA submit and key actions (Publish, Save, Send Invite). Default OFF. Toggleable in nav.
+**Impact:** Adds analog-instrument character. Off by default so it never annoys; toggleable so creators who want it can have it.
+**Implementation:** Web Audio API, preloaded sample, localStorage preference persisted.
+**Status:** Approved (Design Overhaul interview, May 2026)
+
+---
+
+### HS-COPY-1: Demo Pitch on Landing Page
+
+**Type:** Content / Brand
+**Problem:** The landing page hero showed abstract typography, no actual product visible. Cold-traffic visitors couldn't see what they'd get after signing up.
+**Solution:** A beautifully curated "demo pitch" — an A24-style indie film with cinematic poster, strong logline, real synopsis, plausible cast — lives in the database as a real project. Screenshots of this demo project drive the landing page hero and inline UI figures.
+**Impact:** Visitors see the actual product within 3 seconds. Critical for cold-traffic conversion. Same demo pitch can be used across marketing.
+**Implementation:** Create a system-owned project in DB with curated content + commissioned/sourced poster. Reference its screenshots from landing components.
+**Status:** Approved (Design Overhaul interview, May 2026)
+
+---
+
 ## Notes
 
 - This file is a living document

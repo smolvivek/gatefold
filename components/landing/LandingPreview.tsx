@@ -131,11 +131,11 @@ export function LandingPreview() {
   const p = projects[activeIndex];
 
   return (
-    <section className="px-[48px] md:px-[96px] py-[96px] bg-surface/40 border-t border-white/5 relative overflow-hidden">
+    <section className="px-[48px] md:px-[80px] py-[96px] bg-surface border-t border-border relative overflow-hidden">
       <div className="max-w-[1200px] mx-auto">
 
         {/* Section header — matches philosophy pattern */}
-        <div className="flex flex-col md:flex-row md:justify-between md:items-baseline border-b border-white/10 pb-[24px] mb-[48px] gap-[12px]">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-baseline border-b border-border pb-[24px] mb-[48px] gap-[12px]">
           <motion.h2
             className="font-heading font-light text-[clamp(36px,5vw,72px)] tracking-tight leading-[1.0]"
             initial={{ y: "110%", opacity: 0 }}
@@ -183,7 +183,7 @@ export function LandingPreview() {
           viewport={{ once: true }}
         >
           {/* Chrome bar */}
-          <div className="bg-[#1C1C1C] border border-border border-b-0 px-[16px] py-[10px] flex items-center">
+          <div className="bg-surface border border-border border-b-0 px-[16px] py-[10px] flex items-center">
             <div className="flex-1 bg-background/50 px-[12px] py-[4px] overflow-hidden">
               <span className="font-mono text-[11px] text-text-disabled whitespace-nowrap">
                 pitchcraft.app/p/{p.slug}
@@ -203,7 +203,7 @@ export function LandingPreview() {
               >
 
                 {/* ── TopBar — mirrors PitchViewTopBar ── */}
-                <header className="py-[12px] px-[32px] flex items-center justify-between border-b border-white/5 bg-[#131313]">
+                <header className="py-[12px] px-[32px] flex items-center justify-between border-b border-border bg-background">
                   <span className="font-heading font-bold text-[13px] uppercase tracking-tighter text-text-primary">
                     {p.title}
                   </span>
@@ -217,7 +217,7 @@ export function LandingPreview() {
                       </span>
                     ))}
                   </nav>
-                  <span className="bg-text-primary text-background px-[12px] py-[5px] font-mono text-[8px] tracking-[0.15em] uppercase font-bold">
+                  <span className="bg-pop text-text-on-pop px-[12px] py-[5px] font-mono text-[8px] tracking-[0.15em] uppercase font-bold">
                     Get in touch
                   </span>
                 </header>
@@ -258,7 +258,7 @@ export function LandingPreview() {
                     </h1>
 
                     {/* Director + logline grid */}
-                    <div className="grid grid-cols-12 gap-[20px] pt-[16px] border-t border-white/10">
+                    <div className="grid grid-cols-12 gap-[20px] pt-[16px] border-t border-border">
                       <div className="col-span-4 border-l border-pop/30 pl-[14px]">
                         <p className="font-mono text-[7px] uppercase tracking-[0.25em] text-text-disabled mb-[5px]">
                           Director
@@ -277,7 +277,7 @@ export function LandingPreview() {
                 </div>
 
                 {/* ── Metadata — mirrors PitchViewMetadata ── */}
-                <div className="px-[32px] py-[18px] border-b border-white/5 flex flex-wrap gap-x-[40px] gap-y-[10px]">
+                <div className="px-[32px] py-[18px] border-b border-border flex flex-wrap gap-x-[40px] gap-y-[10px]">
                   <div>
                     <p className="font-mono text-[7px] uppercase tracking-[0.2em] text-text-disabled mb-[3px]">Genre</p>
                     <p className="font-mono text-[9px] uppercase tracking-[0.1em] text-text-primary">{p.genre}</p>
@@ -290,7 +290,7 @@ export function LandingPreview() {
 
                 {/* ── Sections — mirrors PitchViewSection grid ── */}
                 {p.sections.map((section, idx) => (
-                  <div key={section.title} className="px-[32px] py-[28px] border-b border-white/5">
+                  <div key={section.title} className="px-[32px] py-[28px] border-b border-border">
                     <div className="grid grid-cols-12 gap-[20px]">
                       <div className="col-span-12 md:col-span-2">
                         <p className="font-mono text-[7px] uppercase tracking-[0.2em] text-pop font-bold">
@@ -311,14 +311,14 @@ export function LandingPreview() {
 
                 {/* ── Cast / Team — mirrors PitchViewCards list ── */}
                 {p.people && (
-                  <div className="px-[32px] py-[28px] border-b border-white/5">
+                  <div className="px-[32px] py-[28px] border-b border-border">
                     <div className="grid grid-cols-12 gap-[20px]">
                       <div className="col-span-12 md:col-span-2">
                         <p className="font-mono text-[7px] uppercase tracking-[0.2em] text-pop font-bold">
                           {p.people.title.toUpperCase()}
                         </p>
                       </div>
-                      <div className="col-span-12 md:col-span-10 divide-y divide-white/5">
+                      <div className="col-span-12 md:col-span-10 divide-y divide-border">
                         {p.people.items.map((item) => (
                           <div key={item.name} className="py-[10px] flex items-baseline gap-[16px]">
                             <span className="font-heading text-[15px] text-text-primary w-[180px] flex-shrink-0">
@@ -336,7 +336,7 @@ export function LandingPreview() {
 
                 {/* ── Funding — mirrors PitchViewFunding strip ── */}
                 {p.funding && (
-                  <div className="px-[32px] py-[28px] border-b border-white/5">
+                  <div className="px-[32px] py-[28px] border-b border-border">
                     <p className="font-mono text-[7px] uppercase tracking-[0.2em] text-text-disabled mb-[12px]">
                       Funding
                     </p>
