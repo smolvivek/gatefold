@@ -320,8 +320,8 @@ Optional feature. Creators can enable or disable.
 - **Rewards (Optional):** Perks or credit for supporters
 
 ### Payment Processing:
-- Stripe or Patreon integration
-- Pitchcraft takes commission (percentage TBD at build)
+- Razorpay (implemented — order creation + HMAC verification + idempotent donation recording)
+- Pitchcraft takes commission: 8% free / 5% Pro / 3% Studio
 - Creators receive remainder
 - All transactions transparent
 
@@ -474,7 +474,7 @@ Trust is a core feature.
 - AI image generation (optional, pay-as-you-go)
 - One-link pitch with version control
 - Share links (public/private/password)
-- Support this project (funding integration via Stripe/Patreon)
+- Support this project (funding integration via Razorpay)
 - Dark canvas only — A24 cinematic + editorial print aesthetic
 - Newsreader / Inter / JetBrains Mono — three fonts, no exceptions
 
