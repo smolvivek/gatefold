@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse, after } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getRazorpay } from '@/lib/razorpay/client'
 import { sendDonorConfirmation, sendCreatorDonationAlert } from '@/lib/email/client'
@@ -104,12 +104,14 @@ export async function POST(
     }
 
     // Record donation using Razorpay-verified amount (not client-supplied)
+    const donorName = name ?? 'Anonymous'
+
     const { error: insertError } = await supabase
       .from('donations')
       .insert({
         funding_id: fundingId,
         amount: verifiedAmount,
-        name: name ?? 'Anonymous',
+        name: donorName,
         email: email ?? '',
         message: message ?? null,
         razorpay_order_id,
@@ -118,37 +120,43 @@ export async function POST(
       })
 
     if (insertError) {
+      // Unique violation means the /funding/webhook already recorded this payment concurrently — not an error
+      if (insertError.code === '23505') {
+        return NextResponse.json({ success: true })
+      }
       console.error('Record donation error:', insertError)
       return NextResponse.json({ error: 'Failed to record donation' }, { status: 500 })
     }
 
-    // Send emails — fire and forget, don't fail the response if email fails
+    // Send emails — after() keeps the function alive past the response so
+    // these sends aren't dropped by a serverless freeze
     const projectName = (pitch as unknown as { project_name?: string })?.project_name ?? 'this project'
 
-    Promise.allSettled([
-      email
-        ? sendDonorConfirmation({
-            to: email,
-            donorName: name ?? 'Supporter',
-            projectName,
-            amount: verifiedAmount,
-            currency: verifiedCurrency,
-            paymentId: razorpay_payment_id,
-          })
-        : Promise.resolve(),
-      creator?.email
-        ? sendCreatorDonationAlert({
-            to: creator.email,
-            creatorName: creator.name,
-            projectName,
-            donorName: name ?? 'Anonymous',
-            amount: verifiedAmount,
-            currency: verifiedCurrency,
-            message,
-            paymentId: razorpay_payment_id,
-          })
-        : Promise.resolve(),
-    ]).then((results) => {
+    after(async () => {
+      const results = await Promise.allSettled([
+        email
+          ? sendDonorConfirmation({
+              to: email,
+              donorName,
+              projectName,
+              amount: verifiedAmount,
+              currency: verifiedCurrency,
+              paymentId: razorpay_payment_id,
+            })
+          : Promise.resolve(),
+        creator?.email
+          ? sendCreatorDonationAlert({
+              to: creator.email,
+              creatorName: creator.name,
+              projectName,
+              donorName,
+              amount: verifiedAmount,
+              currency: verifiedCurrency,
+              message,
+              paymentId: razorpay_payment_id,
+            })
+          : Promise.resolve(),
+      ])
       results.forEach((r, i) => {
         if (r.status === 'rejected') {
           console.error(`Email ${i === 0 ? 'donor' : 'creator'} send failed for payment ${razorpay_payment_id}:`, r.reason)

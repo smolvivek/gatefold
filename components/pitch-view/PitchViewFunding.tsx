@@ -79,7 +79,9 @@ export function PitchViewFunding({ pitchId, projectName }: PitchViewFundingProps
 
   if (loading || !funding) return null
 
-  const percentage = Math.min(100, Math.round((funding.total_raised / funding.funding_goal) * 100))
+  const percentage = funding.funding_goal > 0
+    ? Math.min(100, Math.round((funding.total_raised / funding.funding_goal) * 100))
+    : 0
   const isExpired = funding.end_date ? new Date(funding.end_date) < new Date() : false
 
   const formatCurrency = (cents: number) =>
