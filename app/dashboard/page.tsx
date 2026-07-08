@@ -123,7 +123,7 @@ export default async function DashboardPage() {
           </div>
 
           {/* Divider */}
-          <div className="h-[1px] bg-white/5 mb-[16px]" />
+          <div className="h-[1px] bg-border mb-[16px]" />
 
           {!hasPitches ? (
             <div className="py-[80px] max-w-[480px] animate-fade-up opacity-0 [animation-fill-mode:forwards] [animation-delay:200ms]">
@@ -131,7 +131,7 @@ export default async function DashboardPage() {
                 00 / Start here
               </p>
               <h2 className="font-heading italic text-[28px] leading-[36px] text-text-primary mb-[12px]">
-                Nothing here yet.
+                Nothing yet.
               </h2>
               <p className="text-[14px] leading-[22px] text-text-secondary mb-[32px]">
                 Logline, vision, cast, budget — one page, one link.

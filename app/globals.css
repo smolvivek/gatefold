@@ -1,33 +1,42 @@
 @import "tailwindcss";
 
-/* ── Design Tokens (Warm Dark + Moog Orange) ── */
+/* ── Design Tokens (Near-Black + 80s Yellow) ── */
 
 @theme inline {
   /* Colors */
-  --color-background: #1A130E;
-  --color-surface: #231A12;
-  --color-surface-hover: #2D2218;
-  --color-border: #3A2B1E;
-  --color-border-hover: #4A3828;
-  --color-hairline: rgba(255, 180, 120, 0.06);
-  --color-text-primary: #F4EBDC;
-  --color-text-secondary: #A69682;
-  --color-text-disabled: #6B5D4F;
-  --color-pop: #FF6B1A;
-  --color-pop-hover: #FF8038;
-  --color-pop-dim: #A0431B;
-  --color-pop-light: #FFB38A;
-  --color-link: #FF6B1A;
-  --color-text-on-pop: #1A130E;
-  --color-btn: #FF6B1A;
-  --color-btn-hover: #FF8038;
-  --color-status-looking: #FF6B1A;
-  --color-status-progress: #FFB627;
+  --color-background: #0A0A0A;
+  --color-surface: #131313;
+  --color-surface-hover: #1A1A1A;
+  --color-border: #262626;
+  --color-border-hover: #333333;
+  --color-hairline: rgba(255, 255, 255, 0.05);
+  --color-text-primary: #F0EDE8;
+  --color-text-secondary: #8A8880;
+  --color-text-disabled: #545250;
+  /* Pop — Kodachrome yellow (active / live / selected) */
+  --color-pop: #F5C830;
+  --color-pop-hover: #F7D24A;
+  --color-pop-dim: #7A6418;
+  --color-pop-light: #FBE880;
+  --color-text-on-pop: #0A0A0A;
+
+  /* Accent — F91W Royal Blue (functional / secondary) */
+  --color-accent: #2755A1;
+  --color-accent-hover: #3163B5;
+  --color-accent-dim: #1A3872;
+  --color-text-on-accent: #F0EDE8;
+
+  --color-link: #F5C830;
+  --color-btn: #F0EDE8;
+  --color-btn-hover: #FFFFFF;
+  --color-status-looking: #F5C830;
+  --color-status-progress: #D4A843;
   --color-status-complete: #7CB342;
   --color-error: #E5494D;
   --color-success: #7CB342;
-  --color-amber: #FFB627;
-  --color-white: #F4EBDC;
+  --color-amber: #D4A843;
+  --color-white: #F0EDE8;
+
 
   /* Fonts */
   --font-heading: var(--font-newsreader), Georgia, serif;
@@ -73,13 +82,14 @@ body {
 body::before {
   content: "";
   position: fixed;
-  inset: -256px;
+  inset: -512px;
   z-index: 1;
   pointer-events: none;
-  opacity: 0.07;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
-  background-size: 256px 256px;
+  background-size: 512px 512px;
+  filter: sepia(0.5) hue-rotate(10deg);
 }
 
 /* ── Focus Styles ── */
@@ -142,8 +152,24 @@ body::before {
   animation: led-pulse 4s ease-in-out infinite;
 }
 
+/* Gentler variant for the primary CTA at rest (0.85 → 1.0 per DESIGN.md) */
+@keyframes led-pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+.led-pulse-subtle {
+  animation: led-pulse-subtle 4s ease-in-out infinite;
+}
+
+/* Disabled buttons must not pulse — the animation would override disabled opacity */
+.led-pulse-subtle:disabled {
+  animation: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .led-pulse {
+  .led-pulse,
+  .led-pulse-subtle {
     animation: none;
     opacity: 1;
   }
@@ -183,7 +209,7 @@ body::before {
 
 .card-hover:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(255, 107, 26, 0.08), 0 1px 4px rgba(255, 107, 26, 0.04);
+  box-shadow: 0 4px 20px rgba(245, 200, 48, 0.08), 0 1px 4px rgba(245, 200, 48, 0.04);
   border-color: var(--color-border-hover);
 }
 
@@ -262,47 +288,6 @@ body::before {
 
 .animate-slide-in-right {
   animation: slide-in-right 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* ── Text Rise ── */
-
-@keyframes text-rise {
-  from {
-    transform: translateY(110%);
-    opacity: 0.3;
-  }
-  to {
-    transform: translateY(0%);
-    opacity: 1;
-  }
-}
-
-.animate-text-rise {
-  animation: text-rise 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-/* ── Rule Draw ── */
-
-@keyframes rule-draw {
-  from { transform: scaleX(0); opacity: 0; }
-  to   { transform: scaleX(1); opacity: 1; }
-}
-
-.animate-rule-draw {
-  animation: rule-draw 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  transform-origin: left;
-}
-
-/* ── Stamp In ── */
-
-@keyframes stamp-in {
-  0%   { opacity: 0; letter-spacing: 0.6em; }
-  60%  { opacity: 1; }
-  100% { opacity: 1; letter-spacing: 0.25em; }
-}
-
-.animate-stamp-in {
-  animation: stamp-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* ── Scan Right (loading bar) ── */

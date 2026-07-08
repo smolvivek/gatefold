@@ -156,7 +156,7 @@ export default function SignupPage() {
             onChange={(e) => setName(e.target.value)}
             required
             autoComplete="name"
-            className="bg-transparent border-b border-white/20 focus:border-white/60 text-text-primary text-[15px] py-[10px] outline-none placeholder:text-text-disabled transition-colors duration-[150ms]"
+            className="bg-transparent border-b border-border focus:border-border-hover text-text-primary text-[15px] py-[10px] outline-none placeholder:text-text-disabled transition-colors duration-[150ms]"
             placeholder="Your name"
           />
           {errors.name && (
@@ -176,7 +176,7 @@ export default function SignupPage() {
             onChange={(e) => setEmail(e.target.value)}
             required
             autoComplete="email"
-            className="bg-transparent border-b border-white/20 focus:border-white/60 text-text-primary text-[15px] py-[10px] outline-none placeholder:text-text-disabled transition-colors duration-[150ms]"
+            className="bg-transparent border-b border-border focus:border-border-hover text-text-primary text-[15px] py-[10px] outline-none placeholder:text-text-disabled transition-colors duration-[150ms]"
             placeholder="your@email.com"
           />
           {errors.email && (
@@ -196,7 +196,7 @@ export default function SignupPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
             autoComplete="new-password"
-            className="bg-transparent border-b border-white/20 focus:border-white/60 text-text-primary text-[15px] py-[10px] outline-none placeholder:text-text-disabled transition-colors duration-[150ms]"
+            className="bg-transparent border-b border-border focus:border-border-hover text-text-primary text-[15px] py-[10px] outline-none placeholder:text-text-disabled transition-colors duration-[150ms]"
             placeholder="••••••••"
           />
           {errors.password && (
@@ -219,7 +219,7 @@ export default function SignupPage() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
             autoComplete="new-password"
-            className="bg-transparent border-b border-white/20 focus:border-white/60 text-text-primary text-[15px] py-[10px] outline-none placeholder:text-text-disabled transition-colors duration-[150ms]"
+            className="bg-transparent border-b border-border focus:border-border-hover text-text-primary text-[15px] py-[10px] outline-none placeholder:text-text-disabled transition-colors duration-[150ms]"
             placeholder="••••••••"
           />
           {errors.confirmPassword && (
@@ -275,7 +275,7 @@ export default function SignupPage() {
         </button>
       </form>
 
-      <div className="mt-[32px] pt-[32px] border-t border-white/5 text-center">
+      <div className="mt-[32px] pt-[32px] border-t border-border text-center">
         <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-text-disabled">
           Already have an account?{" "}
           <Link

@@ -1,628 +1,587 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { LandingPreview } from "@/components/landing/LandingPreview";
-import { MagneticButton } from "@/components/ui/MagneticButton";
+import { useState, useEffect } from "react";
+
 import { PulseDot } from "@/components/ui/PulseDot";
 import { playClick } from "@/lib/sound/click";
-import { motion, MotionConfig } from "framer-motion";
+import { motion, MotionConfig, AnimatePresence } from "framer-motion";
 
-const expoOut: [number, number, number, number] = [0.16, 1, 0.3, 1];
+// ── Demo project data ────────────────────────────────────────────────────────
 
-interface CalloutDot {
-  id: string;
-  x: string;
-  y: string;
-  label: string;
-  desc: string;
+interface DemoProject {
+  slug: string; title: string; director: string; logline: string;
+  genre: string; genreShort: string; status: string; budget: string;
+  posterImg: string; posterFallback: string;
+  cast: { role: string; name: string }[];
 }
 
-const callouts: CalloutDot[] = [
+const demoProjects: DemoProject[] = [
   {
-    id: "status",
-    x: "14%",
-    y: "32%",
-    label: "Live status",
-    desc: "Producers see if you're actively raising. The badge breathes — it signals life.",
+    slug: "the-uninvited", title: "The Uninvited", director: "Mara Holst",
+    logline: "A folklore archivist cataloguing abandoned estates begins finding her own handwriting in century-old journals she has never seen before.",
+    genre: "Fiction / Feature", genreShort: "Fiction", status: "Development", budget: "$250K–$1M",
+    posterImg: "https://cdn2.picryl.com/photo/1921/12/31/nosferatu-original-poster-1921-325722-1024.jpg",
+    posterFallback: "linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 40%, #262626 60%, #0A0A0A 100%)",
+    cast: [
+      { role: "Elin Voss", name: "Ingrid Sørensen" },
+      { role: "Aksel Voss", name: "Mikael Berg" },
+      { role: "The Keeper", name: "Liv Andersen" },
+    ],
   },
   {
-    id: "link",
-    x: "55%",
-    y: "8%",
-    label: "One link",
-    desc: "Public, private, or password-protected. Revoke access any time.",
+    slug: "white-silence", title: "White Silence", director: "Anika Strand",
+    logline: "A glaciologist documents the final winter before the Antarctic shelf she's studied for a decade breaks off into the sea.",
+    genre: "Documentary / Feature", genreShort: "Documentary", status: "In Production", budget: "$50K–$250K",
+    posterImg: "https://upload.wikimedia.org/wikipedia/commons/0/05/Antarctic_Sound-2016-Iceberg_02.jpg",
+    posterFallback: "linear-gradient(145deg, #0A1C2E 0%, #0D2B40 30%, #1A4A6B 55%, #0A1C2E 100%)",
+    cast: [
+      { role: "Subject", name: "Dr. Anika Strand" },
+      { role: "Narrator", name: "Elias Krogh" },
+      { role: "Field Team", name: "Nordkapp Unit" },
+    ],
   },
   {
-    id: "funding",
-    x: "28%",
-    y: "88%",
-    label: "Funding built in",
-    desc: "Accept investment directly on the pitch page. No redirects, no third-party platform.",
+    slug: "monsoon-estrella", title: "Monsoon", director: "Kiran Patel",
+    logline: "A 60-second spot — one continuous shot following a bottle of cold beer through a monsoon street party in Mumbai.",
+    genre: "Ad Film / Campaign", genreShort: "Ad Film", status: "Development", budget: "$5K–$50K",
+    posterImg: "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=800&q=80",
+    posterFallback: "linear-gradient(150deg, #0A1628 0%, #0D3B66 35%, #1B6B93 55%, #0A1628 100%)",
+    cast: [
+      { role: "Talent", name: "Rohan Iyer" },
+      { role: "Voiceover", name: "Priya Nair" },
+      { role: "Choreography", name: "Studio Varsha" },
+    ],
   },
-];
+]
 
-function HeroProductMockup() {
-  const [activeCallout, setActiveCallout] = useState<string | null>(null);
+// ── Hero pitch preview ────────────────────────────────────────────────────────
+// Renders the real pitch-view visual language scaled down via CSS transform.
+// The inner div is written at 1280px wide and scaled to fill the column —
+// so the poster fills its background, the title is large, nothing is cropped.
+
+// Each project holds until its full-page scroll completes, then advances.
+const DEMO_CYCLE_MS = 15000
+
+function HeroPitchDemo() {
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  useEffect(() => {
+    const t = setTimeout(() => setActiveIndex((p) => (p + 1) % demoProjects.length), DEMO_CYCLE_MS)
+    return () => clearTimeout(t)
+  }, [activeIndex])
+
+  const p = demoProjects[activeIndex]
+  // Higher scale (0.52) so content is legible — container clips and scrolls to reveal all sections
+  const scale = 0.52
+  const INNER_W = 1280
+  const INNER_H = 1750
+  const containerH = 390
+  const scaledH = Math.round(INNER_H * scale)
+  const scrollAmount = scaledH - containerH
 
   return (
-    <div className="relative w-full max-w-[560px]" style={{ aspectRatio: "4/3" }}>
-      {/* Browser chrome */}
-      <div className="bg-surface border border-border border-b-0 px-[12px] py-[8px] flex items-center gap-[8px]">
-        <div className="flex gap-[5px]">
-          <span className="w-[8px] h-[8px] rounded-full bg-border" />
-          <span className="w-[8px] h-[8px] rounded-full bg-border" />
-          <span className="w-[8px] h-[8px] rounded-full bg-border" />
-        </div>
-        <div className="flex-1 bg-background/60 px-[10px] py-[3px] mx-[4px]">
-          <span className="font-mono text-[10px] text-text-disabled">
-            pitchcraft.app/p/the-uninvited
-          </span>
-        </div>
-      </div>
-
-      {/* Pitch page */}
-      <div className="bg-background border border-border border-t-0 overflow-hidden relative" style={{ height: "calc(100% - 32px)" }}>
-        {/* TopBar */}
-        <div className="px-[16px] py-[8px] border-b border-border flex items-center justify-between bg-surface">
-          <span className="font-heading font-bold text-[10px] uppercase tracking-tighter text-text-primary">
-            The Uninvited
-          </span>
-          <span className="bg-pop text-text-on-pop px-[8px] py-[3px] font-mono text-[7px] tracking-[0.15em] uppercase font-bold">
-            Get in touch
-          </span>
-        </div>
-
-        {/* Hero */}
-        <div
-          className="relative overflow-hidden flex flex-col justify-end"
-          style={{
-            height: "55%",
-            background:
-              "linear-gradient(135deg, #1A130E 0%, #2A1A06 40%, #3D2510 60%, #1A130E 100%)",
-          }}
-        >
-          {/* Warm dark texture overlay */}
-          <div
-            className="absolute inset-0 opacity-40"
+    <div className="w-full">
+      {/* Genre tabs */}
+      <div className="flex items-center gap-[20px] mb-[12px]">
+        {demoProjects.map((proj, i) => (
+          <button
+            key={proj.slug}
+            onClick={() => setActiveIndex(i)}
+            className="font-mono text-[9px] tracking-[0.12em] uppercase transition-colors duration-[200ms] pb-[3px]"
             style={{
-              background:
-                "linear-gradient(to top, #0D0905 0%, rgba(13,9,5,0.7) 30%, transparent 70%)",
+              color: i === activeIndex ? "var(--color-text-primary)" : "var(--color-text-disabled)",
+              borderBottom: i === activeIndex ? "1px solid var(--color-text-primary)" : "1px solid transparent",
             }}
-          />
-          <div className="relative z-10 px-[16px] pb-[12px] space-y-[8px]">
-            <div className="flex items-center gap-[8px]">
-              <PulseDot size={5} />
-              <span className="font-mono text-[7px] tracking-[0.3em] uppercase text-pop font-bold">
-                Looking
-              </span>
-            </div>
-            <h1 className="font-heading font-bold text-[22px] leading-[0.9] tracking-[-0.02em] uppercase text-text-primary">
-              The Uninvited
-            </h1>
-            <p className="font-heading italic text-[10px] leading-[1.4] text-text-primary/60 max-w-[280px]">
-              A folklore archivist cataloguing abandoned estates begins finding her own handwriting in century-old journals.
-            </p>
-          </div>
-        </div>
-
-        {/* Metadata strip */}
-        <div className="px-[16px] py-[8px] border-b border-border flex gap-[24px]">
-          <div>
-            <p className="font-mono text-[6px] uppercase tracking-[0.2em] text-text-disabled mb-[2px]">Genre</p>
-            <p className="font-mono text-[8px] uppercase text-text-primary">Fiction / Feature</p>
-          </div>
-          <div>
-            <p className="font-mono text-[6px] uppercase tracking-[0.2em] text-text-disabled mb-[2px]">Budget</p>
-            <p className="font-mono text-[8px] uppercase text-text-primary">$250K – $1M</p>
-          </div>
-        </div>
-
-        {/* Funding strip */}
-        <div className="px-[16px] py-[10px]">
-          <div className="flex justify-between items-baseline mb-[6px]">
-            <span className="font-heading text-[13px] tracking-[-0.02em] text-text-primary">$42,000</span>
-            <span className="font-mono text-[7px] text-text-disabled">of $80,000</span>
-          </div>
-          <div className="h-[2px] bg-border overflow-hidden mb-[4px]">
-            <div className="h-full bg-pop led-pulse" style={{ width: "52%" }} />
-          </div>
-          <p className="font-mono text-[7px] text-text-disabled">23 supporters · 52%</p>
-        </div>
+          >
+            {proj.genreShort}
+          </button>
+        ))}
       </div>
 
-      {/* Callout dots */}
-      {callouts.map((dot) => (
-        <div
-          key={dot.id}
-          className="absolute z-20"
-          style={{ left: dot.x, top: dot.y }}
-          onMouseEnter={() => setActiveCallout(dot.id)}
-          onMouseLeave={() => setActiveCallout(null)}
-        >
-          {/* Dot */}
-          <div className="relative">
-            <span className="block w-[10px] h-[10px] rounded-full bg-pop led-pulse cursor-pointer border-2 border-background" />
-            {/* Ripple ring */}
-            <span className="absolute inset-[-4px] rounded-full border border-pop/30 led-pulse" />
-          </div>
+      {/* Browser chrome */}
+      <div className="flex items-center gap-[6px] border border-border border-b-0 bg-surface px-[12px] h-[32px]">
+        <span className="w-[7px] h-[7px] rounded-full bg-border" aria-hidden="true" />
+        <span className="w-[7px] h-[7px] rounded-full bg-border" aria-hidden="true" />
+        <span className="w-[7px] h-[7px] rounded-full bg-border" aria-hidden="true" />
+        <span className="ml-[10px] flex-1 min-w-0 truncate bg-background px-[10px] py-[3px] font-mono text-[9px] text-text-disabled">
+          pitchcraft.app/p/{p.slug}
+        </span>
+      </div>
 
-          {/* Callout card */}
-          {activeCallout === dot.id && (
-            <div
-              className="absolute z-30 w-[160px] bg-surface border border-border p-[10px] shadow-lg"
-              style={{
-                top: "calc(100% + 8px)",
-                left: "-16px",
-                boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
-              }}
+      {/* Full-page pitch preview — clips content and auto-scrolls to reveal all sections */}
+      <div
+        className="border border-border bg-background overflow-hidden"
+        style={{ position: 'relative', height: `${containerH}px` }}
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeIndex}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%' }}
+          >
+            {/* Scroll animation — one full pass per project: hold on hero,
+                scroll through every section, hold on funding, then crossfade */}
+            <motion.div
+              animate={{ y: [0, 0, -scrollAmount, -scrollAmount] }}
+              transition={{ duration: 14.2, times: [0, 0.09, 0.87, 1], ease: 'easeInOut' }}
             >
-              <p className="font-mono text-[8px] uppercase tracking-[0.15em] text-pop mb-[4px]">
-                {dot.label}
-              </p>
-              <p className="text-[10px] text-text-secondary leading-[1.5]">{dot.desc}</p>
+              <div
+                style={{
+                  width: `${INNER_W}px`,
+                  height: `${INNER_H}px`,
+                  transform: `scale(${scale})`,
+                  transformOrigin: 'top left',
+                }}
+              >
+            {/* ── TopBar ── */}
+            <header style={{
+              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+              padding: '20px 96px', height: '64px',
+              borderBottom: '1px solid rgba(255,255,255,0.05)',
+              background: 'var(--color-background)',
+            }}>
+              <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontStyle: 'italic', fontSize: 18, letterSpacing: '-0.02em', color: 'var(--color-text-primary)' }}>
+                {p.title}
+              </span>
+              <nav style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+                <span style={{ fontFamily: 'monospace', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-text-disabled)' }}>Funding</span>
+                <span style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-text-disabled)' }}>V3</span>
+              </nav>
+            </header>
+
+            {/* ── Hero ── */}
+            <div style={{ position: 'relative', height: '380px', background: p.posterFallback }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={p.posterImg}
+                alt=""
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 30%', opacity: 0.6 }}
+                loading="lazy"
+              />
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: 'linear-gradient(to top, #0A0A0A 0%, rgba(10,10,10,0.55) 45%, rgba(10,10,10,0.1) 100%)',
+              }} />
+              <div style={{ position: 'absolute', top: 24, right: 96, display: 'flex', alignItems: 'center', gap: 8, border: '1px solid var(--color-pop)', padding: '6px 10px' }}>
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-pop)', display: 'block' }} />
+                <span style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-pop)' }}>{p.status}</span>
+              </div>
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '0 96px 48px' }}>
+                <h1 style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 96, lineHeight: 0.87, letterSpacing: '-0.03em', textTransform: 'uppercase', color: 'var(--color-text-primary)', marginBottom: 28 }}>
+                  {p.title}
+                </h1>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 28, paddingTop: 24, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div>
+                    <p style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--color-text-disabled)', marginBottom: 6 }}>Director</p>
+                    <p style={{ fontFamily: 'var(--font-heading)', fontSize: 20, lineHeight: 1.1, color: 'var(--color-text-primary)' }}>{p.director}</p>
+                  </div>
+                  <div style={{ borderLeft: '1px solid rgba(245,200,48,0.3)', paddingLeft: 20 }}>
+                    <p style={{ fontFamily: 'var(--font-heading)', fontSize: 18, lineHeight: 1.55, fontStyle: 'italic', color: 'rgba(240,237,232,0.75)' }}>{p.logline}</p>
+                  </div>
+                </div>
+              </div>
             </div>
-          )}
-        </div>
-      ))}
+
+            {/* ── Metadata strip ── */}
+            <div style={{ display: 'flex', gap: 64, padding: '24px 96px', borderBottom: '1px solid rgba(255,255,255,0.05)', background: 'var(--color-surface)' }}>
+              {[['Genre', p.genre], ['Budget', p.budget], ['Status', p.status]].map(([label, val], i) => (
+                <div key={label}>
+                  <p style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-text-disabled)', marginBottom: 5 }}>{label}</p>
+                  <p style={{ fontFamily: 'monospace', fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: i === 2 ? 'var(--color-pop)' : 'var(--color-text-primary)' }}>{val}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* ── Synopsis section ── */}
+            <div style={{ padding: '72px 96px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48 }}>
+                <div>
+                  <p style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--color-pop)', fontWeight: 700 }}>01</p>
+                </div>
+                <div>
+                  <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 52, lineHeight: 1.0, letterSpacing: '-0.02em', color: 'var(--color-text-primary)', marginBottom: 20, fontWeight: 400 }}>Synopsis</h2>
+                  <p style={{ fontSize: 17, lineHeight: 1.8, color: 'var(--color-text-secondary)', maxWidth: 640 }}>{p.logline} A project built to be presented, not forwarded as a PDF.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* ── Vision section ── */}
+            <div style={{ padding: '72px 96px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48 }}>
+                <div>
+                  <p style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--color-pop)', fontWeight: 700 }}>02</p>
+                </div>
+                <div>
+                  <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 52, lineHeight: 1.0, letterSpacing: '-0.02em', color: 'var(--color-text-primary)', marginBottom: 20, fontWeight: 400 }}>Director&apos;s Vision</h2>
+                  <p style={{ fontSize: 17, lineHeight: 1.8, color: 'var(--color-text-secondary)', maxWidth: 640 }}>
+                    Restraint as the primary technique. Every frame deliberate. Every silence earned. Shot in natural light with a single camera position per scene.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* ── Cast section ── */}
+            <div style={{ padding: '72px 96px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48 }}>
+                <div>
+                  <p style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--color-pop)', fontWeight: 700 }}>03</p>
+                </div>
+                <div>
+                  <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 52, lineHeight: 1.0, letterSpacing: '-0.02em', color: 'var(--color-text-primary)', marginBottom: 28, fontWeight: 400 }}>Cast &amp; Characters</h2>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24, maxWidth: 720 }}>
+                    {p.cast.map((c) => (
+                      <div key={c.name}>
+                        <div style={{ height: 150, background: 'var(--color-surface-hover)', border: '1px solid var(--color-border)', display: 'flex', alignItems: 'flex-end', padding: 12, marginBottom: 12 }}>
+                          <span style={{ fontFamily: 'var(--font-heading)', fontSize: 48, lineHeight: 1, letterSpacing: '-0.04em', color: 'rgba(84,82,80,0.35)' }}>{c.name.charAt(0)}</span>
+                        </div>
+                        <p style={{ fontFamily: 'monospace', fontSize: 8, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-pop)', fontWeight: 700, marginBottom: 6 }}>{c.role}</p>
+                        <p style={{ fontFamily: 'var(--font-heading)', fontSize: 18, lineHeight: 1.1, color: 'var(--color-text-primary)' }}>{c.name}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* ── Funding widget ── */}
+            <div style={{ padding: '64px 96px', background: 'var(--color-surface)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 48 }}>
+                <div>
+                  <p style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--color-pop)', fontWeight: 700 }}>Fund</p>
+                </div>
+                <div>
+                  <p style={{ fontFamily: 'var(--font-heading)', fontSize: 48, lineHeight: 1.0, letterSpacing: '-0.02em', color: 'var(--color-text-primary)', marginBottom: 6, fontWeight: 700 }}>$42,000</p>
+                  <p style={{ fontFamily: 'monospace', fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-text-disabled)', marginBottom: 20 }}>Raised of $80,000 · 23 backers</p>
+                  <div style={{ height: 4, background: 'rgba(255,255,255,0.07)', marginBottom: 8 }}>
+                    <div style={{ height: '100%', width: '52%', background: 'var(--color-pop)' }} />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+              </div>
+            </motion.div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </div>
-  );
+  )
 }
+
+// ── Feature UI mocks ─────────────────────────────────────────────────────────
+// Real product interface recreations, not icons or illustrations.
+
+function EditorMock() {
+  const sections = [
+    { n: "01", label: "Logline", active: false },
+    { n: "02", label: "Synopsis", active: true },
+    { n: "03", label: "Vision", active: false },
+    { n: "04", label: "Cast", active: false },
+    { n: "05", label: "Budget", active: false },
+  ]
+  return (
+    <div className="border border-border bg-background flex" aria-hidden="true">
+      {/* Sidebar — editorial step sequencer */}
+      <div className="w-[150px] md:w-[168px] shrink-0 bg-surface border-r border-hairline py-[16px]">
+        {sections.map((s) => (
+          <div
+            key={s.n}
+            className={`flex items-baseline gap-[6px] px-[16px] py-[12px] border-l-2 ${s.active ? "border-pop" : "border-transparent"}`}
+          >
+            <span className={`font-mono text-[10px] font-bold uppercase tracking-[0.15em] ${s.active ? "text-pop led-pulse" : "text-text-disabled"}`}>
+              {s.n}
+            </span>
+            <span className={`font-mono text-[10px] font-bold uppercase tracking-[0.15em] ${s.active ? "text-pop" : "text-text-disabled"}`}>
+              / {s.label}
+            </span>
+          </div>
+        ))}
+      </div>
+      {/* Writing surface */}
+      <div className="flex-1 min-w-0 p-[24px] md:p-[32px]">
+        <p className="font-heading text-[24px] text-text-primary leading-[1.1] mb-[20px]">The Weight of Water</p>
+        <div className="space-y-[10px] mb-[28px]">
+          <div className="h-[7px] bg-text-primary/10 w-full" />
+          <div className="h-[7px] bg-text-primary/10 w-[92%]" />
+          <div className="h-[7px] bg-text-primary/10 w-[97%]" />
+          <div className="h-[7px] bg-text-primary/10 w-[58%]" />
+        </div>
+        <p className="font-mono text-[10px] text-text-disabled">Saved — looks good.</p>
+      </div>
+    </div>
+  )
+}
+
+function ShareMock() {
+  const options = [
+    { label: "Public", note: "Anyone with the link", selected: true },
+    { label: "Private", note: "Only you", selected: false },
+    { label: "Password", note: "Pro / Studio", selected: false },
+  ]
+  return (
+    <div className="border border-border bg-surface p-[24px] md:p-[32px] space-y-[24px]" aria-hidden="true">
+      <div className="flex items-center justify-between">
+        <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-text-secondary font-bold">Share this draft</p>
+        <span className="border border-accent px-[8px] py-[3px] font-mono text-[9px] uppercase tracking-[0.15em] text-accent-hover">V3</span>
+      </div>
+      <div className="flex items-stretch border border-border bg-background">
+        <span className="flex-1 min-w-0 truncate px-[14px] py-[12px] font-mono text-[11px] text-text-primary">
+          pitchcraft.app/p/the-weight-of-water
+        </span>
+        <span className="flex items-center border-l border-border px-[14px] font-mono text-[9px] uppercase tracking-[0.15em] text-text-secondary">
+          Copy
+        </span>
+      </div>
+      <div>
+        {options.map((o) => (
+          <div
+            key={o.label}
+            className={`flex items-center justify-between px-[14px] py-[12px] ${o.selected ? "bg-background border border-border" : ""}`}
+          >
+            <span className="flex items-center gap-[10px]">
+              <span className={`w-[6px] h-[6px] rounded-full ${o.selected ? "bg-pop" : "bg-border"}`} />
+              <span className={`font-mono text-[10px] uppercase tracking-[0.15em] ${o.selected ? "text-text-primary" : "text-text-disabled"}`}>
+                {o.label}
+              </span>
+            </span>
+            <span className="font-mono text-[9px] uppercase tracking-[0.1em] text-text-disabled">{o.note}</span>
+          </div>
+        ))}
+      </div>
+      <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-text-disabled">Revoke access</p>
+    </div>
+  )
+}
+
+function FundMock() {
+  const goals = [
+    { amt: "$10K", label: "Principal photography", reached: true },
+    { amt: "$50K", label: "Festival run", reached: false },
+    { amt: "$80K", label: "Final mix", reached: false },
+  ]
+  return (
+    <div className="border border-border bg-surface p-[24px] md:p-[32px]" aria-hidden="true">
+      <p className="font-heading italic font-bold text-[16px] tracking-tighter text-text-primary mb-[24px]">
+        The Weight of Water
+      </p>
+      <p className="font-heading font-bold text-[48px] leading-[1] tracking-[-0.02em] text-text-primary">$42,000</p>
+      <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-disabled mt-[8px] mb-[16px]">
+        Raised of $80,000 · 23 backers
+      </p>
+      <div className="h-[4px] bg-text-primary/10 mb-[28px]">
+        <div className="h-full w-[52%] bg-pop led-pulse" />
+      </div>
+      <div className="space-y-[10px]">
+        {goals.map((g) => (
+          <div key={g.amt} className="flex items-baseline gap-[16px]">
+            <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-text-secondary w-[40px] shrink-0">
+              {g.amt}
+            </span>
+            <span className={`font-mono text-[10px] uppercase tracking-[0.1em] ${g.reached ? "text-text-primary" : "text-text-disabled"}`}>
+              {g.label}
+              {g.reached && <span className="text-pop"> ✓</span>}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// ── Main component ───────────────────────────────────────────────────────────
+
+const primaryCta =
+  "inline-flex items-center gap-[12px] bg-pop text-background px-[32px] py-[16px] font-heading text-[14px] font-bold uppercase tracking-tighter hover:bg-pop-hover active:scale-[0.98] transition-all duration-200 led-pulse-subtle"
+const secondaryCta =
+  "inline-flex items-center gap-[12px] border border-border text-text-primary px-[32px] py-[16px] font-heading text-[14px] font-bold uppercase tracking-tighter hover:border-pop transition-colors duration-200"
 
 export function LandingHero() {
   return (
     <MotionConfig reducedMotion="user">
       <>
         {/* ── HERO ── */}
-        <section className="px-[32px] md:px-[80px] pt-[140px] pb-[100px]">
+        <section className="relative overflow-hidden px-[24px] md:px-[48px] pt-[152px] pb-[100px]">
           <div className="max-w-[1200px] mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-[64px] items-center">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-[64px] items-start">
 
               {/* Left: Headline + CTA */}
               <div className="md:col-span-5">
-                {/* Stamp */}
-                <div className="overflow-hidden mb-[24px]">
-                  <span
-                    className="font-mono text-[9px] uppercase text-text-disabled block animate-stamp-in"
-                    style={{ animationDelay: "0.5s" }}
-                  >
-                    Pitchcraft
-                  </span>
+                <div className="animate-fade-up opacity-0 [animation-fill-mode:forwards]">
+                  <h1 className="font-heading text-[clamp(40px,7vw,96px)] leading-[0.92] tracking-[-0.03em] text-text-primary mb-[8px]">
+                    <span className="block">Present your work.</span>
+                    <span className="block">Fund your vision.</span>
+                    <span className="block italic text-pop">Properly.</span>
+                  </h1>
                 </div>
 
-                {/* Title */}
-                <h1 className="font-heading font-light text-[clamp(48px,9vw,120px)] leading-[0.88] tracking-[-0.03em] text-text-primary mb-[8px]">
-                  <div className="overflow-hidden">
-                    <span className="block animate-text-rise" style={{ animationDelay: "0.55s" }}>
-                      The pitch is
-                    </span>
-                  </div>
-                  <div className="overflow-hidden">
-                    <span className="block animate-text-rise" style={{ animationDelay: "0.72s" }}>
-                      the{" "}
-                      <span className="italic">first frame.</span>
-                    </span>
-                  </div>
-                </h1>
-
-                {/* Rule */}
                 <div
-                  className="h-[1px] bg-border mb-[32px] animate-rule-draw"
-                  style={{ animationDelay: "0.9s" }}
-                />
-
-                {/* Subtitle */}
-                <motion.p
-                  className="text-text-secondary font-light leading-relaxed text-[16px] mb-[40px] max-w-[360px]"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, ease: expoOut, delay: 1.1 }}
+                  className="animate-fade-up opacity-0 [animation-fill-mode:forwards]"
+                  style={{ animationDelay: "80ms" }}
                 >
-                  Pitchcraft builds editorial pitch pages for filmmakers — logline, vision, cast, budget, funding. One link, built to be read.
-                </motion.p>
+                  <div className="h-[1px] bg-hairline mb-[32px]" />
+                  <p className="text-text-secondary leading-[26px] text-[16px] mb-[40px] max-w-[380px]">
+                    One link for your entire project — logline, cast, budget,
+                    and funding. Share it with producers. Version it. Fund through it.
+                  </p>
+                </div>
 
-                {/* CTAs */}
-                <motion.div
-                  className="flex flex-col sm:flex-row gap-[16px] items-start"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, ease: expoOut, delay: 1.25 }}
+                <div
+                  className="flex flex-col sm:flex-row gap-[16px] items-start animate-fade-up opacity-0 [animation-fill-mode:forwards]"
+                  style={{ animationDelay: "160ms" }}
                 >
-                  <MagneticButton>
-                    <Link
-                      href="/signup"
-                      onClick={() => playClick()}
-                      className="led-pulse inline-flex items-center gap-[12px] bg-pop text-text-on-pop px-[28px] py-[14px] font-mono text-[11px] uppercase tracking-[0.15em] font-bold hover:bg-pop-hover transition-colors duration-200"
-                    >
-                      Begin the cut
-                      <span>→</span>
-                    </Link>
-                  </MagneticButton>
-                  <Link
-                    href="/pricing"
-                    className="inline-flex items-center gap-[12px] border border-border text-text-secondary px-[28px] py-[14px] font-mono text-[11px] uppercase tracking-[0.15em] hover:border-border-hover hover:text-text-primary transition-colors duration-200"
-                  >
+                  <Link href="/signup" onClick={() => playClick()} className={primaryCta}>
+                    Create your first project
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                  <Link href="/pricing" className={secondaryCta}>
                     See pricing
                   </Link>
-                </motion.div>
+                </div>
               </div>
 
-              {/* Right: Product preview */}
-              <motion.div
-                className="md:col-span-7 flex justify-center md:justify-end"
-                initial={{ opacity: 0, y: 32 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, ease: expoOut, delay: 0.8 }}
+              {/* Right: Live pitch page demo */}
+              <div
+                className="md:col-span-7 min-w-0 animate-fade-up opacity-0 [animation-fill-mode:forwards]"
+                style={{ animationDelay: "240ms" }}
               >
-                <HeroProductMockup />
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── WHAT IT IS ── */}
-        <section className="py-[96px] px-[48px] md:px-[80px] bg-background border-t border-border">
-          <div className="max-w-[1200px] mx-auto">
-            <div className="flex flex-col md:flex-row md:justify-between md:items-baseline border-b border-border pb-[24px] mb-[48px] gap-[12px]">
-              <motion.h2
-                className="font-heading text-[clamp(36px,5vw,72px)] font-light tracking-tight leading-[1.0]"
-                initial={{ opacity: 0, y: 48 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.0, ease: expoOut }}
-                viewport={{ once: true, amount: 0.2 }}
-              >
-                Your project. One page.
-              </motion.h2>
-              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-text-disabled flex-shrink-0">
-                01 / What it is
-              </span>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 48 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.0, ease: expoOut, delay: 0.12 }}
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <p className="text-text-secondary mb-[48px] leading-relaxed text-[17px] font-light max-w-[600px]">
-                Logline, vision, cast, and budget — assembled once, shared as one link. Reads like the work it&apos;s pitching, not a slide deck.
-              </p>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-[32px] pt-[32px] border-t border-border">
-                {[
-                  { label: "Build", desc: "Logline, vision, cast, budget, moodboard." },
-                  { label: "Share", desc: "One link. Public, private, or password-protected." },
-                  { label: "Version", desc: "Every draft saved. Send the right cut to the right person." },
-                  { label: "Fund", desc: "Accept investment directly through your pitch page." },
-                ].map((item) => (
-                  <div key={item.label}>
-                    <span className="text-text-disabled text-[9px] tracking-[0.3em] font-bold uppercase block mb-[8px]">{item.label}</span>
-                    <p className="text-[13px] font-light text-text-secondary leading-relaxed">{item.desc}</p>
-                  </div>
-                ))}
+                <HeroPitchDemo />
               </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* ── PRODUCT PREVIEW (rotating) ── */}
-        <LandingPreview />
-
-        {/* ── HOW IT WORKS (bento) ── */}
-        <section className="py-[96px] px-[48px] md:px-[80px] bg-surface border-t border-border">
-          <div className="max-w-[1200px] mx-auto">
-            <div className="flex flex-col md:flex-row md:justify-between md:items-baseline border-b border-border pb-[24px] mb-[48px] gap-[12px]">
-              <motion.h2
-                className="font-heading text-[clamp(36px,5vw,72px)] font-light tracking-tight leading-[1.0]"
-                initial={{ opacity: 0, y: 48 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.0, ease: expoOut }}
-                viewport={{ once: true, amount: 0.2 }}
-              >
-                How it works.
-              </motion.h2>
-              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-text-disabled flex-shrink-0">
-                03 / The Product
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-[1px] grid-rows-2 bg-border" style={{ minHeight: 600 }}>
-              {/* Tile 1: The Editor — 2-col */}
-              <motion.div
-                className="md:col-span-2 bg-surface p-[48px] flex flex-col justify-between hover:bg-surface-hover transition-colors"
-                initial={{ opacity: 0, y: 56 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.85, ease: expoOut, delay: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-              >
-                <div>
-                  <span className="font-mono text-[9px] tracking-[0.25em] font-bold text-text-disabled uppercase block mb-[24px]">Editor</span>
-                  <h3 className="font-heading text-[36px] mb-[16px] font-light">The Editor</h3>
-                  <p className="max-w-[480px] text-text-secondary text-[14px] font-light leading-relaxed">
-                    Build your project: logline, vision, cast, and budget in one place.
-                  </p>
-                </div>
-                <div className="flex items-center gap-[8px] mt-[32px]">
-                  <PulseDot size={6} active={false} />
-                  <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-text-disabled">01</span>
-                </div>
-              </motion.div>
-
-              {/* Tile 2: Dashboard — 1-col, 2-row */}
-              <motion.div
-                className="row-span-2 bg-surface p-[48px] flex flex-col justify-between hover:bg-surface-hover transition-colors"
-                initial={{ opacity: 0, y: 56 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.85, ease: expoOut, delay: 0.1 }}
-                viewport={{ once: true, amount: 0.2 }}
-              >
-                <div>
-                  <span className="font-mono text-[9px] tracking-[0.25em] font-bold text-text-disabled uppercase block mb-[24px]">Dashboard</span>
-                  <h3 className="font-heading text-[36px] mb-[16px] font-light leading-[1.1]">Your<br />Projects</h3>
-                  <p className="text-text-secondary text-[14px] font-light leading-relaxed">
-                    Every project. Every version. One dashboard.
-                  </p>
-                  <div className="mt-[40px] space-y-[16px]">
-                    {["Project List", "Share Controls", "Funding Tracker"].map((item) => (
-                      <div key={item} className="py-[8px] border-b border-border">
-                        <span className="font-mono text-[10px] tracking-[0.1em] uppercase text-text-secondary">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex items-center gap-[8px] mt-[32px]">
-                  <PulseDot size={6} active={false} />
-                  <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-text-disabled">02</span>
-                </div>
-              </motion.div>
-
-              {/* Tile 3: Distribution — 2-col */}
-              <motion.div
-                className="md:col-span-2 bg-surface p-[48px] flex flex-col justify-between hover:bg-surface-hover transition-colors"
-                initial={{ opacity: 0, y: 56 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.85, ease: expoOut, delay: 0.2 }}
-                viewport={{ once: true, amount: 0.2 }}
-              >
-                <div>
-                  <span className="font-mono text-[9px] tracking-[0.25em] font-bold text-text-disabled uppercase block mb-[24px]">Distribution</span>
-                  <h3 className="font-heading text-[36px] mb-[16px] font-light">The Premiere</h3>
-                  <p className="max-w-[480px] text-text-secondary text-[14px] font-light leading-relaxed">
-                    Private, password-protected exhibition links for investors and crew. One link for the entire world of your project.
-                  </p>
-                </div>
-                <div className="flex items-center gap-[8px] mt-[32px]">
-                  <PulseDot size={6} active={false} />
-                  <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-text-disabled">03</span>
-                </div>
-              </motion.div>
             </div>
           </div>
         </section>
 
-        {/* ── FEATURES CHESS ── */}
-        <section className="px-[48px] md:px-[80px] py-[96px] border-t border-border bg-background">
+        {/* ── FEATURES ── */}
+        <section className="px-[24px] md:px-[48px] py-[96px] border-t border-hairline bg-background">
           <div className="max-w-[1200px] mx-auto">
-            <div className="flex flex-col md:flex-row md:justify-between md:items-baseline border-b border-border pb-[24px] mb-[96px] gap-[12px]">
-              <motion.h2
-                className="font-heading text-[clamp(36px,5vw,72px)] font-light tracking-tight leading-[1.0]"
-                initial={{ opacity: 0, y: 48 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.0, ease: expoOut }}
-                viewport={{ once: true, amount: 0.2 }}
-              >
-                Every tool a filmmaker needs.
-              </motion.h2>
-              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-text-disabled flex-shrink-0">
-                04 / Features
+            <div className="flex justify-end border-b border-hairline pb-[24px] mb-[96px]">
+              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-pop font-bold">
+                01 / Features
               </span>
             </div>
 
             {/* Row 1 — Build */}
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 gap-[64px] items-center mb-[120px]"
-              initial={{ opacity: 0, y: 48 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.0, ease: expoOut }}
-              viewport={{ once: true, amount: 0.15 }}
-            >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[64px] items-center mb-[120px]">
               <div>
-                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-text-disabled font-bold block mb-[24px]">01 / Build</span>
-                <h3 className="font-heading text-[clamp(28px,4vw,56px)] font-light tracking-[-0.02em] leading-[1.0] mb-[24px]">
-                  Built in an afternoon.<br />
+                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-pop font-bold block mb-[24px]">
+                  01 / Build
+                </span>
+                <h3 className="font-heading text-[clamp(28px,4vw,56px)] tracking-[-0.02em] leading-[1.0] mb-[24px]">
+                  Built in an afternoon.
+                  <br />
                   <span className="italic">Not a weekend.</span>
                 </h3>
-                <p className="text-text-secondary text-[15px] leading-relaxed font-light mb-[32px] max-w-[440px]">
-                  Logline, vision, cast, budget, moodboard — assembled in one place. The editor enforces nothing. It doesn&apos;t suggest tone, impose templates, or generate your copy. It gets out of the way.
+                <p className="text-text-secondary text-[16px] leading-[26px] mb-[32px] max-w-[440px]">
+                  Logline, vision, cast, budget, moodboard — assembled in one
+                  place. The editor enforces nothing. It doesn&apos;t suggest
+                  tone, impose templates, or generate your copy. It gets out of
+                  the way.
                 </p>
                 <div className="space-y-[12px]">
-                  {["Logline + Synopsis", "Director's Vision", "Cast & Characters", "Budget Range", "Moodboard Gallery"].map((item) => (
+                  {[
+                    "Logline + Synopsis",
+                    "Director's Vision",
+                    "Cast & Characters",
+                    "Budget Range",
+                    "Moodboard Gallery",
+                  ].map((item) => (
                     <div key={item} className="flex items-center gap-[12px]">
-                      <span className="w-[16px] h-[1px] bg-pop flex-shrink-0" />
-                      <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">{item}</span>
+                      <span className="w-[16px] h-[1px] bg-text-disabled flex-shrink-0" />
+                      <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">
+                        {item}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Editor mock */}
-              <div className="bg-surface border border-border p-[32px] space-y-[20px]">
-                <div className="flex items-center justify-between mb-[8px]">
-                  <span className="font-mono text-[8px] uppercase tracking-[0.25em] text-text-disabled">Draft — The Weight of Water</span>
-                  <span className="font-mono text-[8px] uppercase tracking-[0.15em] text-pop border border-pop/40 px-[6px] py-[2px]">Saved</span>
-                </div>
-                {[
-                  { label: "Logline", value: "A marine biologist discovers the ocean she's spent her life studying is keeping a secret — one that could redefine memory itself.", tall: true },
-                  { label: "Genre", value: "Fiction / Short Film", tall: false },
-                  { label: "Status", value: "Looking", tall: false },
-                ].map((field) => (
-                  <div key={field.label} className="border-b border-border pb-[16px]">
-                    <p className="font-mono text-[7px] uppercase tracking-[0.2em] text-text-disabled mb-[6px]">{field.label}</p>
-                    <p className={`text-[12px] leading-[1.6] text-text-secondary font-light ${field.tall ? "line-clamp-3" : ""}`}>{field.value}</p>
-                  </div>
-                ))}
-                <div className="pt-[8px]">
-                  <span className="font-mono text-[8px] uppercase tracking-[0.15em] text-text-disabled">+ Add Vision</span>
-                </div>
-              </div>
-            </motion.div>
+              <EditorMock />
+            </div>
 
             {/* Row 2 — Share */}
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 gap-[64px] items-center mb-[120px]"
-              initial={{ opacity: 0, y: 48 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.0, ease: expoOut }}
-              viewport={{ once: true, amount: 0.15 }}
-            >
-              {/* Share mock */}
-              <div className="bg-surface border border-border p-[32px] order-2 md:order-1">
-                <p className="font-mono text-[8px] uppercase tracking-[0.25em] text-text-disabled mb-[20px]">Share Controls</p>
-                <div className="space-y-[1px] mb-[24px]">
-                  {[
-                    { label: "Public", sub: "Anyone with the link", active: false },
-                    { label: "Private", sub: "Only you", active: false },
-                    { label: "Password Protected", sub: "Set a passphrase", active: true },
-                  ].map((opt) => (
-                    <div key={opt.label} className={`flex items-center justify-between p-[12px] ${opt.active ? "bg-surface-hover border border-border" : ""}`}>
-                      <div>
-                        <p className={`font-mono text-[10px] uppercase tracking-[0.1em] ${opt.active ? "text-text-primary" : "text-text-disabled"}`}>{opt.label}</p>
-                        <p className="font-mono text-[8px] text-text-disabled mt-[2px]">{opt.sub}</p>
-                      </div>
-                      {opt.active && <PulseDot size={6} />}
-                    </div>
-                  ))}
-                </div>
-                <div className="border-t border-border pt-[16px]">
-                  <p className="font-mono text-[8px] uppercase tracking-[0.2em] text-text-disabled mb-[6px]">Your link</p>
-                  <p className="font-mono text-[11px] text-text-secondary">pitchcraft.app/p/the-weight-of-water</p>
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[64px] items-center mb-[120px]">
+              <div className="order-2 md:order-1">
+                <ShareMock />
               </div>
 
               <div className="order-1 md:order-2">
-                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-text-disabled font-bold block mb-[24px]">02 / Share</span>
-                <h3 className="font-heading text-[clamp(28px,4vw,56px)] font-light tracking-[-0.02em] leading-[1.0] mb-[24px]">
-                  One link.<br />
+                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-pop font-bold block mb-[24px]">
+                  02 / Share
+                </span>
+                <h3 className="font-heading text-[clamp(28px,4vw,56px)] tracking-[-0.02em] leading-[1.0] mb-[24px]">
+                  One link.
+                  <br />
                   <span className="italic">Full control.</span>
                 </h3>
-                <p className="text-text-secondary text-[15px] leading-relaxed font-light mb-[32px] max-w-[440px]">
-                  Public, private, or password-protected. Send the right cut to the right person. Every version is retrievable — the early draft doesn&apos;t disappear when you update the project.
+                <p className="text-text-secondary text-[16px] leading-[26px] mb-[32px] max-w-[440px]">
+                  Public, private, or password-protected. Send the right cut to
+                  the right person. Every version is retrievable — the early
+                  draft doesn&apos;t disappear when you update the project.
                 </p>
                 <div className="space-y-[12px]">
-                  {["Public / Private / Password-protected", "Revoke access instantly", "Custom slug (Pro / Studio)", "Password-protected links (Pro / Studio)"].map((item) => (
+                  {[
+                    "Public / Private / Password-protected",
+                    "Revoke access instantly",
+                    "Custom slug (Pro / Studio)",
+                    "Password-protected links (Pro / Studio)",
+                  ].map((item) => (
                     <div key={item} className="flex items-center gap-[12px]">
-                      <span className="w-[16px] h-[1px] bg-pop flex-shrink-0" />
-                      <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">{item}</span>
+                      <span className="w-[16px] h-[1px] bg-text-disabled flex-shrink-0" />
+                      <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">
+                        {item}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Row 3 — Fund */}
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 gap-[64px] items-center"
-              initial={{ opacity: 0, y: 48 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.0, ease: expoOut }}
-              viewport={{ once: true, amount: 0.15 }}
-            >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[64px] items-center">
               <div>
-                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-text-disabled font-bold block mb-[24px]">03 / Fund</span>
-                <h3 className="font-heading text-[clamp(28px,4vw,56px)] font-light tracking-[-0.02em] leading-[1.0] mb-[24px]">
-                  Funding lives<br />
+                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-pop font-bold block mb-[24px]">
+                  03 / Fund
+                </span>
+                <h3 className="font-heading text-[clamp(28px,4vw,56px)] tracking-[-0.02em] leading-[1.0] mb-[24px]">
+                  Funding lives
+                  <br />
                   <span className="italic">on the page.</span>
                 </h3>
-                <p className="text-text-secondary text-[15px] leading-relaxed font-light mb-[32px] max-w-[440px]">
-                  No redirects. No third-party crowdfunding platform. Accept investment directly alongside the logline, the vision, the cast. The project and the fund are the same page.
+                <p className="text-text-secondary text-[16px] leading-[26px] mb-[32px] max-w-[440px]">
+                  No redirects. No third-party platform. Accept investment
+                  directly alongside the logline, the vision, the cast. The
+                  project and the fund are the same page.
                 </p>
                 <div className="space-y-[12px]">
-                  {["Razorpay-secured payments", "Stretch goals + backer rewards", "Funding progress visible to viewers", "Direct payout — no intermediary"].map((item) => (
-                    <div key={item} className="flex items-center gap-[12px]">
-                      <span className="w-[16px] h-[1px] bg-pop flex-shrink-0" />
-                      <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Funding mock */}
-              <div className="bg-surface border border-border p-[32px]">
-                <p className="font-mono text-[8px] uppercase tracking-[0.25em] text-text-disabled mb-[20px]">Funding — The Weight of Water</p>
-                <div className="mb-[20px]">
-                  <div className="flex justify-between items-baseline mb-[8px]">
-                    <span className="font-heading text-[28px] font-light tracking-[-0.02em] text-text-primary">$42,000</span>
-                    <span className="font-mono text-[10px] text-text-disabled">of $80,000</span>
-                  </div>
-                  <div className="h-[3px] bg-border overflow-hidden mb-[6px]">
-                    <div className="h-full bg-pop led-pulse" style={{ width: "52%" }} />
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="font-mono text-[9px] text-text-disabled">23 supporters</span>
-                    <span className="font-mono text-[9px] text-text-disabled">52%</span>
-                  </div>
-                </div>
-                <div className="space-y-[8px] mb-[16px]">
                   {[
-                    { amount: "$10,000", desc: "Post-production begins", reached: true },
-                    { amount: "$50,000", desc: "Festival submission run", reached: false },
-                    { amount: "$80,000", desc: "Full theatrical distribution", reached: false },
-                  ].map((goal) => (
-                    <div key={goal.amount} className={`flex items-start gap-[8px] px-[10px] py-[7px] border-l-2 ${goal.reached ? "border-pop/60 bg-surface-hover" : "border-transparent"}`}>
-                      <span className="font-mono text-[9px] text-text-disabled whitespace-nowrap">{goal.amount}</span>
-                      <span className={`font-mono text-[9px] ${goal.reached ? "text-text-secondary" : "text-text-disabled"}`}>{goal.desc}{goal.reached ? " ✓" : ""}</span>
+                    "Razorpay-secured payments",
+                    "Stretch goals + backer rewards",
+                    "Funding progress visible to viewers",
+                    "Direct payout — no intermediary",
+                  ].map((item) => (
+                    <div key={item} className="flex items-center gap-[12px]">
+                      <span className="w-[16px] h-[1px] bg-text-disabled flex-shrink-0" />
+                      <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">
+                        {item}
+                      </span>
                     </div>
                   ))}
                 </div>
-                <div className="pt-[12px] border-t border-border">
-                  <div className="bg-pop text-text-on-pop px-[16px] py-[9px] inline-block font-mono text-[9px] uppercase tracking-[0.15em] font-bold">
-                    Support this project
-                  </div>
-                </div>
               </div>
-            </motion.div>
-          </div>
-        </section>
 
-        {/* ── STATS ── */}
-        <section className="px-[48px] md:px-[80px] py-[96px] border-t border-border bg-surface">
-          <div className="max-w-[1200px] mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-[1px] bg-border">
-              {[
-                { number: "3", unit: "min", label: "To publish your first project" },
-                { number: "1", unit: "link", label: "Logline, cast, moodboard, funding" },
-                { number: "0", unit: "decks", label: "Forwarded without context" },
-                { number: "8", unit: "fields", label: "To a complete pitch. That's it." },
-              ].map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  className="bg-surface p-[40px] flex flex-col justify-between min-h-[200px]"
-                  initial={{ opacity: 0, y: 32 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.85, ease: expoOut, delay: i * 0.08 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                >
-                  <div className="flex items-baseline gap-[6px] mb-[16px]">
-                    <span className="font-heading text-[clamp(40px,6vw,80px)] font-light tracking-[-0.03em] leading-[1] text-text-primary">
-                      {stat.number}
-                    </span>
-                    <span className="font-mono text-[12px] uppercase tracking-[0.15em] text-text-disabled">
-                      {stat.unit}
-                    </span>
-                  </div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary leading-[1.6]">
-                    {stat.label}
-                  </p>
-                </motion.div>
-              ))}
+              <FundMock />
             </div>
           </div>
         </section>
 
         {/* ── PRICING ── */}
-        <section className="px-[48px] md:px-[80px] py-[96px] border-t border-border bg-background">
+        <section className="px-[24px] md:px-[48px] py-[96px] border-t border-hairline bg-background">
           <div className="max-w-[1200px] mx-auto">
-            <div className="flex flex-col md:flex-row md:justify-between md:items-baseline border-b border-border pb-[24px] mb-[48px] gap-[12px]">
-              <h2 className="font-heading text-[clamp(36px,5vw,72px)] font-light tracking-tight leading-[1.0]">
+            <div className="flex flex-col md:flex-row md:justify-between md:items-baseline border-b border-hairline pb-[24px] mb-[48px] gap-[12px]">
+              <h2 className="font-heading text-[clamp(36px,5vw,72px)] tracking-tight leading-[1.0]">
                 What it costs.
               </h2>
               <div className="flex items-baseline gap-[32px] flex-shrink-0">
@@ -632,37 +591,75 @@ export function LandingHero() {
                 >
                   Full comparison →
                 </Link>
-                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-text-disabled">
-                  05 / Plans
+                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-pop font-bold">
+                  02 / Plans
                 </span>
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-[1px] bg-border">
               {[
-                { tier: "Free", price: "$0", period: "forever", desc: "One complete project. Share it publicly.", cta: "Start free", href: "/signup", pop: false },
-                { tier: "Pro", price: "$12", period: "/mo", desc: "Unlimited projects. AI. Privacy controls.", cta: "Go Pro", href: "/pricing", pop: true },
-                { tier: "Studio", price: "$29", period: "/mo", desc: "Teams. Unlimited AI. Lower commission.", cta: "Get Studio", href: "/pricing", pop: false },
+                {
+                  tier: "Free",
+                  price: "$0",
+                  period: "forever",
+                  desc: "One complete project. Share it publicly.",
+                  cta: "Start free",
+                  href: "/signup",
+                  pop: false,
+                },
+                {
+                  tier: "Pro",
+                  price: "$12",
+                  period: "/mo",
+                  desc: "Unlimited projects. AI. Privacy controls.",
+                  cta: "Go Pro",
+                  href: "/pricing",
+                  pop: true,
+                },
+                {
+                  tier: "Studio",
+                  price: "$29",
+                  period: "/mo",
+                  desc: "Teams. Unlimited AI. Lower commission.",
+                  cta: "Get Studio",
+                  href: "/pricing",
+                  pop: false,
+                },
               ].map((item) => (
                 <div
                   key={item.tier}
                   className={`p-[32px] flex flex-col gap-[16px] ${item.pop ? "bg-surface" : "bg-background"}`}
-                  style={item.pop ? { boxShadow: "inset 0 0 0 1px rgba(255,107,26,0.2)" } : undefined}
+                  style={
+                    item.pop
+                      ? { boxShadow: "inset 0 0 0 1px rgba(245,200,48,0.25)" }
+                      : undefined
+                  }
                 >
                   <div className="flex items-center justify-between">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">{item.tier}</p>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">
+                      {item.tier}
+                    </p>
                     {item.pop && (
                       <div className="flex items-center gap-[6px]">
                         <PulseDot size={5} />
-                        <span className="font-mono text-[9px] uppercase tracking-[0.1em] text-pop">Popular</span>
+                        <span className="font-mono text-[9px] uppercase tracking-[0.1em] text-pop">
+                          Popular
+                        </span>
                       </div>
                     )}
                   </div>
                   <div className="flex items-baseline gap-[4px]">
-                    <span className="font-heading text-[40px] font-light leading-[1] tracking-[-0.03em] text-text-primary">{item.price}</span>
-                    <span className="font-mono text-[12px] text-text-secondary">{item.period}</span>
+                    <span className="font-heading text-[40px] leading-[1] tracking-[-0.03em] text-text-primary">
+                      {item.price}
+                    </span>
+                    <span className="font-mono text-[12px] text-text-secondary">
+                      {item.period}
+                    </span>
                   </div>
-                  <p className="text-[13px] leading-[20px] text-text-secondary font-light flex-1">{item.desc}</p>
+                  <p className="text-[13px] leading-[20px] text-text-secondary flex-1">
+                    {item.desc}
+                  </p>
                   <Link
                     href={item.href}
                     className={`font-mono text-[11px] uppercase tracking-[0.15em] transition-colors ${item.pop ? "text-pop hover:text-pop-hover" : "text-text-secondary hover:text-text-primary"}`}
@@ -676,46 +673,51 @@ export function LandingHero() {
         </section>
 
         {/* ── FINAL CTA ── */}
-        <section className="py-[160px] px-[48px] md:px-[80px] bg-background border-t border-border">
-          <div className="max-w-[1200px] mx-auto text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: expoOut }}
-              viewport={{ once: true, amount: 0.3 }}
-            >
-              <h2 className="font-heading text-[clamp(48px,9vw,120px)] font-light tracking-[-0.03em] mb-[48px] italic leading-[0.9]">
-                Begin the cut.
-              </h2>
-              <p className="max-w-[480px] mx-auto text-text-secondary mb-[48px] text-[17px] font-light leading-relaxed">
-                Your next project. Built to be read, not forwarded as a PDF.
-              </p>
-              <div className="flex flex-col md:flex-row justify-center gap-[16px] items-center">
-                <MagneticButton>
-                  <Link
-                    href="/signup"
-                    onClick={() => playClick()}
-                    className="led-pulse inline-flex items-center gap-[12px] bg-pop text-text-on-pop px-[48px] py-[18px] font-mono text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-pop-hover transition-colors duration-200"
-                  >
-                    Create your first project
-                  </Link>
-                </MagneticButton>
-                <Link
-                  href="/pricing"
-                  className="inline-flex items-center gap-[12px] border border-border text-text-secondary px-[48px] py-[18px] font-mono text-[11px] uppercase tracking-[0.2em] hover:border-border-hover hover:text-text-primary transition-colors duration-200"
-                >
-                  See pricing
+        <section className="bg-background border-t border-hairline overflow-hidden">
+          <div className="max-w-[1200px] mx-auto">
+            {/* Top rule + label */}
+            <div className="flex items-center justify-between px-[24px] md:px-[48px] pt-[80px] pb-[64px]">
+              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-pop font-bold">03 / Start</span>
+              <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-text-disabled/40">pitchcraft.app/p/your-project</span>
+            </div>
+
+            {/* Massive left headline, right column with action */}
+            <div className="grid grid-cols-12 items-end pb-[96px] px-[24px] md:px-[48px]">
+              {/* Left: full-width editorial heading */}
+              <div className="col-span-12 md:col-span-8">
+                <h2 className="font-heading tracking-[-0.04em] leading-[0.85]"
+                  style={{ fontSize: 'clamp(64px, 11vw, 156px)' }}>
+                  Your project.
+                  <br />
+                  <span className="italic text-pop">One page.</span>
+                </h2>
+              </div>
+
+              {/* Right: compact editorial column — copy + link */}
+              <div className="col-span-12 md:col-span-4 md:pl-[48px] pt-[48px] md:pt-0 pb-[8px]">
+                <p className="text-[15px] leading-[26px] text-text-secondary mb-[32px]">
+                  One link for your logline,<br />
+                  cast, budget, and funding.<br />
+                  Built to be read — not<br />
+                  forwarded as a PDF.
+                </p>
+                <Link href="/signup" onClick={() => playClick()} className={primaryCta}>
+                  Create your first project
+                  <span aria-hidden="true">→</span>
                 </Link>
               </div>
-            </motion.div>
+            </div>
+
+            {/* Bottom: full-width rule */}
+            <div className="h-[1px] bg-hairline" />
           </div>
         </section>
 
         {/* ── FOOTER ── */}
-        <footer className="w-full px-[48px] md:px-[80px] py-[64px] border-t border-border bg-background">
+        <footer className="w-full px-[24px] md:px-[48px] py-[64px] border-t border-hairline bg-background">
           <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-end gap-[32px]">
             <div className="space-y-[8px]">
-              <div className="font-heading font-bold text-[20px] tracking-tighter text-text-primary">
+              <div className="font-heading font-bold text-[20px] uppercase tracking-tighter text-text-primary">
                 Pitchcraft
               </div>
               <p className="font-mono text-[9px] tracking-[0.2em] uppercase text-text-disabled/50">
@@ -724,7 +726,6 @@ export function LandingHero() {
             </div>
             <div className="flex flex-wrap gap-[32px]">
               {[
-                { label: "Toolkit", href: "/toolkit" },
                 { label: "Pricing", href: "/pricing" },
                 { label: "Privacy", href: "/privacy" },
                 { label: "Terms", href: "/terms" },

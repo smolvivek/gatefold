@@ -75,7 +75,7 @@ export default function LoginPage() {
             required
             autoComplete="email"
             className={`bg-transparent border-b text-text-primary text-[15px] py-[10px] outline-none placeholder:text-text-disabled transition-colors duration-[150ms] ${
-              errors.email ? "border-pop" : "border-white/20 focus:border-white/60"
+              errors.email ? "border-pop" : "border-border focus:border-border-hover"
             }`}
             placeholder="your@email.com"
           />
@@ -105,7 +105,7 @@ export default function LoginPage() {
             required
             autoComplete="current-password"
             className={`bg-transparent border-b text-text-primary text-[15px] py-[10px] outline-none placeholder:text-text-disabled transition-colors duration-[150ms] ${
-              errors.password ? "border-pop" : "border-white/20 focus:border-white/60"
+              errors.password ? "border-pop" : "border-border focus:border-border-hover"
             }`}
             placeholder="••••••••"
           />
@@ -124,7 +124,7 @@ export default function LoginPage() {
         </button>
       </form>
 
-      <div className="mt-[32px] pt-[32px] border-t border-white/5 text-center">
+      <div className="mt-[32px] pt-[32px] border-t border-border text-center">
         <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-text-disabled">
           Don&apos;t have an account?{" "}
           <Link

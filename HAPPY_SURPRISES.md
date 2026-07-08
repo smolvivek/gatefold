@@ -200,21 +200,17 @@ Claude understands the product deeply and may spot opportunities the creator has
 
 **Type:** Design / Motion
 **Problem:** The product had zero visible signal that anything was "alive" or active. Static UI = dead UI.
-**Solution:** A 4-second opacity pulse on the Moog orange pop colour, applied only to elements that are alive: active sidebar item, idle primary CTA, "looking" status badge, funding progress bar when raising.
-**Impact:** Tells the user what's currently in motion or awaiting action without screaming for attention. Strongest single piece of motion identity in the new system.
+**Solution:** A 4-second opacity pulse on the Kodachrome yellow pop colour, applied only to elements that are alive: active sidebar item, idle primary CTA, "looking" status badge, funding progress bar when raising.
+**Impact:** Tells the user what's currently in motion or awaiting action without screaming for attention. Strongest single piece of motion identity in the system.
 **Implementation:** CSS keyframe animation, reduced-motion-safe, applied via `.led-pulse` utility class.
-**Status:** Approved (Design Overhaul interview, May 2026)
+**Status:** Shipped — live via `components/ui/PulseDot.tsx` and `components/ui/Badge.tsx`.
 
 ---
 
 ### HS-MOTION-2: Magnetic Primary CTAs
 
 **Type:** Design / Interaction
-**Problem:** Primary buttons felt static — no tactile feedback on hover.
-**Solution:** Subtle magnetic pull on hover. Cursor pulls the button up to 12px toward itself. Settles back smoothly on mouseleave. Touch devices excluded.
-**Impact:** Adds weight and personality to the most important button on every page. Calibrated to feel "considered" not "demoing magnetic buttons."
-**Implementation:** `MagneticButton` component wraps `Button`. Tracks cursor position relative to button center, applies bounded transform.
-**Status:** Approved (Design Overhaul interview, May 2026)
+**Status:** Rejected/Superseded — 2026-07-07. Dropped from the motion direction in favor of Stripe/Linear/A24-style restraint; the `MagneticButton` component was never wired into any page and is now dead code. Not part of the design system going forward.
 
 ---
 

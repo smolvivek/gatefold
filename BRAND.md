@@ -88,55 +88,62 @@ Database and code can use `pitches` table internally. User-facing language = "pr
 
 ## Visual Personality
 
-**Warm dark, analog precision, one signature orange.**
+**Near-black canvas. Kodachrome yellow. F91W Royal Blue. Three values. No more.**
 
-Inspired by, in order of weight: **Moog, Teenage Engineering, Linear, A24, Stranger Things (as flavour only).**
+Inspired by, in order of weight: **Casio F91W (the face — black body, Royal Blue module, yellow LCD indicator), A24 press materials, Kodachrome, Dieter Rams / Braun (restraint and function).**
 
-The product should feel like an analog synthesiser sitting next to a director's laptop — warm wood casing, cream lettering, one orange knob glowing softly. Used by professionals. Confident. Alive but not loud.
+Teenage Engineering and warm-brown walnut palettes are explicitly NOT the reference. The canvas is neutral black. Two functional colours sit on it: yellow signals "live / active / on." Blue signals "structural / informational / navigational." Neither is decorative.
+
+The product should feel like an F91W on a director's desk — black resin, Royal Blue face, one yellow indicator blinking. Functional. Precise. Alive but not decorative.
 
 ### Core Traits
 
 1. **Negative space as instrument panel** — Not minimalism, considered placement. Like a 909 with knobs spaced so your hand falls into the right place.
 2. **Typography as hierarchy** — Scale and weight do the work, not decoration
-3. **Warm dark + one signature pop** — `#1A130E` walnut + `#FF6B1A` Moog orange. Used with precision, never as flourish.
+3. **Three-value palette** — `#0A0A0A` black + `#F5C830` Kodachrome yellow + `#2755A1` F91W Royal Blue. Used with precision, never as flourish.
 4. **Every element has purpose** — If you can't explain why it's there, remove it
-5. **Personality emerges from craft** — Not from cleverness or decoration. From getting the LED pulse rate exactly right, the kerning on the wordmark exactly right, the curve of the magnetic hover exactly right.
+5. **Personality emerges from craft** — Not from cleverness or decoration. From getting the LED pulse rate exactly right, the kerning on the wordmark exactly right.
 
 ---
 
-## Pop Colour Strategy
+## Colour Strategy
 
-**Use orange like Moog uses orange on a synthesiser: sparingly, structurally, purposefully — only on the live element.**
+Two functional colours on a near-black canvas. Each has a job. Neither decorates.
 
-The colour says "this is on." Strip every orange element from a screen and the structure must still read. Pop is the signal, not the scaffold.
+### Pop Yellow (`#F5C830`) — "This is on"
 
-### Use Pop Orange (`#FF6B1A`) For:
+Use like the yellow LCD indicator on an F91W: only when something is live, active, or selected.
 
 1. **Active states** — Current section in sidebar, selected item, focused input
 2. **Primary CTA** — One per page (the main action button)
 3. **Focus rings** — Keyboard navigation outline
-4. **Status indicators** — Specifically "looking" / actively raising
+4. **Status indicators** — "Looking" / actively raising
 5. **LED breathing pulse** — Subtle 4-second breath on live elements
 6. **Inline text links** — Within body copy
 7. **Completion marks** — ✓ on pricing tier features
 
-### Use Cream (`#F4EBDC`) For:
+### Accent Blue (`#2755A1`) — "This is structural"
 
-1. **All body text and headings**
-2. **Button text on dark backgrounds**
+Use like the Royal Blue face of an F91W: the stable, functional field everything else sits on.
 
-### Never Use Pop For:
+1. **Secondary CTAs** — When a primary yellow CTA is already present on the page
+2. **Informational badges** — Version numbers, plan indicators, non-active status
+3. **Selected states in multi-step flows** — Where yellow would read as "live" incorrectly
+4. **Pro/Studio tier highlights** — Tier-specific UI differentiation
+
+### Never Use Either For:
 
 1. **Hover states alone** — Use brightening of existing colour
-2. **Decorative accents** — No orange borders for the sake of decoration
+2. **Decorative accents** — No coloured borders for decoration
 3. **Non-interactive body copy**
-4. **Background gradients or fills** (other than the CTA button)
+4. **Background gradients or fills** (other than CTA buttons)
+5. **Both on the same element** — Yellow and blue never share a component
 
 ---
 
 ## Motion Design Philosophy
 
-**Quality bar: Moog product videos, Linear app motion, Lando Norris site, Apple Vision Pro feature pages.**
+**Quality bar: Stripe.com, Linear.app, A24's site.** Functional micro-motion, not spectacle — motion that clarifies, never motion for its own sake.
 
 ### Principles
 
@@ -147,29 +154,40 @@ The colour says "this is on." Strip every orange element from a screen and the s
 
 ### Allowed Patterns
 
-- **LED breathing pulse** (4s opacity cycle) on active/live elements
-- **Scroll-triggered fade-up reveals** with cinematic 600ms ease
-- **Magnetic button hover** — subtle cursor pull (≤12px) on primary CTAs
+- **LED breathing pulse** (4s opacity cycle) on active/live elements — live today, via `PulseDot`/`Badge`
+- **Staggered fade-up on mount** (80ms increments) — live today on the pitch view page
 - **Active "light up"** — 200ms ramp when something becomes active, settles to static or pulsing
 - **Subtle hover state transitions** — opacity, colour, transform within 200ms
+- **Scroll-triggered reveals** — future aspiration only; not yet built (see DESIGN.md's "Scroll-as-storytelling" section for the target spec if this is picked up later)
 
 ### Reference Points
 
-- **Moog** — product photography and video. The warmth of the wood, the glow of the orange power LED.
+- **Stripe** — restrained, functional micro-motion; nothing moves without a reason.
 - **Linear** — the way the active section in their sidebar breathes. The cinematic cadence of their landing page scroll.
-- **Apple Vision Pro feature pages** — the hover-to-expand callout pattern we're stealing for the landing hero.
-- **Lando Norris site** — large-scale typography in motion, smooth easing on hero text.
-- **Stranger Things** — only as flavour. The warmth of CRT light. The grain.
+- **A24** — editorial restraint, the product/photography as hero, motion in service of the work rather than decoration.
+
+### Scroll-as-Storytelling — future aspiration, not yet built
+
+**Status: not implemented.** No scroll-linked reveal system exists in the codebase today; the live pattern is a simple staggered fade-up on mount (see Allowed Patterns above). The following describes a target for if/when a page's content calls for it — not current law:
+
+- **Visual anchor per section** — within 400px of scroll, something from the real product UI is visible
+- **Entry has character** — a hero demo could enter from below; a feature mock could expand as it enters; a stat could count up. Not every element fades up identically.
+- **Pinned visuals where appropriate** — the left column UI stays fixed while the right copy explains it (Apple product page pattern).
+- **The product is always present** — never two consecutive scroll-depth sections that are copy-only
+
+**Reference:** Stripe, Linear, A24 — restraint first, spectacle never.
 
 ### Never
 
 - Generic fade-ins or slide-ups for the sake of it
-- Spring overshoot or bouncy effects (kills the analog-precision feel)
+- Spring overshoot or bouncy effects (kills the functional-precision feel)
 - Page transitions between routes (kills perceived speed)
 - Loading spinners — use skeleton screens with subtle opacity pulse
 - Ambient floating decorative shapes
 - SVG stroke-draw "logo reveal" animations
 - Motion for motion's sake
+- Bento grid animations (the pattern itself is banned)
+- Magnetic cursor-follow effects on buttons (not part of this system)
 
 ---
 
@@ -204,6 +222,19 @@ Actively avoid these personalities:
 - ❌ **Cold engineering tool** — Precise but warm, never sterile
 - ❌ **Synthwave kitsch** — We borrow analog warmth from synths; we don't dress up in chrome and neon. No Drive-style sunset gradients on every page. Restraint.
 
+### Specifically Banned SaaS Landing Patterns
+
+These patterns appear on ten thousand product sites. If you find yourself building one of them, stop.
+
+- ❌ **Bento grids** — titled feature tiles arranged in a CSS grid with a number, an icon, and a one-line description. This is template design.
+- ❌ **"Every tool a [user type] needs"** — or any variant. Applies to everything. Means nothing.
+- ❌ **"How it works" section** — three steps with arrows and paragraph copy. Show it working. Don't explain how it works.
+- ❌ **Icon + headline + paragraph feature columns** — if the layout is "three (or four) columns, each with an icon at the top and a paragraph below," burn it.
+- ❌ **Stat grids** without visual context — "3 min / 1 link / 0 decks" as plain number tiles means nothing without visual anchoring.
+- ❌ **Abstract hero illustrations** — no isometric UI floating in space, no gradient blobs behind the headline, no glowing orbs.
+- ❌ **"Trusted by X teams"** logo rows with greyscale client logos — we don't have them yet and won't fake credibility.
+- ❌ **The gradient CTA section** — a coloured background with a big headline and a white button at the bottom of every SaaS page. Use editorial typography instead.
+
 ---
 
 ## Brand Adjectives (Approved)
@@ -228,8 +259,8 @@ Actively avoid these personalities:
 ## Implementation Notes
 
 - All new copy must pass the **"warmed Ogilvy test"** — sharp, specific, benefit-focused, kind without being soft
-- All new UI must pass the **"pop test"** — the signature orange used only where something is live
-- All new animations must pass the **"craft test"** — Moog/Linear/Apple-quality, not gimmicky
+- All new UI must pass the **"pop test"** — the signature yellow used only where something is live
+- All new animations must pass the **"craft test"** — Stripe/Linear/A24-quality, not gimmicky
 - All new patterns must respect `prefers-reduced-motion`
 - When in doubt, subtract decoration. Restraint is still the brand. Just warmer.
 

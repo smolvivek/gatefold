@@ -86,7 +86,7 @@ export function UpgradeBanner() {
       <div className="bg-surface border-b border-border px-[24px] py-[12px]">
         <div className="max-w-[1200px] mx-auto flex items-center justify-between gap-[24px]">
           <p className="font-mono text-[13px] leading-[20px] text-text-secondary">
-            Your pitch is live. Want private links, AI, and unlimited pitches?{' '}
+            Your work is ready. Want private links, AI, and unlimited projects?{' '}
             <Link href="/pricing" className="text-pop hover:text-pop-hover transition-colors">
               Go Pro →
             </Link>

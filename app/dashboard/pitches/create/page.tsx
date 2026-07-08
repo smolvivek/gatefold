@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { TextInput, Textarea } from '@/components/ui/Input'
 import { BudgetSegments } from '@/components/ui/BudgetSegments'
@@ -398,6 +399,7 @@ export default function CreatePitchPage() {
   const [enabledOptionalKeys, setEnabledOptionalKeys] = useState<Set<string>>(new Set())
   const [subscriptionTier, setSubscriptionTier] = useState<string | null>(null)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [upgradeRequired, setUpgradeRequired] = useState(false)
   const [loading, setLoading] = useState(false)
 
   // ─── Draft save (localStorage) — survives session expiry ───
@@ -713,7 +715,7 @@ export default function CreatePitchPage() {
       const result = await res.json()
 
       if (res.status === 403 && result.upgrade) {
-        setErrors({ general: 'Free accounts are limited to 1 pitch. Upgrade to Pro for unlimited pitches.' })
+        setUpgradeRequired(true)
         setLoading(false)
         return
       }
@@ -1464,7 +1466,16 @@ export default function CreatePitchPage() {
             )}
 
             {/* Error message */}
-            {errors.general && (
+            {upgradeRequired && (
+              <p className="text-[14px] leading-[20px] text-error mb-[24px]">
+                Free accounts are limited to 1 project.{' '}
+                <Link href="/pricing" className="underline hover:opacity-70 transition-opacity">
+                  Upgrade to Pro
+                </Link>{' '}
+                for unlimited projects.
+              </p>
+            )}
+            {errors.general && !upgradeRequired && (
               <p className="text-[14px] leading-[20px] text-error mb-[24px]">{errors.general}</p>
             )}
 

@@ -45,6 +45,18 @@ export async function recordView({
       shareLink?.visibility === 'private' || !!shareLink?.password_hash
     if (!isPrivateOrProtected) return
 
+    // Resolve auth_id + tier before writing anything — free tier never gets notifications
+    // and we should not accumulate pitch_views rows for them (no purpose served).
+    const { data: ownerProfile } = await admin
+      .from('users')
+      .select('auth_id, email')
+      .eq('id', ownerUserId)
+      .single()
+    if (!ownerProfile?.auth_id || !ownerProfile.email) return
+
+    const tier = await getUserTier(admin, ownerProfile.auth_id)
+    if (tier === 'free') return
+
     const ipDayHash = hashIpDay(ip)
 
     // Dedup: if this ip+day has already been recorded for this pitch, skip
@@ -57,18 +69,6 @@ export async function recordView({
     if ((count ?? 0) > 0) return
 
     await admin.from('pitch_views').insert({ pitch_id: pitchId, ip_day_hash: ipDayHash })
-
-    // Resolve auth_id for tier check — subscriptions.user_id → auth.users.id,
-    // but pitch.user_id → public.users.id. Fetch both email and auth_id in one query.
-    const { data: ownerProfile } = await admin
-      .from('users')
-      .select('auth_id, email')
-      .eq('id', ownerUserId)
-      .single()
-    if (!ownerProfile?.auth_id || !ownerProfile.email) return
-
-    const tier = await getUserTier(admin, ownerProfile.auth_id)
-    if (tier === 'free') return
 
     // Rate-limit via DB — survives cold starts on serverless.
     const { data: pitchMeta } = await admin

@@ -54,7 +54,7 @@ function Sidebar({
                   font-bold uppercase tracking-[0.15em] text-[10px]
                   transition-colors duration-[150ms] ease-out cursor-pointer
                   ${isActive
-                    ? "border-l-2 border-pop text-pop bg-surface-hover"
+                    ? "border-l-2 border-accent text-text-primary bg-accent/15"
                     : "border-l-2 border-transparent text-text-disabled hover:text-text-primary hover:bg-surface-hover"
                   }
                 `}
@@ -62,7 +62,7 @@ function Sidebar({
               >
                 <span>{num} / {section.label}</span>
                 {section.completed && (
-                  <span className="text-text-disabled font-normal normal-case tracking-normal" aria-label="complete">✓</span>
+                  <span className="text-accent font-normal normal-case tracking-normal" aria-label="complete">✓</span>
                 )}
               </button>
             </li>
@@ -85,7 +85,7 @@ function Sidebar({
                     font-bold uppercase tracking-[0.15em] text-[10px]
                     transition-colors duration-[150ms] ease-out cursor-pointer
                     ${isActive
-                      ? "border-l-2 border-pop text-pop bg-surface-hover"
+                      ? "border-l-2 border-accent text-text-primary bg-accent/15"
                       : "border-l-2 border-transparent text-text-disabled hover:text-text-primary hover:bg-surface-hover"
                     }
                   `}
@@ -158,7 +158,7 @@ function Sidebar({
                       <button
                         type="button"
                         onClick={() => onToggleSection!(def.key)}
-                        className="shrink-0 font-mono text-[10px] leading-[18px] text-pop hover:underline mt-[1px]"
+                        className="shrink-0 font-mono text-[10px] leading-[18px] text-accent hover:underline mt-[1px]"
                       >
                         + Add
                       </button>
@@ -171,7 +171,7 @@ function Sidebar({
                 <div className="py-[8px]">
                   <p className="font-mono text-[10px] leading-[18px] text-text-disabled">
                     Custom sections are a{" "}
-                    <a href="/pricing" className="text-pop hover:underline">Pro feature</a>.
+                    <a href="/pricing" className="text-accent hover:underline">Pro feature</a>.
                   </p>
                 </div>
               ) : (
@@ -196,7 +196,7 @@ function Sidebar({
                         <button
                           type="button"
                           onClick={() => onToggleSection!(key)}
-                          className="shrink-0 font-mono text-[10px] leading-[18px] text-pop hover:underline mt-[1px]"
+                          className="shrink-0 font-mono text-[10px] leading-[18px] text-accent hover:underline mt-[1px]"
                         >
                           + Add
                         </button>

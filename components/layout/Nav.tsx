@@ -90,7 +90,7 @@ function Nav({ links = [], user = null, tier }: NavProps) {
               </button>
               <Link
                 href="/dashboard/pitches/create"
-                className="bg-pop text-text-on-pop px-[24px] py-[10px] font-heading text-[15px] tracking-tighter uppercase font-bold hover:bg-pop-hover transition-colors duration-[150ms]"
+                className="bg-btn text-background px-[24px] py-[10px] font-heading text-[15px] tracking-tighter uppercase font-bold hover:bg-btn-hover transition-colors duration-[150ms]"
               >
                 New Project
               </Link>
@@ -105,7 +105,7 @@ function Nav({ links = [], user = null, tier }: NavProps) {
               </Link>
               <Link
                 href="/signup"
-                className="bg-pop text-text-on-pop px-[24px] py-[10px] font-heading text-[15px] tracking-tighter uppercase font-bold hover:bg-pop-hover transition-colors duration-[150ms]"
+                className="bg-btn text-background px-[24px] py-[10px] font-heading text-[15px] tracking-tighter uppercase font-bold hover:bg-btn-hover transition-colors duration-[150ms]"
               >
                 Join
               </Link>
@@ -183,7 +183,7 @@ function Nav({ links = [], user = null, tier }: NavProps) {
                 <Link
                   href="/dashboard/pitches/create"
                   onClick={() => setMobileOpen(false)}
-                  className="mt-[16px] bg-pop text-text-on-pop px-[24px] py-[12px] font-heading text-[15px] tracking-tighter uppercase font-bold hover:bg-pop-hover transition-colors text-center"
+                  className="mt-[16px] bg-btn text-background px-[24px] py-[12px] font-heading text-[15px] tracking-tighter uppercase font-bold hover:bg-btn-hover transition-colors text-center"
                 >
                   New Project
                 </Link>
@@ -200,7 +200,7 @@ function Nav({ links = [], user = null, tier }: NavProps) {
                 <Link
                   href="/signup"
                   onClick={() => setMobileOpen(false)}
-                  className="bg-pop text-text-on-pop px-[24px] py-[12px] font-heading text-[15px] tracking-tighter uppercase font-bold hover:bg-pop-hover transition-colors text-center"
+                  className="bg-btn text-background px-[24px] py-[12px] font-heading text-[15px] tracking-tighter uppercase font-bold hover:bg-btn-hover transition-colors text-center"
                 >
                   Join
                 </Link>

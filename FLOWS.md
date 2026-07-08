@@ -66,10 +66,10 @@ FLOWS.md thinks like a first-time user. Where CRITIC.md finds bugs in code, FLOW
 | ID | Gap | Severity | File |
 |----|-----|----------|------|
 | FL-02a | The create page is a client component with no route guard. If the user's Supabase session expires mid-create, the `POST /api/pitches` call returns 401. The create page has no handling for 401 — the error is generic. The half-filled form is lost. | High | `app/dashboard/pitches/create/page.tsx` |
-| FL-02b | There is no auto-save on the create page. If the user navigates away (back button, accidental tab close), all content is lost. The edit page has auto-save; create does not. | High | `app/dashboard/pitches/create/page.tsx` |
-| FL-02c | WelcomeOnboarding is a full-screen modal. It appears on top of the create page if the user navigates directly to `/dashboard/pitches/create` without dismissing it. The onboarding does not know the user is on the create page. | Medium | `components/ui/WelcomeOnboarding.tsx:27-38` |
-| FL-02d | Free tier users who already have 1 pitch see a 403 when they try to create. The create page shows a generic upgrade message (from CRITIC fixes), but there is no CTA that links to pricing or triggers checkout. User is left at a dead end. | High | `app/dashboard/pitches/create/page.tsx` |
-| FL-02e | After successful pitch creation, the redirect destination is not clearly defined in the code. Confirm: does the user land on `/dashboard` or the edit page? If `/dashboard`, they see their pitch in the list but may not know to share it. | Medium | `app/dashboard/pitches/create/page.tsx` (submit handler) |
+| ~~FL-02b~~ | ~~No auto-save on create page.~~ | ~~High~~ | **Fixed** — localStorage draft with restore banner. |
+| ~~FL-02c~~ | ~~WelcomeOnboarding covers create page.~~ | ~~Medium~~ | **Fixed** — pathname guard added; modal skips create route. |
+| ~~FL-02d~~ | ~~No CTA link on 403 error.~~ | ~~High~~ | **Fixed** — "Upgrade to Pro" is now a link to /pricing. |
+| FL-02e | After successful pitch creation, user lands on `/p/[id]` (the public pitch view). This is intentional — they see their project immediately. | Medium | Resolved by design — redirect is to `/p/${pitch.id}`. |
 | FL-02f | The sidebar on the create page shows 8 required sections. Optional sections are in a "More" panel. New users won't know optional sections exist unless they click "More." No indication during onboarding that optional sections are available. | Low | `components/layout/Sidebar.tsx:38-75` |
 
 ---
@@ -175,12 +175,12 @@ FLOWS.md thinks like a first-time user. Where CRITIC.md finds bugs in code, FLOW
 
 | ID | Gap | Severity | File |
 |----|-----|----------|------|
-| FL-06a | The `UpgradeBanner` component reads the `?upgraded=true` URL parameter to show a success message. But the webhook fires asynchronously — there can be a 2-10 second delay between the return URL loading and the webhook updating the `subscriptions` table. If the user lands on `/dashboard?upgraded=true` before the webhook fires, their tier is still `free`. The banner says "upgraded" but all Pro features are still locked. | Critical | `app/dashboard/page.tsx` + `components/ui/UpgradeBanner.tsx` |
+| ~~FL-06a~~ | ~~Post-upgrade webhook delay — user lands on dashboard still locked.~~ | ~~Critical~~ | **Fixed** — UpgradeBanner polls `/api/subscriptions/status` with backoff until tier confirms. |
 | FL-06b | If the user abandons DodoPayments checkout and returns to the app, they land on `/pricing` or back-navigate. There's no "continue checkout" mechanism. The session is orphaned. No cleanup needed, but the user may be confused about whether they were charged. | Medium | DodoPayments checkout flow |
-| FL-06c | From a tier gate on the create page, the upgrade path is: see 403 error → navigate to `/pricing` manually. There's no direct "Upgrade now" CTA that links to `/pricing` or triggers checkout inline. The user has to know to go to pricing. | High | `app/dashboard/pitches/create/page.tsx` (403 handler) |
-| FL-06d | The pricing page is accessible to unauthenticated users. Clicking "Go Pro" calls `POST /api/subscriptions/checkout` which returns 401. The `CheckoutButton` client component gets 401 and does... what? Is there an error state? Or does it silently fail? Unauthenticated users must sign up first. | High | `components/ui/CheckoutButton.tsx` |
-| FL-06e | After upgrade, there is no UI to cancel a subscription. The account page shows the tier and billing period but says "to cancel, email support." This is a valid MVP approach but creates friction. Cancel rates by support email are harder to measure. | Medium | `app/dashboard/account/page.tsx` |
-| FL-06f | Annual pricing ($9/mo, $22/mo) is displayed on the pricing page but there is no annual billing toggle. The checkout always creates a monthly subscription. Annual pricing is advertised but not actually purchasable. | Critical | `app/pricing/page.tsx:54-57` + `app/api/subscriptions/checkout/route.ts` |
+| ~~FL-06c~~ | ~~No CTA link from tier gate to /pricing.~~ | ~~High~~ | **Fixed** — create page 403 error renders "Upgrade to Pro" as a Link to /pricing. |
+| ~~FL-06d~~ | ~~Unauthenticated user clicking "Go Pro" silently fails.~~ | ~~High~~ | **Fixed** — CheckoutButton redirects to `/signup?plan=${tier}` on 401. |
+| FL-06e | After upgrade, there is no UI to cancel a subscription. The account page shows the tier and billing period but says "to cancel, email support." This is a valid MVP approach but creates friction. | Medium | `app/dashboard/account/page.tsx` |
+| ~~FL-06f~~ | ~~Annual billing toggle missing; checkout always creates monthly.~~ | ~~Critical~~ | **Fixed** — pricing page has monthly/annual toggle; CheckoutButton passes billingPeriod; checkout API routes to correct DodoPayments product. Requires env vars set. |
 
 ---
 

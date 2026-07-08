@@ -22,7 +22,7 @@ PIXEL.md thinks like a design director who has seen the rendered page. Token com
 
 ## Historical context (archived)
 
-Earlier PIXEL.md content (PX-01 through PX-27, Stitch-redesign audit, E-series aspirations) is preserved in git history at commits prior to 2026-05-23. Those entries were written against the prior monochrome / restrained direction. The product has pivoted to the warm-dark + Moog orange + motion-as-craft direction defined in DESIGN.md and BRAND.md. The backlog below is reset accordingly.
+Earlier PIXEL.md content (PX-01 through PX-27, Stitch-redesign audit, E-series aspirations) is preserved in git history at commits prior to 2026-05-23. Those entries were written against a prior warm-dark walnut/orange ("Moog") direction that was itself later superseded. The product has settled on the near-black + Kodachrome-yellow + F91W-Royal-Blue direction defined in BRAND.md and DESIGN.md, with motion restrained to what's actually built (LED pulse, mount fade-in) per Stripe/Linear/A24-style taste. The backlog below is reset accordingly.
 
 ---
 
@@ -30,22 +30,22 @@ Earlier PIXEL.md content (PX-01 through PX-27, Stitch-redesign audit, E-series a
 
 ---
 
-## PX-100. Skip-to-Content Link Has Invisible Focus State
+## PX-100. Skip-to-Content Link Focus State
 
 **Severity:** High (accessibility)
 **File:** `app/layout.tsx:73`
-**What:** The skip link uses `focus:bg-pop focus:text-text-primary`. Pop is `#FF6B1A` orange; text-primary is `#F4EBDC` cream. When focused, the link renders cream text on orange — passes AA contrast but the link is visually weak against the focus ring at the same colour family.
-**Fix:** Use `focus:text-background` (deep walnut on orange) for maximum contrast and to match the Primary CTA button pattern (dark text on orange fill).
-**Status:** Open
+**What:** Skip link uses `focus:bg-accent focus:text-text-on-accent`. Accent is `#2755A1` Royal Blue; text-on-accent is `#F0EDE8` cream. Cream on blue passes AA contrast and is distinct from the yellow primary CTA.
+**Fix:** Implemented. Verify keyboard tab order reaches the link and it renders correctly.
+**Status:** Resolved — 2026-05-27
 
 ---
 
-## PX-101. Pop Colour Used Decoratively, Not As Signal
+## PX-101. Pop / Accent Colour Discipline
 
 **Severity:** TBD (audit pending)
 **Files:** TBD (after Phase 2-7 redesign passes)
-**What:** Any place where the orange pop colour is used for decoration rather than marking what's alive or active. The pop test in BRAND.md: strip every orange element from a page; the page must still read as a structured composition.
-**Fix:** Move pop to active/live elements only. Replace decorative uses with `text-text-secondary` or border-border.
+**What:** The palette is now three values: `#0A0A0A` black + `#F5C830` Kodachrome yellow (pop, active/live) + `#2755A1` F91W Royal Blue (accent, structural/informational). Yellow marks what's on or active. Blue marks structure, navigation, secondary UI. Neither decorates.
+**Fix:** Pop test — strip all yellow from a page; the page must still read as structured. Strip all blue; the page must still read as alive. Replace any decorative uses of either with neutral tokens.
 **Status:** Re-audit after Phase 7 ships.
 
 ---
@@ -66,13 +66,9 @@ Verify with browser dev tools: Toggle reduced motion → confirm all pulses stop
 
 ---
 
-## PX-103. Magnetic Button on Touch Devices
+## PX-103. Magnetic Button — Superseded
 
-**Severity:** High (usability)
-**Files:** `components/ui/MagneticButton.tsx` (when implemented)
-**What:** Magnetic hover physics on a touch device is broken — there's no cursor to follow. If enabled, taps cause an awkward "jump" as the button tries to magnetize toward the touch point.
-**Fix:** Detect `(pointer: coarse)` media query or `'ontouchstart' in window` and disable magnetic behaviour entirely on touch. Use standard `:active` state on touch.
-**Status:** To be verified during Phase 1 build.
+**Status:** Superseded — 2026-07-07. Magnetic button hover was dropped from the motion system entirely (BRAND.md/DESIGN.md rewrite toward Stripe/Linear/A24-style restraint). `components/ui/MagneticButton.tsx` is dead code (never imported) and is not part of the design direction going forward; this violation no longer applies. See CLAUDE.md §7 "Deletion Is Valid" for a future follow-up to remove the unused component file.
 
 ---
 
@@ -197,14 +193,13 @@ Not for week-1 ship. Documented so they don't get lost.
 
 | Category | Count | Status |
 |----------|-------|--------|
-| Open violations (Part 1) | 4 (PX-100 to PX-103) | To clear during Phase 1-9 |
+| Open violations (Part 1) | 2 (PX-100, PX-102); PX-103 superseded | To clear during Phase 1-9 |
 | Likely-issue audit targets (Part 2) | 5 (PX-200 to PX-204) | Verify per phase |
 | Aspirations (Part 3) | 4 (PX-A01 to PX-A04) | Post-launch |
 
 **Carry into Phase 1 build:**
 - PX-100: Skip-link contrast fix (Phase 1 globals.css + layout.tsx pass)
 - PX-102: Verify reduced-motion override on every pulse animation
-- PX-103: Verify magnetic disabled on touch
 - PX-204: First-visit sound-toggle nudge
 
 **Brand-impression critical:**

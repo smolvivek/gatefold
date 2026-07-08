@@ -193,50 +193,44 @@ export function PitchViewFunding({ pitchId, projectName }: PitchViewFundingProps
     <>
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
 
-      <section className="px-[48px] md:px-[96px] py-[96px] border-b border-white/5">
+      <section id="funding" className="px-[24px] md:px-[96px] py-[96px] border-b border-hairline">
         <div className="max-w-[1200px] mx-auto grid grid-cols-12 gap-[48px]">
           <div className="col-span-12 md:col-span-2">
-            <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-pop font-bold md:sticky md:top-[88px]">
+            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-pop font-bold md:sticky md:top-[88px]">
               Funding
             </p>
           </div>
           <div className="col-span-12 md:col-span-10">
-          <h2 className="font-heading text-[48px] md:text-[56px] font-light tracking-[-0.02em] text-text-primary leading-[1.0] mb-[48px]">
-            Back this film.
+          <h2 className="font-heading text-[clamp(40px,6vw,80px)] tracking-[-0.02em] text-text-primary leading-[1.0] mb-[48px]">
+            Back this project.
           </h2>
 
           {funding.description && (
-            <p className="text-[14px] leading-[20px] text-text-secondary mb-[16px]">
+            <p className="text-[16px] leading-[26px] text-text-secondary mb-[24px] max-w-[680px]">
               {funding.description}
             </p>
           )}
 
-          {/* Progress bar */}
-          <div className="mb-[16px]">
-            <div className="flex justify-between items-baseline mb-[8px]">
-              <span className="font-mono text-[13px] leading-[20px] text-text-primary">
-                {formatCurrency(funding.total_raised)} raised
-              </span>
-              <span className="font-mono text-[13px] leading-[20px] text-text-secondary">
-                of {formatCurrency(funding.funding_goal)}
-              </span>
-            </div>
+          {/* Amount raised + progress bar */}
+          <div className="mb-[24px]">
+            <p className="font-heading font-bold text-[clamp(40px,6vw,72px)] leading-[1] tracking-[-0.02em] text-text-primary">
+              {formatCurrency(funding.total_raised)}
+            </p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-text-secondary mt-[8px] mb-[16px]">
+              Raised of {formatCurrency(funding.funding_goal)} · {funding.donor_count}{' '}
+              {funding.donor_count === 1 ? 'supporter' : 'supporters'}
+            </p>
             <div className="h-[4px] bg-border overflow-hidden">
               <div
-                className="h-full bg-pop transition-all duration-[400ms] ease-out"
+                className={`h-full bg-pop transition-all duration-[400ms] ease-out${isExpired ? '' : ' led-pulse'}`}
                 style={{ width: `${percentage}%` }}
               />
             </div>
-            <div className="flex justify-between items-baseline mt-[8px]">
-              <span className="font-mono text-[13px] leading-[20px] text-text-secondary">
-                {funding.donor_count} {funding.donor_count === 1 ? 'supporter' : 'supporters'}
-              </span>
-              {funding.end_date && (
-                <span className="font-mono text-[13px] leading-[20px] text-text-secondary">
-                  {isExpired ? 'Ended' : `Ends ${new Date(funding.end_date).toLocaleDateString()}`}
-                </span>
-              )}
-            </div>
+            {funding.end_date && (
+              <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-text-secondary mt-[8px] text-right">
+                {isExpired ? 'Ended' : `Ends ${new Date(funding.end_date).toLocaleDateString()}`}
+              </p>
+            )}
           </div>
 
           {/* Stretch Goals */}

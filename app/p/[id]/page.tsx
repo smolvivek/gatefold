@@ -98,6 +98,26 @@ async function fetchPitchData(pitchId: string) {
     .eq('pitch_id', pitchId)
     .order('order_index', { ascending: true })
 
+  // Funding summary for the metadata bar + top bar anchor (same data the
+  // public funding API exposes; only shown for public links — see caller)
+  let funding: { goal: number; raised: number } | null = null
+  const { data: fundingRow } = await supabase
+    .from('funding')
+    .select('id, funding_goal')
+    .eq('pitch_id', pitchId)
+    .maybeSingle()
+  if (fundingRow) {
+    const { data: donations } = await supabase
+      .from('donations')
+      .select('amount')
+      .eq('funding_id', fundingRow.id)
+    const raised = (donations ?? []).reduce(
+      (sum: number, d: { amount: number }) => sum + d.amount,
+      0
+    )
+    funding = { goal: fundingRow.funding_goal, raised }
+  }
+
   const mediaWithUrls: (MediaRecord & { signedUrl: string })[] = []
   if (media && media.length > 0) {
     const urlPromises = media.map(async (m: MediaRecord) => {
@@ -114,6 +134,7 @@ async function fetchPitchData(pitchId: string) {
     pitch: pitch as Pitch,
     sections: (sections ?? []) as PitchSection[],
     media: mediaWithUrls,
+    funding,
   }
 }
 
@@ -284,6 +305,10 @@ export default async function PitchViewPage({ params }: PageProps) {
   const country = reqHeaders.get('x-vercel-ip-country') ?? null
   after(() => recordView({ pitchId: id, ownerUserId: pitch.user_id, ip, country, isOwner }))
 
+  // Funding UI (top bar anchor + metadata bar) only when the widget will
+  // actually render — the public funding API requires a public share link
+  const showFunding = !!data.funding && linkInfo.visibility === 'public'
+
   const castItems = parseCardItems(pitch.cast_and_characters)
   const teamItems = parseCardItems(pitch.team)
 
@@ -354,13 +379,9 @@ export default async function PitchViewPage({ params }: PageProps) {
       />
       <PitchViewTopBar
         projectName={pitch.project_name}
+        version={pitch.current_version}
         topOffset={isOwner ? 'top-[40px]' : undefined}
-        availableSections={{
-          synopsis: !!pitch.synopsis?.trim(),
-          vision: !!pitch.vision?.trim(),
-          cast: castItems.length > 0 || !!pitch.cast_and_characters?.trim(),
-          team: teamItems.length > 0 || !!pitch.team?.trim(),
-        }}
+        hasFunding={showFunding}
       />
 
       <div className="animate-fade-up opacity-0 [animation-fill-mode:forwards]" style={{ animationDelay: delay() }}>
@@ -377,6 +398,8 @@ export default async function PitchViewPage({ params }: PageProps) {
         <PitchViewMetadata
           genre={pitch.genre}
           budgetRange={pitch.budget_range as BudgetRange}
+          status={pitch.status}
+          funding={showFunding && data.funding ? data.funding : undefined}
         />
       </div>
 

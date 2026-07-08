@@ -17,7 +17,7 @@ export function PitchViewOwnerBar({ pitchId, pitchName, projectType }: PitchView
   const typeLabel = projectType ? PROJECT_TYPE_LABELS[projectType] : null
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[60] h-[40px] bg-background/95 backdrop-blur-sm border-b border-border flex items-center justify-between px-[24px]">
+    <div className="fixed top-0 left-0 right-0 z-[60] h-[40px] bg-accent/10 backdrop-blur-sm border-b border-accent/20 flex items-center justify-between px-[24px]">
       <Link
         href="/dashboard"
         className="font-mono text-[11px] text-text-disabled hover:text-text-primary transition-colors flex items-center gap-[6px]"

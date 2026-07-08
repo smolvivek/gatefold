@@ -8,16 +8,16 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-btn text-background hover:opacity-90 active:opacity-80 disabled:opacity-40 disabled:cursor-not-allowed",
+    "bg-pop text-background hover:bg-pop-hover active:scale-[0.98] led-pulse-subtle disabled:opacity-50 disabled:cursor-not-allowed",
   secondary:
-    "bg-transparent border border-border text-text-primary hover:bg-surface-hover hover:border-border-hover active:bg-surface disabled:text-text-disabled disabled:border-border disabled:cursor-not-allowed",
+    "bg-transparent border border-border text-text-primary hover:border-pop active:bg-transparent disabled:text-text-disabled disabled:border-border disabled:cursor-not-allowed",
   tertiary:
-    "bg-transparent text-link hover:underline active:text-pop-active disabled:text-text-disabled disabled:no-underline disabled:cursor-not-allowed",
+    "bg-transparent text-link hover:underline active:text-pop disabled:text-text-disabled disabled:no-underline disabled:cursor-not-allowed",
 };
 
 const sizeStyles: Record<ButtonVariant, string> = {
-  primary: "px-[24px] py-[12px] text-[14px] font-bold uppercase tracking-[0.05em]",
-  secondary: "px-[24px] py-[12px] text-[14px] font-medium",
+  primary: "px-[32px] py-[16px] font-heading text-[14px] font-bold uppercase tracking-tighter",
+  secondary: "px-[32px] py-[16px] font-heading text-[14px] font-bold uppercase tracking-tighter",
   tertiary: "px-[16px] py-[8px] text-[14px] font-medium",
 };
 

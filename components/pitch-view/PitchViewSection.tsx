@@ -45,29 +45,31 @@ export function PitchViewSection({ title, index, id, content, imageUrls, images,
   if (!content && allImages.length === 0 && !videoUrl && !pdf) return null
 
   const videoEmbed = videoUrl ? parseVideoEmbed(videoUrl) : null
+  // Number only — the heading beside it carries the name; repeating it in the
+  // label reads twice ("01 / SYNOPSIS … Synopsis")
   const sectionLabel = index !== undefined
-    ? `${String(index).padStart(2, '0')} / ${title.toUpperCase()}`
+    ? String(index).padStart(2, '0')
     : title.toUpperCase()
 
   return (
-    <section id={id} className="px-[48px] md:px-[96px] py-[96px] border-b border-white/5">
+    <section id={id} className="px-[24px] md:px-[96px] py-[96px] border-b border-hairline">
       <div className="max-w-[1200px] mx-auto grid grid-cols-12 gap-[48px]">
 
         {/* Left: sticky section label */}
         <div className="col-span-12 md:col-span-2">
-          <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-pop font-bold md:sticky md:top-[88px]">
+          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-pop font-bold md:sticky md:top-[88px]">
             {sectionLabel}
           </p>
         </div>
 
         {/* Right: content */}
         <div className="col-span-12 md:col-span-10 space-y-[40px]">
-          <h2 className="font-heading text-[48px] md:text-[56px] tracking-[-0.02em] text-text-primary leading-[1.0]">
+          <h2 className="font-heading text-[clamp(40px,6vw,80px)] tracking-[-0.02em] text-text-primary leading-[1.0]">
             {title}
           </h2>
 
           {content && (
-            <div className="text-[17px] md:text-[19px] leading-[30px] md:leading-[32px] text-text-secondary font-light whitespace-pre-wrap max-w-[680px]">
+            <div className="text-[17px] leading-[30px] text-text-secondary whitespace-pre-wrap max-w-[680px]">
               {content}
             </div>
           )}
@@ -78,7 +80,7 @@ export function PitchViewSection({ title, index, id, content, imageUrls, images,
                 href={pdf.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-[10px] border border-white/20 px-[16px] py-[10px] font-mono text-[11px] uppercase tracking-[0.15em] text-text-secondary hover:border-white/40 hover:text-text-primary transition-colors duration-[200ms]"
+                className="inline-flex items-center gap-[10px] border border-border px-[16px] py-[10px] font-mono text-[11px] uppercase tracking-[0.15em] text-text-secondary hover:border-border-hover hover:text-text-primary transition-colors duration-[200ms]"
               >
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="flex-shrink-0">
                   <rect x="2" y="1" width="8" height="11" stroke="currentColor" strokeWidth="1.2" />
@@ -106,7 +108,7 @@ export function PitchViewSection({ title, index, id, content, imageUrls, images,
                         src={img.url}
                         alt={img.caption || `${title} image ${i + 1}`}
                         fill
-                        className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                        className="object-cover hover:brightness-110 transition-all duration-500"
                         sizes={allImages.length === 1 ? '860px' : '420px'}
                       />
                     </div>
@@ -123,7 +125,7 @@ export function PitchViewSection({ title, index, id, content, imageUrls, images,
 
           {videoEmbed && (
             <div className="max-w-[860px]">
-              <div className="relative aspect-video overflow-hidden bg-surface/50">
+              <div className="relative aspect-video overflow-hidden bg-surface">
                 <iframe
                   src={videoEmbed.embedUrl}
                   title={`${title} video`}

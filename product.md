@@ -423,7 +423,7 @@ Creators remain the priority. All features serve creator intent first.
 - No novelty for novelty's sake
 - Animations must be intentional and calm
 - Dark canvas only (MVP) — content is the light source
-- One restrained pop color (white on dark)
+- Two-color system: Kodachrome yellow (pop — active/live/selected) + F91W Royal Blue (accent — structural/informational). See BRAND.md.
 - Grid-based, consistent spacing
 - Typography: 3 fonts (Newsreader headings, Inter body, JetBrains Mono metadata)
 - Clarity over cleverness

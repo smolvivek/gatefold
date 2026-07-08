@@ -291,6 +291,37 @@ The old copy was action-oriented and specific: three things Pitchcraft lets you 
 
 ---
 
+---
+
+### CP-14. Landing Page: "Every tool a filmmaker needs." — Generic SaaS Headline
+**Severity:** Critical
+**File:** `components/landing/LandingHero.tsx` (features section heading)
+**What's wrong:** This headline could appear verbatim on Adobe Creative Suite, Final Cut Pro, Notion, or Canva. It contains no specific claim, no benefit, and no voice. It is the platonic ideal of generic SaaS copy — a feature section heading that exists because something had to go there.
+**Voice test:** "A seasoned filmmaker reading this would skip past it immediately." The words are placeholders masquerading as headlines.
+**Approved fix:** Remove the section heading entirely, or replace it with a single specific claim that only Pitchcraft can make. Candidate: *"One link. The whole project."* or just eliminate it — the feature rows speak for themselves.
+**Status:** Open
+
+---
+
+### CP-15. Landing Page: "How it works." — The 2019 SaaS Pattern
+**Severity:** Critical
+**File:** `components/landing/LandingHero.tsx` (how-it-works section — now removed from code)
+**What's wrong:** "How it works" as a section heading belongs to the era of Stripe's first landing page. It announces that we're about to explain the product to the user, which treats them as a passive reader rather than a filmmaker who can look at the actual product and understand it.
+**Rule:** Show it working. Never explain how it works.
+**Approved fix:** This section has been removed from the landing page code. Do not re-introduce it.
+**Status:** Resolved in code — do not re-add.
+
+---
+
+### CP-16. Landing Page: Bento Feature Tiles — "Editor / Dashboard / Distribution"
+**Severity:** Critical
+**File:** `components/landing/LandingHero.tsx` (how-it-works bento — now removed from code)
+**What's wrong:** Three (or four) tiles in a grid, each with a label and a short description. This is the template design language of every B2B SaaS product launched between 2018-2024. It has no editorial voice and gives no specific information about the product. "The Editor — Build your project: logline, vision, cast, and budget in one place." is a sentence that contains nothing the user couldn't have guessed.
+**Approved fix:** This section has been removed. Do not re-introduce bento grids. Show the editor working inside a real UI screenshot.
+**Status:** Resolved in code — do not re-add.
+
+---
+
 ## Audit Schedule
 
 - **After any new page or flow:** Add it to this file

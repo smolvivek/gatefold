@@ -46,7 +46,7 @@ export function PitchViewFlow({ beats, audioUrl }: PitchViewFlowProps) {
   if (beats.length === 0) return null
 
   return (
-    <section className="px-[48px] md:px-[96px] py-[96px] border-b border-white/5">
+    <section className="px-[48px] md:px-[96px] py-[96px] border-b border-border">
       <div className="max-w-[1200px] mx-auto">
 
         {/* Header row */}

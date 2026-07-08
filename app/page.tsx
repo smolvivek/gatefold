@@ -47,49 +47,43 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppJsonLd) }}
       />
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-[24px] md:px-[48px] h-[64px]">
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-[24px] md:px-[48px] h-[72px] bg-background/90 backdrop-blur-sm border-b border-hairline">
         <Link
           href="/"
-          className="font-[var(--font-heading)] text-[18px] font-semibold text-text-primary"
+          className="font-heading text-[20px] font-bold uppercase tracking-tighter text-text-primary"
         >
           Pitchcraft
         </Link>
-        <div className="flex items-center gap-[24px]">
-          <Link
-            href="/toolkit"
-            className="font-[var(--font-mono)] text-[13px] leading-[20px] text-text-secondary hover:text-text-primary transition-colors duration-[200ms] ease-out"
-          >
-            Toolkit
-          </Link>
+        <div className="flex items-center gap-[16px] md:gap-[32px]">
           <Link
             href="/pricing"
-            className="font-[var(--font-mono)] text-[13px] leading-[20px] text-text-secondary hover:text-text-primary transition-colors duration-[200ms] ease-out"
+            className="hidden md:inline font-heading text-[15px] uppercase tracking-tighter text-text-secondary hover:text-text-primary transition-colors duration-[200ms] ease-out"
           >
             Pricing
           </Link>
+          {!(user && profile) && (
+            <Link
+              href="/login"
+              className="font-heading text-[15px] uppercase tracking-tighter text-text-secondary hover:text-text-primary transition-colors duration-[200ms] ease-out"
+            >
+              Sign In
+            </Link>
+          )}
           <SoundToggle />
           {user && profile ? (
             <Link
               href="/dashboard"
-              className="font-[var(--font-mono)] text-[13px] leading-[20px] text-text-primary hover:opacity-70 transition-opacity duration-[200ms] ease-out"
+              className="inline-flex items-center bg-pop text-background px-[20px] py-[10px] font-heading text-[13px] font-bold uppercase tracking-tighter hover:bg-pop-hover transition-colors duration-[200ms]"
             >
               Dashboard
             </Link>
           ) : (
-            <>
-              <Link
-                href="/login"
-                className="font-[var(--font-mono)] text-[13px] leading-[20px] text-text-primary hover:opacity-70 transition-opacity duration-[200ms] ease-out"
-              >
-                Log in
-              </Link>
-              <Link
-                href="/signup"
-                className="font-[var(--font-mono)] text-[13px] leading-[20px] text-text-primary hover:opacity-70 transition-opacity duration-[200ms] ease-out"
-              >
-                Sign up
-              </Link>
-            </>
+            <Link
+              href="/signup"
+              className="inline-flex items-center bg-pop text-background px-[20px] py-[10px] font-heading text-[13px] font-bold uppercase tracking-tighter hover:bg-pop-hover transition-colors duration-[200ms]"
+            >
+              Join
+            </Link>
           )}
         </div>
       </nav>

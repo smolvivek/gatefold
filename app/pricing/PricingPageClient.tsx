@@ -106,11 +106,11 @@ const faqs = [
   },
   {
     q: 'Do you use my content to train AI?',
-    a: 'No. Your pitches, images, documents, and all content belong to you. We never use creator content for AI training.',
+    a: 'No. Your projects, images, documents, and all content belong to you. We never use creator content for AI training.',
   },
   {
     q: 'What happens if I cancel?',
-    a: 'You keep full access until the end of your billing period. After that, your account moves to Free — your pitches stay, you just lose access to Pro and Studio features.',
+    a: 'You keep full access until the end of your billing period. After that, your account moves to Free — your projects stay, you just lose access to Pro and Studio features.',
   },
 ]
 

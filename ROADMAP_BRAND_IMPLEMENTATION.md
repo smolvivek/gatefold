@@ -4,26 +4,23 @@
 
 Brand personality is now locked. All new code must follow [BRAND.md](./BRAND.md) and updated [DESIGN.md](./DESIGN.md).
 
+**Status update (2026-07-07):** DESIGN.md has now actually been rewritten to match BRAND.md's near-black + Kodachrome-yellow + F91W-Royal-Blue palette (previously it still described a stale walnut/orange "Moog" system that was never implemented). PIXEL.md, HAPPY_SURPRISES.md, and CONSTRAINTS.md were also swept for consistency. This closes the gap this roadmap doc originally flagged.
+
 ---
 
 ## Immediate Tasks (Priority Order)
 
-### 1. Update All Copy: "Pitch" → "Project"
+### 1. Update All Copy: "Pitch" → "Project" ✅ DONE
 
-**Files to update:**
-- `/app/page.tsx` - Landing page hero/CTA
-- `/app/dashboard/page.tsx` - Dashboard heading, empty state
-- `/app/dashboard/pitches/create/page.tsx` - Page heading, button text
-- `/app/dashboard/pitches/[id]/edit/page.tsx` - Page heading, delete modal
-- `/components/ui/Card.tsx` - PitchCard component (keep internal name, update displayed copy)
-- `/COPY.md` - Global find/replace "pitch" → "project" (except in file names/technical context)
-
-**Terminology:**
-- "Create Pitch" → "Create Project"
-- "Your Pitches" → "Your Projects"
-- "Edit Pitch" → "Edit Project"
-- "Delete pitch?" → "Delete project?"
-- "Pitch is live" → "Your work is ready. Now the hard part: sharing it."
+**Completed:**
+- `/app/dashboard/page.tsx` — empty state "Nothing yet.", "Create your first project" ✓
+- `/app/dashboard/pitches/create/page.tsx` — 403 error says "projects", Link to /pricing ✓
+- `/components/ui/DeletePitchButton.tsx` — aria-labels → "Delete project" ✓
+- `/components/ui/UpgradeBanner.tsx` — "Your work is ready. Want private links, AI, and unlimited projects?" ✓
+- `/components/ui/WelcomeOnboarding.tsx` — "Build your project" ✓
+- `/app/pricing/PricingPageClient.tsx` — FAQs say "projects" ✓
+- `/components/landing/LandingHero.tsx` — "your project page" ✓
+- Note: "The pitch is the first frame." is an intentional cinematic tagline, not UI copy — left as-is.
 
 **Database/code:** Keep `pitches` table name and internal references. Only user-facing copy changes.
 
@@ -98,22 +95,14 @@ Brand personality is now locked. All new code must follow [BRAND.md](./BRAND.md)
 
 ---
 
-### 4. Update Status Terminology
+### 4. Update Status Terminology ✅ DONE
 
-**Find/replace across codebase:**
-- "looking" → "development"
-- "in-progress" → "production"
-- "complete" → "completed"
-
-**Files already updated:**
-- ✅ `/lib/types/pitch.ts`
-- ✅ `/components/ui/Badge.tsx`
-- ✅ `/components/ui/StatusRadio.tsx`
+**Completed:**
+- ✅ `/lib/types/pitch.ts` — PitchStatus = 'development' | 'production' | 'completed'
+- ✅ `/components/ui/Badge.tsx` — labels: Development / Production / Completed; LED pulse on development status dot ✓
+- ✅ `/components/ui/StatusRadio.tsx` — correct values and labels
 - ✅ `/app/design/page.tsx`
-
-**Still need to check:**
-- `/app/dashboard/page.tsx` - Status display in pitch cards
-- `/COPY.md` - Status labels and descriptions
+- ✅ `/app/dashboard/page.tsx` — passes `pitch.status as PitchStatus` to Badge via PitchCard ✓
 
 ---
 
@@ -121,9 +110,7 @@ Brand personality is now locked. All new code must follow [BRAND.md](./BRAND.md)
 
 **Issues to fix:**
 
-1. **Remove production metadata overlay** (`TC 00:00:00:00 / 24fps / ISO 800`)
-   - It's decoration without purpose
-   - Delete from `/app/page.tsx`
+1. ~~**Remove production metadata overlay**~~ — **Already removed.** `app/page.tsx` has no TC/fps/ISO overlay.
 
 2. **Simplify feature section** (too much literature)
    - Current: Three dense columns with paragraphs
@@ -160,10 +147,10 @@ Brand personality is now locked. All new code must follow [BRAND.md](./BRAND.md)
 **New animations to implement (from COPY.md):**
 
 **Tier 1 (ship now):**
-1. Section completion checkmark draw (300ms SVG animation)
-2. Progress bar spring overshoot (5% overshoot, settle back)
-3. Budget segment selection (scale + pop colour slide-in)
-4. Status radio dot scale (0 → 1.2x spring, settle to 1.0x)
+1. Section completion checkmark draw (300ms SVG animation) — **TODO**
+2. Progress bar spring overshoot (5% overshoot, settle back) — **TODO**
+3. ✅ Budget segment selection (scale + pop colour slide-in) — done in `BudgetSegments.tsx`
+4. Status radio dot scale — ✅ scale-0→scale-100 with cinematic ease in `StatusRadio.tsx`. Spring overshoot (1.2x → 1.0x) still TODO.
 
 **Tier 2 (polish later):**
 5. Section transition title card (A24-style)
@@ -183,18 +170,18 @@ Brand personality is now locked. All new code must follow [BRAND.md](./BRAND.md)
 
 After implementing changes:
 
-- [ ] All user-facing copy says "project" not "pitch"
-- [ ] Voice matches BRAND.md examples (Ogilvy + British dry humor)
-- [ ] Terracotta only used per TE strategy (sparingly, structurally)
-- [ ] Status terminology updated (development/production/completed)
-- [ ] Production metadata overlay removed from landing page
-- [ ] Empty states use approved copy
-- [ ] Save confirmations use approved copy
-- [ ] No condescending language anywhere ("wisely", "who matters")
-- [ ] TypeScript builds without errors
-- [ ] Landing page compiles and renders
-- [ ] Dashboard functions correctly
-- [ ] Create/edit pages work with new copy
+- [x] All user-facing copy says "project" not "pitch"
+- [x] Voice matches BRAND.md examples (empty states, banners, save confirmations)
+- [x] Terracotta only used per TE strategy — Button.tsx and BudgetSegments audited ✓
+- [x] Status terminology updated (development/production/completed)
+- [x] Production metadata overlay removed from landing page (was already gone)
+- [x] Empty states use approved copy ("Nothing yet.")
+- [x] Save confirmations use approved copy ("Saved.")
+- [x] No condescending language anywhere
+- [x] TypeScript builds without errors
+- [ ] Landing page hero copy refinement (pending user direction)
+- [ ] Marquee visual improvement (pending user direction)
+- [ ] Tier 1 animations 1, 2, 4-spring still TODO
 
 ---
 

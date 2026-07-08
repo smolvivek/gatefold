@@ -123,7 +123,7 @@ function PitchCard({ pitchId, index, title, subtitle, status, genre, budget, ver
         )}
         {genre && <MonoText>{genre}</MonoText>}
         {budget && <MonoText>{budget}</MonoText>}
-        {version !== undefined && <MonoText>v{version}</MonoText>}
+        {version !== undefined && <MonoText className="text-accent">v{version}</MonoText>}
         {updatedAt && <MonoText>{updatedAt}</MonoText>}
       </div>
     </div>

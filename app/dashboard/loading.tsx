@@ -4,8 +4,8 @@ export default function DashboardLoading() {
   return (
     <>
       {/* Top scan bar */}
-      <div className="fixed top-0 left-0 right-0 h-[2px] z-[100] overflow-hidden bg-white/5">
-        <div className="h-full bg-white/60 animate-scan-right origin-left" />
+      <div className="fixed top-0 left-0 right-0 h-[2px] z-[100] overflow-hidden bg-border">
+        <div className="h-full bg-text-secondary animate-scan-right origin-left" />
       </div>
 
       <DashboardShell>

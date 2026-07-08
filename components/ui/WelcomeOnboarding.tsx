@@ -1,12 +1,13 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
 
 const STEPS = [
   {
     number: '01',
-    title: 'Build your pitch',
+    title: 'Build your project',
     body: 'Give your project structure — logline, synopsis, vision, cast, budget, and more. Add images, embed video, upload documents.',
   },
   {
@@ -25,14 +26,16 @@ export function WelcomeOnboarding({ userId }: { userId?: string }) {
   const [visible, setVisible] = useState(false)
   const dialogRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
+  const pathname = usePathname()
 
   useEffect(() => {
+    if (pathname?.startsWith('/dashboard/pitches/create')) return
     const key = userId ? `pitchcraft-onboarding-done-${userId}` : 'pitchcraft-onboarding-done'
     const dismissed = localStorage.getItem(key)
     if (!dismissed) {
       setVisible(true)
     }
-  }, [userId])
+  }, [userId, pathname])
 
   // Auto-focus the dismiss button when modal opens
   useEffect(() => {

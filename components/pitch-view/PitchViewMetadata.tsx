@@ -3,6 +3,9 @@ import type { BudgetRange } from '@/lib/types/pitch'
 interface PitchViewMetadataProps {
   genre: string
   budgetRange: BudgetRange
+  status?: string
+  /** Cents. Shown as a compact progress bar when the pitch is publicly raising. */
+  funding?: { goal: number; raised: number }
 }
 
 const BUDGET_LABELS: Record<BudgetRange, string> = {
@@ -13,10 +16,21 @@ const BUDGET_LABELS: Record<BudgetRange, string> = {
   '1m-plus': '$1M+',
 }
 
-export function PitchViewMetadata({ genre, budgetRange }: PitchViewMetadataProps) {
+const STATUS_LABELS: Record<string, string> = {
+  development: 'Development',
+  production: 'Production',
+  completed: 'Completed',
+}
+
+export function PitchViewMetadata({ genre, budgetRange, status, funding }: PitchViewMetadataProps) {
+  const statusLabel = status ? (STATUS_LABELS[status] ?? status) : null
+  const fundingPct = funding && funding.goal > 0
+    ? Math.min(100, Math.round((funding.raised / funding.goal) * 100))
+    : null
+
   return (
-    <div className="px-[48px] md:px-[96px] py-[32px] border-b border-white/5 bg-background">
-      <div className="flex flex-wrap gap-x-[64px] gap-y-[16px]">
+    <div className="px-[24px] md:px-[96px] py-[24px] border-b border-hairline bg-surface">
+      <div className="flex flex-wrap items-end gap-x-[64px] gap-y-[16px]">
         {genre && (
           <div>
             <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-text-disabled mb-[4px]">Genre</p>
@@ -30,6 +44,25 @@ export function PitchViewMetadata({ genre, budgetRange }: PitchViewMetadataProps
               {BUDGET_LABELS[budgetRange]}
             </p>
           </div>
+        )}
+        {statusLabel && (
+          <div>
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-text-disabled mb-[4px]">Status</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-pop">{statusLabel}</p>
+          </div>
+        )}
+        {fundingPct !== null && (
+          <a href="#funding" className="md:ml-auto group">
+            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-text-disabled mb-[6px]">Funding</p>
+            <span className="flex items-center gap-[10px]">
+              <span className="block h-[3px] w-[120px] bg-border">
+                <span className="block h-full bg-pop" style={{ width: `${fundingPct}%` }} />
+              </span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-text-primary group-hover:text-pop transition-colors duration-[200ms]">
+                {fundingPct}%
+              </span>
+            </span>
+          </a>
         )}
       </div>
     </div>

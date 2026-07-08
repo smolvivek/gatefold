@@ -15,24 +15,25 @@ interface PitchViewCardsProps {
 export function PitchViewCards({ title, index, id, items, variant = 'cast' }: PitchViewCardsProps) {
   if (items.length === 0) return null
 
+  // Number only — the heading beside it carries the name (see PitchViewSection)
   const sectionLabel = index !== undefined
-    ? `${String(index).padStart(2, '0')} / ${title.toUpperCase()}`
+    ? String(index).padStart(2, '0')
     : title.toUpperCase()
 
   return (
-    <section id={id} className="px-[48px] md:px-[96px] py-[96px] border-b border-white/5">
+    <section id={id} className="px-[24px] md:px-[96px] py-[96px] border-b border-hairline">
       <div className="max-w-[1200px] mx-auto grid grid-cols-12 gap-[48px]">
 
         {/* Left: sticky section label */}
         <div className="col-span-12 md:col-span-2">
-          <p className="font-mono text-[9px] uppercase tracking-[0.25em] text-pop font-bold md:sticky md:top-[88px]">
+          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-pop font-bold md:sticky md:top-[88px]">
             {sectionLabel}
           </p>
         </div>
 
         {/* Right: content */}
         <div className="col-span-12 md:col-span-10">
-          <h2 className="font-heading text-[48px] md:text-[56px] tracking-[-0.02em] text-text-primary leading-[1.0] mb-[64px]">
+          <h2 className="font-heading text-[clamp(40px,6vw,80px)] tracking-[-0.02em] text-text-primary leading-[1.0] mb-[64px]">
             {title}
           </h2>
 
@@ -42,7 +43,7 @@ export function PitchViewCards({ title, index, id, items, variant = 'cast' }: Pi
               {items.map((item, i) => (
                 <div key={i} className="space-y-[24px]">
                   {/* Portrait — typographic fallback */}
-                  <div className="aspect-[3/4] bg-surface-hover border border-white/5 flex items-end p-[16px]">
+                  <div className="aspect-[3/4] bg-surface-hover border border-border flex items-end p-[16px]">
                     <span className="font-heading text-[72px] leading-[1] tracking-[-0.04em] text-text-disabled/30 select-none">
                       {item.name.charAt(0)}
                     </span>
@@ -71,7 +72,7 @@ export function PitchViewCards({ title, index, id, items, variant = 'cast' }: Pi
               {items.map((item, i) => (
                 <div key={i} className="flex flex-col md:flex-row gap-[32px] items-start">
                   {/* Headshot — typographic fallback */}
-                  <div className="w-[96px] h-[96px] bg-surface-hover border border-white/5 flex-shrink-0 flex items-end p-[8px]">
+                  <div className="w-[96px] h-[96px] bg-surface-hover border border-border flex-shrink-0 flex items-end p-[8px]">
                     <span className="font-heading text-[40px] leading-[1] tracking-[-0.04em] text-text-disabled/30 select-none">
                       {item.name.charAt(0)}
                     </span>

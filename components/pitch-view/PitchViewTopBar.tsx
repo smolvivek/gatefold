@@ -1,50 +1,39 @@
-interface AvailableSections {
-  synopsis: boolean
-  vision: boolean
-  cast: boolean
-  team: boolean
-}
+// No per-section tabs: pitches carry a variable number of optional sections
+// (moodboard, flow, script docs, …) and a tab row can't scale with them.
+// The scroll is the navigation; the top bar keeps only the two things a
+// reader always needs — where they are (name) and the one terminal action
+// (funding, when it exists).
 
 interface PitchViewTopBarProps {
   projectName: string
-  availableSections?: AvailableSections
+  version?: number
+  hasFunding?: boolean
   topOffset?: string
 }
 
-const ALL_NAV_LINKS = [
-  { label: 'Overview', href: '#synopsis', key: 'synopsis' as const },
-  { label: 'Vision', href: '#vision', key: 'vision' as const },
-  { label: 'Cast', href: '#cast', key: 'cast' as const },
-  { label: 'Team', href: '#team', key: 'team' as const },
-]
-
-export function PitchViewTopBar({ projectName, availableSections, topOffset }: PitchViewTopBarProps) {
-  const navLinks = availableSections
-    ? ALL_NAV_LINKS.filter((link) => availableSections[link.key])
-    : ALL_NAV_LINKS
-
+export function PitchViewTopBar({ projectName, version, hasFunding, topOffset }: PitchViewTopBarProps) {
   return (
-    <header className={`fixed ${topOffset ?? 'top-0'} w-full flex justify-between items-center px-[48px] py-[28px] bg-background/90 backdrop-blur-sm z-50 border-b border-white/5`}>
+    <header className={`fixed ${topOffset ?? 'top-0'} w-full flex justify-between items-center px-[24px] md:px-[48px] h-[64px] bg-background/90 backdrop-blur-sm z-50 border-b border-hairline`}>
       {/* Project name */}
-      <div className="font-heading font-bold text-[22px] uppercase tracking-tighter text-text-primary">
+      <div className="font-heading font-bold italic text-[18px] tracking-tighter text-text-primary truncate">
         {projectName}
       </div>
 
-      {/* Section nav */}
-      {navLinks.length > 0 && (
-        <nav className="hidden md:flex items-center gap-[48px]">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-disabled hover:text-text-primary transition-colors duration-[200ms]"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-      )}
-
+      <div className="flex items-center gap-[32px]">
+        {hasFunding && (
+          <a
+            href="#funding"
+            className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-disabled hover:text-text-primary transition-colors duration-[200ms]"
+          >
+            Funding
+          </a>
+        )}
+        {version != null && (
+          <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-text-disabled">
+            V{version}
+          </span>
+        )}
+      </div>
     </header>
   )
 }

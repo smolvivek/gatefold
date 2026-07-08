@@ -80,22 +80,22 @@ export default function DesignShowcase() {
         <Section title="Colors">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-[16px]">
             {[
-              { name: "Background", value: "#DBDDD0", className: "bg-background border border-border" },
-              { name: "Surface", value: "#D0D2C5", className: "bg-surface" },
-              { name: "Border", value: "#B3B5A8", className: "bg-border" },
-              { name: "Text Primary", value: "#1A1A1A", className: "bg-text-primary" },
-              { name: "Text Secondary", value: "#6B6560", className: "bg-text-secondary" },
-              { name: "Text Disabled", value: "#A8A29E", className: "bg-text-disabled" },
-              { name: "Pop (visual)", value: "#AF2E1B", className: "bg-pop" },
-              { name: "Link", value: "#AF2E1B", className: "bg-link" },
-              { name: "Button", value: "#1A1A1A", className: "bg-btn" },
-              { name: "Button Hover", value: "#333333", className: "bg-btn-hover" },
+              { name: "Background", value: "#0A0A0A", className: "bg-background border border-border" },
+              { name: "Surface", value: "#131313", className: "bg-surface" },
+              { name: "Border", value: "#262626", className: "bg-border" },
+              { name: "Text Primary", value: "#F0EDE8", className: "bg-text-primary" },
+              { name: "Text Secondary", value: "#8A8880", className: "bg-text-secondary" },
+              { name: "Text Disabled", value: "#545250", className: "bg-text-disabled" },
+              { name: "Pop (visual)", value: "#F5C830", className: "bg-pop" },
+              { name: "Link", value: "#F5C830", className: "bg-link" },
+              { name: "Button", value: "#F0EDE8", className: "bg-btn" },
+              { name: "Button Hover", value: "#FFFFFF", className: "bg-btn-hover" },
               { name: "Button Active", value: "#000000", className: "bg-btn-active" },
-              { name: "Status: Looking", value: "#D32F2F", className: "bg-status-looking" },
-              { name: "Status: In Progress", value: "#E8A817", className: "bg-status-progress" },
-              { name: "Status: Complete", value: "#388E3C", className: "bg-status-complete" },
-              { name: "Error", value: "#D32F2F", className: "bg-error" },
-              { name: "Success", value: "#4CAF50", className: "bg-success" },
+              { name: "Status: Looking", value: "#F5C830", className: "bg-status-looking" },
+              { name: "Status: In Progress", value: "#D4A843", className: "bg-status-progress" },
+              { name: "Status: Complete", value: "#7CB342", className: "bg-status-complete" },
+              { name: "Error", value: "#E5494D", className: "bg-error" },
+              { name: "Success", value: "#7CB342", className: "bg-success" },
             ].map((color) => (
               <div key={color.name} className="flex flex-col gap-[8px]">
                 <div className={`w-full h-[48px] rounded-none ${color.className}`} />

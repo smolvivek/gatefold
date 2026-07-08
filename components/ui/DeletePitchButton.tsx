@@ -56,7 +56,7 @@ export function DeletePitchButton({ pitchId, pitchName }: DeletePitchButtonProps
           type="button"
           onClick={handleDelete}
           disabled={loading}
-          aria-label="Delete pitch"
+          aria-label="Delete project"
           className="font-mono text-[11px] text-error hover:opacity-80 transition-opacity disabled:opacity-40"
         >
           {loading ? 'Deleting...' : 'Yes, delete'}
@@ -76,8 +76,8 @@ export function DeletePitchButton({ pitchId, pitchName }: DeletePitchButtonProps
     <button
       type="button"
       onClick={handleDelete}
-      title="Delete pitch"
-      aria-label="Delete pitch"
+      title="Delete project"
+      aria-label="Delete project"
       className="text-text-disabled hover:text-error transition-colors duration-[150ms] p-[4px]"
     >
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">

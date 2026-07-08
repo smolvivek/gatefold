@@ -5,7 +5,7 @@ export default function AuthLayout({
 }) {
 
   return (
-    <div className="min-h-screen bg-[#0e0e0e] flex items-center justify-center px-[24px] py-[40px] relative overflow-hidden">
+    <div className="min-h-screen bg-background flex items-center justify-center px-[24px] py-[40px] relative overflow-hidden">
 
       {/* Bottom-right: Pitchcraft wordmark */}
       <div className="absolute bottom-[32px] right-[32px]" aria-hidden="true">
