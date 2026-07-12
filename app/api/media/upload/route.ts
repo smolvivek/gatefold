@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { getAuthProfile } from '@/lib/auth/getAuthProfile'
+import { rateLimit } from '@/lib/ratelimit'
 import crypto from 'crypto'
 
 const ALLOWED_TYPES: Record<string, string> = {
@@ -13,6 +14,9 @@ const ALLOWED_TYPES: Record<string, string> = {
 const MAX_IMAGE_SIZE = 10 * 1024 * 1024 // 10MB
 const MAX_PDF_SIZE = 50 * 1024 * 1024 // 50MB
 
+const MAX_UPLOADS = 30
+const UPLOAD_WINDOW_MS = 10 * 60 * 1000 // 10 minutes
+
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createClient()
@@ -21,6 +25,16 @@ export async function POST(request: NextRequest) {
     const { data: { user }, error: authError } = await supabase.auth.getUser()
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    // Keyed by user (not IP) — this is an authenticated route, and per-user
+    // limits also cap storage/bandwidth cost from any single account.
+    const rl = await rateLimit(`rl:upload:${user.id}`, MAX_UPLOADS, UPLOAD_WINDOW_MS)
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: 'Too many uploads. Try again later.' },
+        { status: 429, headers: { 'Retry-After': String(rl.retryAfterSeconds) } }
+      )
     }
 
     const formData = await request.formData()

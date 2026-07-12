@@ -33,7 +33,7 @@ export function CancelSubscriptionButton() {
     return (
       <div className="flex flex-col gap-[12px]">
         <p className="text-[14px] leading-[20px] text-text-primary">
-          Cancel your subscription? You'll keep access until the end of your billing period.
+          Cancel your subscription? You&apos;ll keep access until the end of your billing period.
         </p>
         {error && (
           <p className="font-mono text-[12px] leading-[18px] text-error">{error}</p>

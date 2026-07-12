@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 interface SectionTransitionProps {
   sectionNumber: string;
@@ -27,20 +27,17 @@ export function SectionTransition({
   );
   const [displayedKey, setDisplayedKey] = useState(sectionKey);
   const [displayedNumber, setDisplayedNumber] = useState(sectionNumber);
-  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    // Skip transition on first render
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      setDisplayedKey(sectionKey);
-      setDisplayedNumber(sectionNumber);
-      return;
-    }
-
+    // Initial state already matches props (see useState above), so this only
+    // fires the transition when sectionKey actually changes after mount.
     if (sectionKey === displayedKey) return;
 
-    // Phase 1: fade out current content (150ms)
+    // Phase 1: fade out current content (150ms) — this effect exists to
+    // kick off a timed animation sequence in response to an external prop
+    // change, which is exactly what effects are for; it can't be derived
+    // during render.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPhase("number");
     setDisplayedNumber(sectionNumber);
 

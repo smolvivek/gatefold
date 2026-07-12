@@ -28,11 +28,20 @@ export function WelcomeOnboarding({ userId }: { userId?: string }) {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const pathname = usePathname()
 
+  const dismiss = () => {
+    setVisible(false)
+    const key = userId ? `pitchcraft-onboarding-done-${userId}` : 'pitchcraft-onboarding-done'
+    localStorage.setItem(key, '1')
+  }
+
   useEffect(() => {
     if (pathname?.startsWith('/dashboard/pitches/create')) return
     const key = userId ? `pitchcraft-onboarding-done-${userId}` : 'pitchcraft-onboarding-done'
     const dismissed = localStorage.getItem(key)
     if (!dismissed) {
+      // localStorage is unavailable during SSR, so this can't be a lazy
+      // useState initializer without causing a hydration mismatch.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setVisible(true)
     }
   }, [userId, pathname])
@@ -81,12 +90,6 @@ export function WelcomeOnboarding({ userId }: { userId?: string }) {
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [visible])
-
-  const dismiss = () => {
-    setVisible(false)
-    const key = userId ? `pitchcraft-onboarding-done-${userId}` : 'pitchcraft-onboarding-done'
-    localStorage.setItem(key, '1')
-  }
 
   if (!visible) return null
 
