@@ -179,6 +179,8 @@ export function AIImageGenerate({ fieldName, onAccept, maxReached, context }: AI
             AI Generated
           </div>
           <div className="w-full max-w-[300px] aspect-square rounded-none overflow-hidden border border-[#D4D6C8] bg-surface">
+            {/* Generator returns an arbitrary provider URL, not a next/image remote pattern */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={previewUrl}
               alt="AI generated reference"

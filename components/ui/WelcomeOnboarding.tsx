@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
 
@@ -28,11 +28,11 @@ export function WelcomeOnboarding({ userId }: { userId?: string }) {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const pathname = usePathname()
 
-  const dismiss = () => {
+  const dismiss = useCallback(() => {
     setVisible(false)
     const key = userId ? `pitchcraft-onboarding-done-${userId}` : 'pitchcraft-onboarding-done'
     localStorage.setItem(key, '1')
-  }
+  }, [userId])
 
   useEffect(() => {
     if (pathname?.startsWith('/dashboard/pitches/create')) return
@@ -89,7 +89,7 @@ export function WelcomeOnboarding({ userId }: { userId?: string }) {
 
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [visible])
+  }, [visible, dismiss])
 
   if (!visible) return null
 

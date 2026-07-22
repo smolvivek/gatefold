@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useCallback } from 'react'
+import Image from 'next/image'
 import { validateImageFile } from '@/lib/utils/fileValidation'
 import type { MediaRecord } from '@/lib/types/pitch'
 
@@ -274,10 +275,12 @@ function ImageThumbnail({
           </div>
         )}
         {imageUrl && (
-          <img
+          <Image
             src={imageUrl}
             alt={caption || ''}
-            className="w-full h-full object-cover"
+            fill
+            sizes="(max-width: 768px) 50vw, 33vw"
+            className="object-cover"
           />
         )}
         <button

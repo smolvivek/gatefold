@@ -170,16 +170,6 @@ export default function EditPitchPage({ params }: { params: Promise<{ id: string
   const autoSaveTimer = useRef<ReturnType<typeof setTimeout>>(null)
   const isInitialLoad = useRef(true)
 
-  // Mark as unsaved when any field changes (after initial load)
-  const markUnsaved = useCallback(() => {
-    if (isInitialLoad.current) return
-    setSaveStatus('unsaved')
-    if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current)
-    autoSaveTimer.current = setTimeout(() => {
-      autoSaveDraft()
-    }, 2000)
-  }, [])
-
   // Draft save — no validation, no version snapshot, no redirect
   const autoSaveDraft = useCallback(async () => {
     setSaveStatus('saving')
@@ -226,6 +216,16 @@ export default function EditPitchPage({ params }: { params: Promise<{ id: string
       setSaveStatus('unsaved')
     }
   }, [title, logline, synopsis, genre, vision, castMembers, budgetRange, pitchStatus, teamMembers, posterMediaId, sections, pitchId])
+
+  // Mark as unsaved when any field changes (after initial load)
+  const markUnsaved = useCallback(() => {
+    if (isInitialLoad.current) return
+    setSaveStatus('unsaved')
+    if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current)
+    autoSaveTimer.current = setTimeout(() => {
+      autoSaveDraft()
+    }, 2000)
+  }, [autoSaveDraft])
 
   // Trigger markUnsaved when any field changes
   useEffect(() => {
@@ -1010,7 +1010,6 @@ export default function EditPitchPage({ params }: { params: Promise<{ id: string
   }
 
   // ─── Determine what to render based on active section ───
-  const isRequiredSection = REQUIRED_SECTIONS.some((s) => s.key === activeSection)
   const optionalDef = OPTIONAL_SECTIONS.find((d) => d.key === activeSection)
   const isCustomSection = CUSTOM_SECTION_KEYS.includes(activeSection as typeof CUSTOM_SECTION_KEYS[number])
   const currentSectionState = sections[activeSection]

@@ -20,7 +20,6 @@ export async function POST(
       name,
       email,
       message,
-      amount,
       currency,
     } = body as {
       razorpay_order_id: string
@@ -29,7 +28,6 @@ export async function POST(
       name: string
       email: string
       message?: string
-      amount: number
       currency: string
     }
 

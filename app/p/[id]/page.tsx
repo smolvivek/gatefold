@@ -155,9 +155,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!data) return { title: 'Not Found' }
 
   const { pitch } = data
-  const posterMedia = data.media.find(
-    (m) => m.section_name === 'poster' || m.file_type === 'image'
-  )
 
   return {
     title: `${pitch.project_name} — Pitchcraft`,

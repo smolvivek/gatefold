@@ -181,6 +181,8 @@ function InlineImageUpload({
         <div className="grid grid-cols-3 sm:grid-cols-4 gap-[8px]">
           {files.map((file, i) => (
             <div key={i} className="relative aspect-square bg-surface rounded-none overflow-hidden border border-border group">
+              {/* blob: URL, not a next/image remote pattern — nothing to optimize */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={URL.createObjectURL(file)}
                 alt=""
@@ -286,6 +288,8 @@ function PosterUpload({
       {file ? (
         <div className="relative inline-block">
           <div className="w-[180px] aspect-[2/3] rounded-none overflow-hidden border border-border bg-surface">
+            {/* blob: URL, not a next/image remote pattern — nothing to optimize */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={URL.createObjectURL(file)}
               alt="Project poster preview"
@@ -350,7 +354,6 @@ function PosterUpload({
 export default function CreatePitchPage() {
   const router = useRouter()
   const [currentSection, setCurrentSection] = useState<SectionKey>('project')
-  const [completedSections, setCompletedSections] = useState<Set<SectionKey>>(new Set())
   const [mode, setMode] = useState<'required' | 'add-more' | 'optional'>('required')
 
   // ─── Form state ───
@@ -397,7 +400,6 @@ export default function CreatePitchPage() {
 
   const [projectType, setProjectType] = useState<ProjectType | null>(null)
   const [enabledOptionalKeys, setEnabledOptionalKeys] = useState<Set<string>>(new Set())
-  const [subscriptionTier, setSubscriptionTier] = useState<string | null>(null)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [upgradeRequired, setUpgradeRequired] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -430,15 +432,6 @@ export default function CreatePitchPage() {
     } catch {
       // corrupted draft — ignore
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  // Fetch subscription tier for sidebar custom sections gate
-  useEffect(() => {
-    fetch('/api/subscriptions/status')
-      .then((r) => r.json())
-      .then((d) => { if (d.tier) setSubscriptionTier(d.tier) })
-      .catch(() => {})
   }, [])
 
   // Auto-save serializable fields 1s after last change
@@ -462,14 +455,8 @@ export default function CreatePitchPage() {
   const getCurrentSectionIndex = () => getSectionIndex(currentSection)
   const isRequiredSection = (key: string): key is RequiredSectionKey => REQUIRED_SECTIONS.some((s) => s.key === key)
   const isOnOptionalSection = !isRequiredSection(currentSection)
-  const isLastSection = getCurrentSectionIndex() === ALL_SECTIONS.length - 1
   const isFirstSection = getCurrentSectionIndex() === 0
   const isLastRequiredSection = currentSection === REQUIRED_SECTIONS[REQUIRED_SECTIONS.length - 1].key
-
-  const goToSection = (key: SectionKey) => {
-    setCurrentSection(key)
-    setErrors({})
-  }
 
   const goToNextSection = () => {
     const idx = getCurrentSectionIndex()
@@ -487,25 +474,6 @@ export default function CreatePitchPage() {
     }
   }
 
-  const markSectionComplete = (key: SectionKey) => {
-    setCompletedSections((prev) => new Set([...prev, key]))
-  }
-
-  const handleToggleSection = (key: string) => {
-    setEnabledOptionalKeys((prev) => {
-      const next = new Set(prev)
-      if (next.has(key)) {
-        next.delete(key)
-        if (currentSection === key) {
-          setCurrentSection(REQUIRED_SECTIONS[REQUIRED_SECTIONS.length - 1].key)
-        }
-      } else {
-        next.add(key)
-        setCurrentSection(key as SectionKey)
-      }
-      return next
-    })
-  }
 
   // Cast helpers
   const addCastMember = () => {
@@ -597,7 +565,6 @@ export default function CreatePitchPage() {
   const handleContinue = () => {
     if (isRequiredSection(currentSection)) {
       if (validateCurrentSection()) {
-        markSectionComplete(currentSection)
         if (isLastRequiredSection) {
           setMode('add-more')
         } else {
@@ -605,7 +572,6 @@ export default function CreatePitchPage() {
         }
       }
     } else {
-      markSectionComplete(currentSection)
       goToNextSection()
     }
   }
@@ -803,8 +769,6 @@ export default function CreatePitchPage() {
     : (currentSectionData?.title || 'Section')
 
   const currentSectionDescription = currentSectionData?.description || ''
-
-  const requiredComplete = REQUIRED_SECTIONS.filter((s) => completedSections.has(s.key)).length
 
   // ─── Type selection screen ───
   if (projectType === null) {
@@ -1114,6 +1078,19 @@ export default function CreatePitchPage() {
                     fieldName="Director's Vision"
                     currentText={vision}
                     onAccept={setVision}
+                    context={aiContext}
+                  />
+                  <InlineImageUpload
+                    files={visionImages}
+                    onAdd={(newFiles) => setVisionImages((prev) => [...prev, ...newFiles])}
+                    onRemove={(i) => setVisionImages((prev) => prev.filter((_, idx) => idx !== i))}
+                    maxFiles={10}
+                    label="Mood Board"
+                  />
+                  <AIImageGenerate
+                    fieldName="Director's Vision mood board"
+                    onAccept={(file) => setVisionImages((prev) => [...prev, file])}
+                    maxReached={visionImages.length >= 10}
                     context={aiContext}
                   />
                 </div>
