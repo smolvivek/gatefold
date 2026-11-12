@@ -41,6 +41,13 @@ export async function POST(request: NextRequest) {
     const paymentId = event.payload.payment.entity.id
     const orderId = event.payload.payment.entity.order_id
 
+    // This endpoint sees every captured payment on the account. Anything that is
+    // not a donation order is acknowledged, not failed — Razorpay retries non-2xx
+    // responses and can eventually disable the endpoint.
+    if (!orderId) {
+      return NextResponse.json({ received: true })
+    }
+
     const supabase = createAdminClient()
 
     // Idempotent — the client's /verify call may have already recorded this payment
@@ -61,8 +68,8 @@ export async function POST(request: NextRequest) {
     const fundingId = notes.funding_id
 
     if (!fundingId) {
-      console.error('Razorpay webhook: missing funding_id in order notes', orderId)
-      return NextResponse.json({ error: 'Missing funding_id' }, { status: 400 })
+      console.warn('Razorpay webhook: order has no funding_id (not a donation), ignored', orderId)
+      return NextResponse.json({ received: true })
     }
 
     const verifiedAmount = typeof order.amount === 'string' ? parseInt(order.amount, 10) : Number(order.amount)
@@ -78,8 +85,8 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (!funding) {
-      console.error('Razorpay webhook: funding not found', fundingId)
-      return NextResponse.json({ error: 'Funding not found' }, { status: 404 })
+      console.error('Razorpay webhook: funding not found, ignored', fundingId)
+      return NextResponse.json({ received: true })
     }
 
     const { data: pitch } = await supabase

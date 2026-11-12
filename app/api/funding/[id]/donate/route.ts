@@ -26,7 +26,10 @@ export async function POST(
 
     // Unauthenticated endpoint that creates real Razorpay orders — cap per IP
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? '0.0.0.0'
-    const limit = await rateLimit(`rl:donate:${ip}`, 10, 10 * 60 * 1000)
+    const limit = await rateLimit(`rl:donate:${ip}`, 10, 10 * 60 * 1000).catch((err) => {
+      console.error('Donate rate limit unavailable, allowing request:', err)
+      return { allowed: true, remaining: 0, retryAfterSeconds: 0 }
+    })
     if (!limit.allowed) {
       return NextResponse.json(
         { error: 'Too many attempts. Please wait a few minutes and try again.' },

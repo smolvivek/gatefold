@@ -4,7 +4,9 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getUserTier } from '@/lib/subscriptions/getTier'
 
-const VISIBILITIES = ['public', 'private', 'password']
+// Password protection is a public link with a password hash; the UI never sets
+// visibility 'password', and a link with that value but no hash cannot be opened.
+const VISIBILITIES = ['public', 'private']
 // verify-password rejects anything longer, so a longer one could never be unlocked
 const MAX_PASSWORD_LENGTH = 128
 

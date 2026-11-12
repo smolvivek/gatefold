@@ -46,14 +46,15 @@ export async function POST(request: NextRequest) {
     }
 
     // One live subscription per user: a second checkout would bill twice against
-    // a single subscriptions row. A cancelled plan (still in its paid period) may
-    // be replaced.
+    // a single subscriptions row. A cancelled plan (still in its paid period) or
+    // one whose payment failed (past_due) may be replaced — the new subscription's
+    // activation takes over the row in the webhook.
     const { data: current } = await supabase
       .from('subscriptions')
       .select('tier, status')
       .eq('user_id', user.id)
       .maybeSingle()
-    if (current && current.tier !== 'free' && current.status !== 'cancelled') {
+    if (current && current.tier !== 'free' && current.status !== 'cancelled' && current.status !== 'past_due') {
       return NextResponse.json(
         { error: 'You already have an active subscription. Manage or cancel it from your account first.' },
         { status: 409 }
