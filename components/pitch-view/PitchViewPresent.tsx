@@ -88,10 +88,12 @@ export function PitchViewPresent({ slides, exitHref, projectName }: PitchViewPre
         router.push(exitHref)
         return
       }
-      // Leave focused controls (buttons, links, media, form fields) alone so
-      // Space/arrows keep their native behaviour there.
+      // Text fields and media controls own their keys. A focused button or
+      // link only owns Space (activation), so arrows still navigate after a
+      // viewer clicks Next/Previous or Exit.
       const target = e.target as HTMLElement | null
-      if (target?.closest('button, a, input, textarea, select, video, audio, [contenteditable="true"]')) return
+      if (target?.closest('input, textarea, select, video, audio, [contenteditable="true"]')) return
+      if (e.key === ' ' && target?.closest('button, a')) return
 
       if (e.key === 'ArrowRight') {
         e.preventDefault()
