@@ -9,9 +9,10 @@ interface PitchViewTopBarProps {
   version?: number
   hasFunding?: boolean
   topOffset?: string
+  presentHref?: string
 }
 
-export function PitchViewTopBar({ projectName, version, hasFunding, topOffset }: PitchViewTopBarProps) {
+export function PitchViewTopBar({ projectName, version, hasFunding, topOffset, presentHref }: PitchViewTopBarProps) {
   return (
     <header className={`fixed ${topOffset ?? 'top-0'} w-full flex justify-between items-center px-[24px] md:px-[48px] h-[64px] bg-background/90 backdrop-blur-sm z-50 border-b border-hairline`}>
       {/* Project name */}
@@ -20,6 +21,14 @@ export function PitchViewTopBar({ projectName, version, hasFunding, topOffset }:
       </div>
 
       <div className="flex items-center gap-[32px]">
+        {presentHref && (
+          <a
+            href={presentHref}
+            className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-disabled hover:text-text-primary transition-colors duration-[200ms]"
+          >
+            Present
+          </a>
+        )}
         {hasFunding && (
           <a
             href="#funding"

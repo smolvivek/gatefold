@@ -1,24 +1,18 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { cookies } from 'next/headers'
-import crypto from 'crypto'
-import { createAdminClient } from '@/lib/supabase/admin'
-import { createClient } from '@/lib/supabase/server'
-
-if (process.env.NODE_ENV === 'production' && !process.env.PITCH_ACCESS_SECRET) {
-  throw new Error('PITCH_ACCESS_SECRET must be set in production')
-}
-
-function verifyAccessCookie(pitchId: string, token: string): boolean {
-  const secret = process.env.PITCH_ACCESS_SECRET ?? 'dev-insecure-secret'
-  const expected = crypto.createHmac('sha256', secret).update(pitchId).digest('hex')
-  return token === expected
-}
 import { headers } from 'next/headers'
 import { after } from 'next/server'
-import type { Pitch, PitchSection, MediaRecord, BudgetRange, FlowBeat } from '@/lib/types/pitch'
+import { createClient } from '@/lib/supabase/server'
+import type { BudgetRange, FlowBeat } from '@/lib/types/pitch'
 import { recordView } from '@/lib/views/record'
-import { OPTIONAL_SECTIONS } from '@/lib/sections'
+import {
+  resolveIdOrSlug,
+  isPasswordVerified,
+  isPitchOwner,
+  getShareLinkInfo,
+  fetchPitchData,
+  buildPitchViewModel,
+} from '@/lib/pitch-view/data'
 import { PitchViewLayout } from '@/components/pitch-view/PitchViewLayout'
 import { PitchViewTopBar } from '@/components/pitch-view/PitchViewTopBar'
 import { PitchViewHero } from '@/components/pitch-view/PitchViewHero'
@@ -33,109 +27,6 @@ import { PitchViewOwnerBar } from '@/components/pitch-view/PitchViewOwnerBar'
 
 interface PageProps {
   params: Promise<{ id: string }>
-}
-
-type ShareLinkInfo = {
-  visibility: string
-  hasPassword: boolean
-}
-
-const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
-
-async function resolveIdOrSlug(idOrSlug: string): Promise<string | null> {
-  if (UUID_REGEX.test(idOrSlug)) return idOrSlug
-
-  const supabase = createAdminClient()
-  const { data } = await supabase
-    .from('pitches')
-    .select('id')
-    .eq('slug', idOrSlug)
-    .is('deleted_at', null)
-    .single()
-
-  return data?.id ?? null
-}
-
-async function getShareLinkInfo(pitchId: string): Promise<ShareLinkInfo | null> {
-  const supabase = createAdminClient()
-
-  const { data: shareLink } = await supabase
-    .from('share_links')
-    .select('visibility, password_hash')
-    .eq('pitch_id', pitchId)
-    .is('deleted_at', null)
-    .single()
-
-  if (!shareLink) return null
-
-  return {
-    visibility: shareLink.visibility,
-    hasPassword: !!shareLink.password_hash,
-  }
-}
-
-async function fetchPitchData(pitchId: string) {
-  const supabase = createAdminClient()
-
-  const { data: pitch } = await supabase
-    .from('pitches')
-    .select('*')
-    .eq('id', pitchId)
-    .is('deleted_at', null)
-    .single()
-
-  if (!pitch) return null
-
-  const { data: sections } = await supabase
-    .from('pitch_sections')
-    .select('*')
-    .eq('pitch_id', pitchId)
-    .order('order_index', { ascending: true })
-
-  const { data: media } = await supabase
-    .from('media')
-    .select('*')
-    .eq('pitch_id', pitchId)
-    .order('order_index', { ascending: true })
-
-  // Funding summary for the metadata bar + top bar anchor (same data the
-  // public funding API exposes; only shown for public links — see caller)
-  let funding: { goal: number; raised: number } | null = null
-  const { data: fundingRow } = await supabase
-    .from('funding')
-    .select('id, funding_goal')
-    .eq('pitch_id', pitchId)
-    .maybeSingle()
-  if (fundingRow) {
-    const { data: donations } = await supabase
-      .from('donations')
-      .select('amount')
-      .eq('funding_id', fundingRow.id)
-    const raised = (donations ?? []).reduce(
-      (sum: number, d: { amount: number }) => sum + d.amount,
-      0
-    )
-    funding = { goal: fundingRow.funding_goal, raised }
-  }
-
-  const mediaWithUrls: (MediaRecord & { signedUrl: string })[] = []
-  if (media && media.length > 0) {
-    const urlPromises = media.map(async (m: MediaRecord) => {
-      const { data } = await supabase.storage
-        .from('pitch-assets')
-        .createSignedUrl(m.storage_path, 604800) // 7 days
-      return { ...m, signedUrl: data?.signedUrl ?? '' }
-    })
-    const resolved = await Promise.all(urlPromises)
-    mediaWithUrls.push(...resolved.filter((m) => m.signedUrl))
-  }
-
-  return {
-    pitch: pitch as Pitch,
-    sections: (sections ?? []) as PitchSection[],
-    media: mediaWithUrls,
-    funding,
-  }
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -217,7 +108,7 @@ export default async function PitchViewPage({ params }: PageProps) {
                 href={`/dashboard/pitches/${id}/edit`}
                 className="font-mono text-[13px] leading-[20px] text-pop hover:text-pop-hover transition-colors"
               >
-                Edit project →
+                Edit project
               </a>
             </>
           ) : user ? (
@@ -233,7 +124,7 @@ export default async function PitchViewPage({ params }: PageProps) {
                 href={`/login?redirect=/p/${id}`}
                 className="font-mono text-[13px] leading-[20px] text-pop hover:text-pop-hover transition-colors"
               >
-                Log in to continue →
+                Log in to continue
               </a>
             </>
           )}
@@ -248,11 +139,7 @@ export default async function PitchViewPage({ params }: PageProps) {
   // Password-protected: verify access cookie before fetching any pitch data.
   // If the cookie is absent or invalid, render ONLY the gate — no content in the HTML.
   if (linkInfo.hasPassword) {
-    const cookieStore = await cookies()
-    const accessCookie = cookieStore.get(`pitch_access_${id}`)
-    const isVerified = accessCookie && verifyAccessCookie(id, accessCookie.value)
-
-    if (!isVerified) {
+    if (!(await isPasswordVerified(id))) {
       return (
         <div className="min-h-screen bg-background flex items-center justify-center px-[24px]">
           <div className="bg-surface border border-border rounded-none p-[32px] max-w-[400px] w-full">
@@ -272,29 +159,12 @@ export default async function PitchViewPage({ params }: PageProps) {
     }
   }
 
-  const data = await fetchPitchData(id)
+  const data = await fetchPitchData(id, { includeFunding: true })
   if (!data) notFound()
 
   const { pitch, sections, media } = data
 
-  // ─── Owner check (non-critical — silently skip on error) ───
-  let isOwner = false
-  try {
-    const userSupabase = await createClient()
-    const { data: { user } } = await userSupabase.auth.getUser()
-    if (user) {
-      const { data: profile } = await createAdminClient()
-        .from('users')
-        .select('id')
-        .eq('auth_id', user.id)
-        .single()
-      if (profile?.id === pitch.user_id) {
-        isOwner = true
-      }
-    }
-  } catch (err) {
-    console.error('Owner check failed (owner bar will be hidden):', err)
-  }
+  const isOwner = await isPitchOwner(pitch.user_id)
   // Record view after response is sent — after() keeps the serverless function alive
   // until the work completes instead of abandoning the promise on stream close.
   const reqHeaders = await headers()
@@ -306,30 +176,15 @@ export default async function PitchViewPage({ params }: PageProps) {
   // actually render — the public funding API requires a public share link
   const showFunding = !!data.funding && linkInfo.visibility === 'public'
 
-  const castItems = parseCardItems(pitch.cast_and_characters)
-  const teamItems = parseCardItems(pitch.team)
-
-  const directorMember = teamItems.find((t) =>
-    t.role.toLowerCase().includes('director')
-  )
-
-  const mediaBySectionMap = new Map<string, typeof media>()
-  const mediaById = new Map<string, string>()
-  for (const m of media) {
-    mediaById.set(m.id, m.signedUrl)
-    const key = m.section_name ?? '__none__'
-    if (!mediaBySectionMap.has(key)) mediaBySectionMap.set(key, [])
-    mediaBySectionMap.get(key)!.push(m)
-  }
-
-  const posterMedia = media.find(
-    (m) => m.section_name === 'poster' || (!m.section_name && m.file_type === 'image')
-  )
-
-  const sectionLabels = new Map<string, string>()
-  for (const def of OPTIONAL_SECTIONS) {
-    sectionLabels.set(def.key, def.label)
-  }
+  const {
+    castItems,
+    teamItems,
+    directorMember,
+    mediaBySectionMap,
+    mediaById,
+    posterMedia,
+    sectionLabels,
+  } = buildPitchViewModel(pitch, sections, media)
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pitchcraft.app'
   const creativeWorkJsonLd: Record<string, unknown> = {
@@ -379,6 +234,7 @@ export default async function PitchViewPage({ params }: PageProps) {
         version={pitch.current_version}
         topOffset={isOwner ? 'top-[40px]' : undefined}
         hasFunding={showFunding}
+        presentHref={`/p/${rawId}/present`}
       />
 
       <div className="animate-fade-up opacity-0 [animation-fill-mode:forwards]" style={{ animationDelay: delay() }}>
@@ -488,20 +344,4 @@ export default async function PitchViewPage({ params }: PageProps) {
   }
 
   return pitchContent
-}
-
-function parseCardItems(text: string): { name: string; role: string; detail?: string }[] {
-  try {
-    const parsed = JSON.parse(text)
-    if (!Array.isArray(parsed)) return []
-    return parsed
-      .filter((item: Record<string, unknown>) => item.name && item.role)
-      .map((item: Record<string, string>) => ({
-        name: item.name,
-        role: item.role,
-        detail: item.description || item.bio,
-      }))
-  } catch {
-    return []
-  }
 }
