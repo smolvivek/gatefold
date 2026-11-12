@@ -310,7 +310,7 @@ function EditorMock() {
           <div className="h-[7px] bg-text-primary/10 w-[97%]" />
           <div className="h-[7px] bg-text-primary/10 w-[58%]" />
         </div>
-        <p className="font-mono text-[10px] text-text-disabled">Saved — looks good.</p>
+        <p className="font-mono text-[10px] text-text-disabled">Saved. Looks good.</p>
       </div>
     </div>
   )
@@ -414,7 +414,7 @@ export function LandingHero() {
                   <h1 className="font-heading text-[clamp(40px,7vw,96px)] leading-[0.92] tracking-[-0.03em] text-text-primary mb-[8px]">
                     <span className="block">Present your work.</span>
                     <span className="block">Fund your vision.</span>
-                    <span className="block italic text-pop">Properly.</span>
+                    <span className="block">Properly.</span>
                   </h1>
                 </div>
 
@@ -424,7 +424,7 @@ export function LandingHero() {
                 >
                   <div className="h-[1px] bg-hairline mb-[32px]" />
                   <p className="text-text-secondary leading-[26px] text-[16px] mb-[40px] max-w-[380px]">
-                    One link for your entire project — logline, cast, budget,
+                    One link for your entire project: logline, cast, budget,
                     and funding. Share it with producers. Version it. Fund through it.
                   </p>
                 </div>
@@ -435,7 +435,6 @@ export function LandingHero() {
                 >
                   <Link href="/signup" onClick={() => playClick()} className={primaryCta}>
                     Create your first project
-                    <span aria-hidden="true">→</span>
                   </Link>
                   <Link href="/pricing" className={secondaryCta}>
                     See pricing
@@ -457,25 +456,17 @@ export function LandingHero() {
         {/* ── FEATURES ── */}
         <section className="px-[24px] md:px-[48px] py-[96px] border-t border-hairline bg-background">
           <div className="max-w-[1200px] mx-auto">
-            <div className="flex justify-end border-b border-hairline pb-[24px] mb-[96px]">
-              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-pop font-bold">
-                01 / Features
-              </span>
-            </div>
 
             {/* Row 1 — Build */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[64px] items-center mb-[120px]">
               <div>
-                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-pop font-bold block mb-[24px]">
-                  01 / Build
-                </span>
                 <h3 className="font-heading text-[clamp(28px,4vw,56px)] tracking-[-0.02em] leading-[1.0] mb-[24px]">
                   Built in an afternoon.
                   <br />
-                  <span className="italic">Not a weekend.</span>
+                  Not a weekend.
                 </h3>
                 <p className="text-text-secondary text-[16px] leading-[26px] mb-[32px] max-w-[440px]">
-                  Logline, vision, cast, budget, moodboard — assembled in one
+                  Logline, vision, cast, budget, moodboard, assembled in one
                   place. The editor enforces nothing. It doesn&apos;t suggest
                   tone, impose templates, or generate your copy. It gets out of
                   the way.
@@ -490,7 +481,7 @@ export function LandingHero() {
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-[12px]">
                       <span className="w-[16px] h-[1px] bg-text-disabled flex-shrink-0" />
-                      <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">
+                      <span className="text-[14px] leading-[20px] text-text-secondary">
                         {item}
                       </span>
                     </div>
@@ -508,17 +499,14 @@ export function LandingHero() {
               </div>
 
               <div className="order-1 md:order-2">
-                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-pop font-bold block mb-[24px]">
-                  02 / Share
-                </span>
                 <h3 className="font-heading text-[clamp(28px,4vw,56px)] tracking-[-0.02em] leading-[1.0] mb-[24px]">
                   One link.
                   <br />
-                  <span className="italic">Full control.</span>
+                  Full control.
                 </h3>
                 <p className="text-text-secondary text-[16px] leading-[26px] mb-[32px] max-w-[440px]">
                   Public, private, or password-protected. Send the right cut to
-                  the right person. Every version is retrievable — the early
+                  the right person. Every version is retrievable, so the early
                   draft doesn&apos;t disappear when you update the project.
                 </p>
                 <div className="space-y-[12px]">
@@ -530,7 +518,7 @@ export function LandingHero() {
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-[12px]">
                       <span className="w-[16px] h-[1px] bg-text-disabled flex-shrink-0" />
-                      <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">
+                      <span className="text-[14px] leading-[20px] text-text-secondary">
                         {item}
                       </span>
                     </div>
@@ -542,13 +530,10 @@ export function LandingHero() {
             {/* Row 3 — Fund */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[64px] items-center">
               <div>
-                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-pop font-bold block mb-[24px]">
-                  03 / Fund
-                </span>
                 <h3 className="font-heading text-[clamp(28px,4vw,56px)] tracking-[-0.02em] leading-[1.0] mb-[24px]">
                   Funding lives
                   <br />
-                  <span className="italic">on the page.</span>
+                  on the page.
                 </h3>
                 <p className="text-text-secondary text-[16px] leading-[26px] mb-[32px] max-w-[440px]">
                   No redirects. No third-party platform. Accept investment
@@ -560,11 +545,11 @@ export function LandingHero() {
                     "Razorpay-secured payments",
                     "Stretch goals + backer rewards",
                     "Funding progress visible to viewers",
-                    "Direct payout — no intermediary",
+                    "Direct payout, no intermediary",
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-[12px]">
                       <span className="w-[16px] h-[1px] bg-text-disabled flex-shrink-0" />
-                      <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-text-secondary">
+                      <span className="text-[14px] leading-[20px] text-text-secondary">
                         {item}
                       </span>
                     </div>
@@ -589,11 +574,8 @@ export function LandingHero() {
                   href="/pricing"
                   className="font-mono text-[9px] uppercase tracking-[0.15em] text-text-disabled hover:text-text-primary transition-colors"
                 >
-                  Full comparison →
+                  Full comparison
                 </Link>
-                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-pop font-bold">
-                  02 / Plans
-                </span>
               </div>
             </div>
 
@@ -664,7 +646,7 @@ export function LandingHero() {
                     href={item.href}
                     className={`font-mono text-[11px] uppercase tracking-[0.15em] transition-colors ${item.pop ? "text-pop hover:text-pop-hover" : "text-text-secondary hover:text-text-primary"}`}
                   >
-                    {item.cta} →
+                    {item.cta}
                   </Link>
                 </div>
               ))}
@@ -676,8 +658,7 @@ export function LandingHero() {
         <section className="bg-background border-t border-hairline overflow-hidden">
           <div className="max-w-[1200px] mx-auto">
             {/* Top rule + label */}
-            <div className="flex items-center justify-between px-[24px] md:px-[48px] pt-[80px] pb-[64px]">
-              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-pop font-bold">03 / Start</span>
+            <div className="flex items-center justify-end px-[24px] md:px-[48px] pt-[80px] pb-[64px]">
               <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-text-disabled/40">pitchcraft.app/p/your-project</span>
             </div>
 
@@ -689,7 +670,7 @@ export function LandingHero() {
                   style={{ fontSize: 'clamp(64px, 11vw, 156px)' }}>
                   Your project.
                   <br />
-                  <span className="italic text-pop">One page.</span>
+                  One page.
                 </h2>
               </div>
 
@@ -698,12 +679,11 @@ export function LandingHero() {
                 <p className="text-[15px] leading-[26px] text-text-secondary mb-[32px]">
                   One link for your logline,<br />
                   cast, budget, and funding.<br />
-                  Built to be read — not<br />
-                  forwarded as a PDF.
+                  Built to be read,<br />
+                  not forwarded as a PDF.
                 </p>
                 <Link href="/signup" onClick={() => playClick()} className={primaryCta}>
                   Create your first project
-                  <span aria-hidden="true">→</span>
                 </Link>
               </div>
             </div>

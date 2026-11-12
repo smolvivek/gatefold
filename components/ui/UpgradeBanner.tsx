@@ -66,8 +66,8 @@ export function UpgradeBanner() {
         <div className="max-w-[1200px] mx-auto flex items-center justify-between gap-[24px]">
           <p className="font-mono text-[13px] leading-[20px] text-success">
             {confirmed
-              ? 'Subscription activated — AI, unlimited pitches, and privacy controls are now active.'
-              : 'Payment received — activating your subscription… Refresh if this takes more than a minute.'}
+              ? 'Subscription activated. AI, unlimited pitches, and privacy controls are now active.'
+              : 'Payment received. Activating your subscription… Refresh if this takes more than a minute.'}
           </p>
           <button
             type="button"
@@ -88,7 +88,7 @@ export function UpgradeBanner() {
           <p className="font-mono text-[13px] leading-[20px] text-text-secondary">
             Your work is ready. Want private links, AI, and unlimited projects?{' '}
             <Link href="/pricing" className="text-pop hover:text-pop-hover transition-colors">
-              Go Pro →
+              Go Pro
             </Link>
           </p>
           <button

@@ -149,14 +149,14 @@ Accent (`#2755A1`) is the structural field — like the Royal Blue face of an F9
 
 | Use | Font | Style | Weight | Size |
 |-----|------|-------|--------|------|
-| **Hero display** | Newsreader | Italic for emphasis word, upright otherwise | 400-500 | `clamp(64px, 14vw, 200px)` |
+| **Hero display** | Newsreader | Upright. No single-word italic or colour accents | 400-500 | `clamp(64px, 14vw, 200px)` |
 | **Section heading** | Newsreader | Upright | 400-500 | `clamp(40px, 6vw, 80px)` |
 | **Pitch view title** | Newsreader | Upright bold | 700 | `clamp(64px, 14vw, 200px)` uppercase |
 | **Navbar wordmark** | Newsreader | Bold uppercase | 700 | `20px` tracking-tighter |
 | **Auth heading** | Newsreader | Italic | 400 | `48px-56px` |
 | **Body** | Inter | Regular | 400 | `16-17px` / `26-28px` line-height |
 | **Small / caption** | Inter | Regular | 400 | `13-14px` / `20-22px` line-height |
-| **Section labels** | JetBrains Mono | — | 700 | `10-11px` uppercase tracking-[0.20-0.25em] |
+| **Section labels** | JetBrains Mono | — | 700 | `10-11px` uppercase tracking-[0.20-0.25em]; only where the label carries information (metadata, status), never as an eyebrow above a heading |
 | **Corner annotations** | JetBrains Mono | — | 400 | `9-10px` uppercase tracking-[0.15-0.20em] |
 | **Metadata strip** | JetBrains Mono | — | 400 | `10-12px` uppercase |
 
@@ -219,6 +219,8 @@ Rounding softens. This system does not soften — it stays analog-precise.
 - Icon at 16-18px
 - `aria-label` required (decorative SVG = `aria-hidden="true"`)
 - Hover: background lightens to `surface-hover`
+
+**Anti-template rules (frontend-design audit, 2026-11-13):** no eyebrow labels or `01 /` numbering unless the content is a real sequence; no single word italicised or coloured in a headline; no `→` on buttons or links; no spaced em dashes in UI copy (use a colon, comma or full stop); feature lists are sentence-case Inter, not mono caps.
 
 **Button copy:** UPPERCASE. Action verb first. Six words max ("Create your first project", "Share this draft").
 

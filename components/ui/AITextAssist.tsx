@@ -164,7 +164,7 @@ export function AITextAssist({ fieldName, currentText, onAccept, context }: AITe
       {error === 'upgrade' && (
         <p className="text-[13px] leading-[20px] text-text-secondary mb-[12px]">
           AI assist is a Pro feature.{' '}
-          <a href="/pricing" className="text-link hover:underline font-medium">Upgrade to unlock →</a>
+          <a href="/pricing" className="text-link hover:underline font-medium">Upgrade to unlock</a>
         </p>
       )}
       {error && error !== 'upgrade' && (

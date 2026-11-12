@@ -835,7 +835,7 @@ export default function CreatePitchPage() {
           {draftRestored && (
             <div className="flex items-center justify-between gap-[16px] bg-surface border border-border rounded-none px-[16px] py-[10px] mb-[24px]">
               <span className="font-mono text-[12px] leading-[16px] text-text-secondary">
-                Draft restored — your previous work is back.
+                Draft restored. Your previous work is back.
               </span>
               <button
                 type="button"

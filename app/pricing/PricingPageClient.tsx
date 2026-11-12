@@ -198,7 +198,7 @@ export function PricingPageClient({ defaultCurrency }: PricingPageClientProps) {
           Pitchcraft
         </Link>
         <Link href="/dashboard" className="font-mono text-[12px] text-text-secondary hover:text-text-primary transition-colors duration-[200ms]">
-          Dashboard →
+          Dashboard
         </Link>
       </header>
 

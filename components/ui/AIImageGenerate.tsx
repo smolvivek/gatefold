@@ -165,7 +165,7 @@ export function AIImageGenerate({ fieldName, onAccept, maxReached, context }: AI
       {error === 'upgrade' && (
         <p className="text-[13px] leading-[20px] text-text-secondary mb-[12px]">
           AI image generation is a Pro feature.{' '}
-          <a href="/pricing" className="text-link hover:underline font-medium">Upgrade to unlock →</a>
+          <a href="/pricing" className="text-link hover:underline font-medium">Upgrade to unlock</a>
         </p>
       )}
       {error && error !== 'upgrade' && (

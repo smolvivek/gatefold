@@ -134,7 +134,7 @@ export default async function DashboardPage() {
                 Nothing yet.
               </h2>
               <p className="text-[14px] leading-[22px] text-text-secondary mb-[32px]">
-                Logline, vision, cast, budget — one page, one link.
+                Logline, vision, cast, budget. One page, one link.
               </p>
               <Link href="/dashboard/pitches/create">
                 <Button variant="primary">Create your first project</Button>

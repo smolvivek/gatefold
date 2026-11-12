@@ -52,7 +52,7 @@ export default function LoginPage() {
       {/* Heading */}
       <h1 className="font-heading text-[48px] leading-[1.0] tracking-[-0.02em] text-text-primary mb-[48px]">
         Welcome<br />
-        <span className="italic">back.</span>
+        back.
       </h1>
 
       {errors.general && (

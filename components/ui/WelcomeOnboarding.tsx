@@ -8,7 +8,7 @@ const STEPS = [
   {
     number: '01',
     title: 'Build your project',
-    body: 'Give your project structure — logline, synopsis, vision, cast, budget, and more. Add images, embed video, upload documents.',
+    body: 'Give your project structure: logline, synopsis, vision, cast, budget, and more. Add images, embed video, upload documents.',
   },
   {
     number: '02',
@@ -18,7 +18,7 @@ const STEPS = [
   {
     number: '03',
     title: 'Version as you go',
-    body: 'Cast changes. Budget shifts. Your project evolves — and every version persists. See what changed and why.',
+    body: 'Cast changes. Budget shifts. Your project evolves, and every version persists. See what changed and why.',
   },
 ]
 

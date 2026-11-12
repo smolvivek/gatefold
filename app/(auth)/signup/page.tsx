@@ -97,7 +97,7 @@ export default function SignupPage() {
       <div className="flex flex-col">
         <h1 className="font-heading text-[40px] leading-[1.0] tracking-[-0.02em] text-text-primary mb-[32px]">
           Check your<br />
-          <span className="italic">inbox.</span>
+          inbox.
         </h1>
         <p className="text-[14px] leading-[24px] text-text-secondary mb-[12px]">
           We sent a confirmation link to{" "}
@@ -134,7 +134,7 @@ export default function SignupPage() {
       {/* Heading */}
       <h1 className="font-heading text-[48px] leading-[1.0] tracking-[-0.02em] text-text-primary mb-[48px]">
         Start<br />
-        <span className="italic">building.</span>
+        building.
       </h1>
 
       {errors.general && (
