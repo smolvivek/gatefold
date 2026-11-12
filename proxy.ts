@@ -65,7 +65,9 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
+     * - payment webhooks and the public funding feed: they carry no user session,
+     *   so the Supabase auth round trip would only add latency and a failure mode
      */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/((?!_next/static|_next/image|favicon.ico|api/funding/webhook|api/subscriptions/webhook|api/funding/public|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 }

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { effectiveTier } from '@/lib/subscriptions/getTier'
 
 export async function GET() {
   try {
@@ -22,16 +23,13 @@ export async function GET() {
     }
 
     // Cancelled subscriptions that have passed their period end revert to free
-    if (
-      subscription.status === 'cancelled' &&
-      subscription.current_period_end &&
-      new Date(subscription.current_period_end) < new Date()
-    ) {
-      return NextResponse.json({ tier: 'free', status: 'cancelled' })
+    const tier = effectiveTier(subscription)
+    if (tier === 'free' && subscription.tier !== 'free') {
+      return NextResponse.json({ tier: 'free', status: subscription.status })
     }
 
     return NextResponse.json({
-      tier: subscription.tier,
+      tier,
       status: subscription.status,
       current_period_end: subscription.current_period_end,
       cancel_at_period_end: subscription.cancel_at_period_end,

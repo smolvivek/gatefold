@@ -9,6 +9,8 @@
 const KV_AVAILABLE =
   !!process.env.KV_REST_API_URL && !!process.env.KV_REST_API_TOKEN
 
+let warnedNoKv = false
+
 interface RateLimitResult {
   allowed: boolean
   remaining: number
@@ -28,6 +30,12 @@ export async function rateLimit(
   windowMs: number
 ): Promise<RateLimitResult> {
   if (!KV_AVAILABLE) {
+    if (process.env.NODE_ENV === 'production' && !warnedNoKv) {
+      warnedNoKv = true
+      console.error(
+        'rateLimit: KV_REST_API_URL / KV_REST_API_TOKEN are not set — rate limiting is DISABLED in production'
+      )
+    }
     // Dev fallback: always allow
     return { allowed: true, remaining: max - 1, retryAfterSeconds: 0 }
   }

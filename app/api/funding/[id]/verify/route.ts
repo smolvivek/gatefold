@@ -17,21 +17,20 @@ export async function POST(
       razorpay_order_id,
       razorpay_payment_id,
       razorpay_signature,
-      name,
-      email,
-      message,
-      currency,
     } = body as {
       razorpay_order_id: string
       razorpay_payment_id: string
       razorpay_signature: string
-      name: string
-      email: string
-      message?: string
-      currency: string
     }
 
-    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+    if (
+      typeof razorpay_order_id !== 'string' ||
+      typeof razorpay_payment_id !== 'string' ||
+      typeof razorpay_signature !== 'string' ||
+      !razorpay_order_id ||
+      !razorpay_payment_id ||
+      !razorpay_signature
+    ) {
       return NextResponse.json({ error: 'Missing payment fields' }, { status: 400 })
     }
 
@@ -46,7 +45,9 @@ export async function POST(
       .update(`${razorpay_order_id}|${razorpay_payment_id}`)
       .digest('hex')
 
-    if (expectedSignature !== razorpay_signature) {
+    const expectedBuf = Buffer.from(expectedSignature)
+    const givenBuf = Buffer.from(razorpay_signature)
+    if (expectedBuf.length !== givenBuf.length || !crypto.timingSafeEqual(expectedBuf, givenBuf)) {
       return NextResponse.json({ error: 'Invalid payment signature' }, { status: 400 })
     }
 
@@ -55,13 +56,23 @@ export async function POST(
     const razorpay = getRazorpay()
     const order = await razorpay.orders.fetch(razorpay_order_id)
     const verifiedAmount = typeof order.amount === 'string' ? parseInt(order.amount, 10) : Number(order.amount)
-    const verifiedCurrency = order.currency ?? currency ?? 'USD'
+    const verifiedCurrency = order.currency ?? 'USD'
 
-    // Cross-check: order must have been created for this funding campaign.
-    // Prevents replaying a payment from campaign A against campaign B.
-    const orderFundingId = (order.notes as Record<string, string> | null)?.funding_id
-    if (orderFundingId && orderFundingId !== fundingId) {
-      console.error(`fundingId mismatch: URL=${fundingId}, order.notes=${orderFundingId}`)
+    // Donor details come from the order notes written server-side when the order
+    // was created (same source as the Razorpay webhook), never from this request —
+    // otherwise anyone holding a valid payment could redirect the confirmation
+    // email or plant text in the creator's alert.
+    const notes = (order.notes as Record<string, string> | null) ?? {}
+    const name = notes.donor_name || 'Anonymous'
+    const email = notes.donor_email || ''
+    const message = notes.message || null
+
+    // Cross-check: the order must have been created for this funding campaign.
+    // Prevents replaying a payment from campaign A against campaign B. An order
+    // with no funding_id note is rejected too, not waved through.
+    const orderFundingId = notes.funding_id
+    if (orderFundingId !== fundingId) {
+      console.error(`fundingId mismatch: URL=${fundingId}, order.notes=${orderFundingId ?? 'missing'}`)
       return NextResponse.json({ error: 'Payment does not match this campaign' }, { status: 400 })
     }
 
@@ -102,7 +113,7 @@ export async function POST(
     }
 
     // Record donation using Razorpay-verified amount (not client-supplied)
-    const donorName = name ?? 'Anonymous'
+    const donorName = name
 
     const { error: insertError } = await supabase
       .from('donations')
@@ -110,8 +121,8 @@ export async function POST(
         funding_id: fundingId,
         amount: verifiedAmount,
         name: donorName,
-        email: email ?? '',
-        message: message ?? null,
+        email,
+        message,
         razorpay_order_id,
         razorpay_payment_id,
         razorpay_signature,

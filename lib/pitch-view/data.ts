@@ -2,6 +2,7 @@ import crypto from 'crypto'
 import { cookies } from 'next/headers'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
+import { getFundingTotals } from '@/lib/funding/totals'
 import type { Pitch, PitchSection, MediaRecord } from '@/lib/types/pitch'
 import { OPTIONAL_SECTIONS } from '@/lib/sections'
 
@@ -104,14 +105,14 @@ export async function fetchPitchData(pitchId: string, { includeFunding = false }
       .eq('pitch_id', pitchId)
       .maybeSingle()
     if (!fundingRow) return null
-    const { data: donations } = await supabase
-      .from('donations')
-      .select('amount')
-      .eq('funding_id', fundingRow.id)
-    const raised = (donations ?? []).reduce(
-      (sum: number, d: { amount: number }) => sum + d.amount,
-      0
-    )
+    let raised = 0
+    try {
+      raised = (await getFundingTotals(supabase, fundingRow.id)).raised
+    } catch (err) {
+      // Hide the funding widget rather than show a wrong total
+      console.error('Funding totals failed:', err)
+      return null
+    }
     return { goal: fundingRow.funding_goal, raised }
   }
 

@@ -45,6 +45,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid billing_period' }, { status: 400 })
     }
 
+    // One live subscription per user: a second checkout would bill twice against
+    // a single subscriptions row. A cancelled plan (still in its paid period) may
+    // be replaced.
+    const { data: current } = await supabase
+      .from('subscriptions')
+      .select('tier, status')
+      .eq('user_id', user.id)
+      .maybeSingle()
+    if (current && current.tier !== 'free' && current.status !== 'cancelled') {
+      return NextResponse.json(
+        { error: 'You already have an active subscription. Manage or cancel it from your account first.' },
+        { status: 409 }
+      )
+    }
+
     const currencyKey = currency === 'inr' ? 'inr' : 'usd'
     const productId = TIER_PRODUCT_IDS[tier][currencyKey][billing_period]
     if (!productId) {

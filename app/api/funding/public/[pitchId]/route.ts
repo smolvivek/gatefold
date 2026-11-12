@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { getFundingTotals } from '@/lib/funding/totals'
 
 // GET — public funding info for a shared pitch (no auth required)
 export async function GET(
@@ -34,17 +35,7 @@ export async function GET(
       return NextResponse.json({ funding: null })
     }
 
-    // Fetch total raised
-    const { data: donations } = await supabase
-      .from('donations')
-      .select('amount')
-      .eq('funding_id', funding.id)
-
-    const totalRaised = donations
-      ? donations.reduce((sum: number, d: { amount: number }) => sum + d.amount, 0)
-      : 0
-
-    const donorCount = donations?.length ?? 0
+    const { raised: totalRaised, donorCount } = await getFundingTotals(supabase, funding.id)
 
     return NextResponse.json({
       funding: {

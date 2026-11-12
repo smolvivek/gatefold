@@ -32,7 +32,7 @@ export async function POST() {
 
     // Update DB immediately so router.refresh() reflects the change.
     // Webhook will reconfirm on subscription.cancelled / subscription.expired.
-    await adminClient
+    const { error: updateError } = await adminClient
       .from('subscriptions')
       .update({
         status: 'cancelled',
@@ -40,6 +40,16 @@ export async function POST() {
         updated_at: new Date().toISOString(),
       })
       .eq('user_id', user.id)
+
+    if (updateError) {
+      // Dodo already has the cancellation; the webhook will sync the status, and a
+      // retry here is safe (the already-cancelled check keys off our DB row).
+      console.error('Subscription cancel: DB update failed after Dodo cancel:', updateError)
+      return NextResponse.json(
+        { error: 'Your cancellation was received but we could not update your account yet. Please refresh in a minute.' },
+        { status: 500 }
+      )
+    }
 
     return NextResponse.json({ success: true })
   } catch (error) {
