@@ -4,6 +4,22 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getUserTier } from '@/lib/subscriptions/getTier'
 
+const VISIBILITIES = ['public', 'private', 'password']
+// verify-password rejects anything longer, so a longer one could never be unlocked
+const MAX_PASSWORD_LENGTH = 128
+
+function validateShareInput(visibility: unknown, password: unknown): string | null {
+  if (visibility !== undefined && (typeof visibility !== 'string' || !VISIBILITIES.includes(visibility))) {
+    return 'Invalid visibility'
+  }
+  if (password !== null && password !== undefined) {
+    if (typeof password !== 'string' || password.length > MAX_PASSWORD_LENGTH) {
+      return `Password must be ${MAX_PASSWORD_LENGTH} characters or fewer`
+    }
+  }
+  return null
+}
+
 async function hashPassword(password: string): Promise<string> {
   return bcrypt.hash(password, 10)
 }
@@ -77,11 +93,15 @@ export async function POST(
     }
 
     const body = await request.json().catch(() => ({}))
-    const visibility = body.visibility || 'public'
+    const visibility = body.visibility ?? 'public'
     const password = body.password || null
 
-    // Private and password-protected links require Pro or Studio
-    if (visibility !== 'public') {
+    const invalid = validateShareInput(visibility, password)
+    if (invalid) return NextResponse.json({ error: invalid }, { status: 400 })
+
+    // Private and password-protected links require Pro or Studio — a password on
+    // a "public" link is password protection too.
+    if (visibility !== 'public' || password) {
       const admin = createAdminClient()
       const tier = await getUserTier(admin, user.id)
       if (tier === 'free') {
@@ -129,10 +149,13 @@ export async function PATCH(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
     }
 
-    const body = await request.json()
+    const body = await request.json().catch(() => ({}))
 
-    // Changing to private/password requires Pro or Studio
-    if (body.visibility !== undefined && body.visibility !== 'public') {
+    const invalid = validateShareInput(body.visibility, body.password || null)
+    if (invalid) return NextResponse.json({ error: invalid }, { status: 400 })
+
+    // Changing to private/password, or setting a password, requires Pro or Studio
+    if ((body.visibility !== undefined && body.visibility !== 'public') || body.password) {
       const admin = createAdminClient()
       const tier = await getUserTier(admin, user.id)
       if (tier === 'free') {

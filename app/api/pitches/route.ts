@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getUserTier } from '@/lib/subscriptions/getTier'
 import { getAuthProfile } from '@/lib/auth/getAuthProfile'
+import { CUSTOM_SECTION_KEYS, CUSTOM_SECTION_LIMITS } from '@/lib/sections'
 
 // POST — create a new pitch, with server-side tier enforcement
 export async function POST(request: NextRequest) {
@@ -57,6 +58,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Project name and logline are required' }, { status: 400 })
     }
 
+    const sections: { section_name: string; data: Record<string, unknown>; order_index: number }[] =
+      Array.isArray(body.sections) ? body.sections : []
+
+    // Custom sections are a paid feature. Sections are written below with the
+    // service-role client, which skips the RLS tier policy, so enforce it here.
+    const customCount = sections.filter((s) =>
+      (CUSTOM_SECTION_KEYS as readonly string[]).includes(s.section_name)
+    ).length
+    if (customCount > CUSTOM_SECTION_LIMITS[tier]) {
+      return NextResponse.json(
+        { error: 'Custom sections require Pro. Upgrade to add them.', upgrade: true },
+        { status: 403 }
+      )
+    }
+
     const { data: pitch, error: pitchError } = await admin
       .from('pitches')
       .insert({
@@ -81,9 +97,6 @@ export async function POST(request: NextRequest) {
     }
 
     // Insert optional sections server-side if provided
-    const sections: { section_name: string; data: Record<string, unknown>; order_index: number }[] =
-      Array.isArray(body.sections) ? body.sections : []
-
     if (sections.length > 0) {
       const { error: sectionsError } = await admin
         .from('pitch_sections')

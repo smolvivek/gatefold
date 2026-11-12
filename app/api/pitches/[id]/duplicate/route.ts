@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getUserTier } from '@/lib/subscriptions/getTier'
 import { getAuthProfile } from '@/lib/auth/getAuthProfile'
+import { CUSTOM_SECTION_KEYS, CUSTOM_SECTION_LIMITS } from '@/lib/sections'
 
 export async function POST(
   _request: NextRequest,
@@ -68,7 +69,8 @@ export async function POST(
         vision: original.vision,
         cast_and_characters: original.cast_and_characters,
         budget_range: original.budget_range,
-        status: 'looking',
+        status: original.status,
+        project_type: original.project_type ?? null,
         team: original.team,
         current_version: 1,
       })
@@ -85,9 +87,17 @@ export async function POST(
       .select('section_name, data, order_index')
       .eq('pitch_id', pitchId)
 
-    if (sections && sections.length > 0) {
+    // Custom sections are a paid feature and this insert bypasses RLS, so a user
+    // who has dropped to free does not carry them into the copy.
+    const copyable = (sections ?? []).filter(
+      (s) =>
+        CUSTOM_SECTION_LIMITS[tier] > 0 ||
+        !(CUSTOM_SECTION_KEYS as readonly string[]).includes(s.section_name)
+    )
+
+    if (copyable.length > 0) {
       const { error: sectionsError } = await admin.from('pitch_sections').insert(
-        sections.map((s) => ({
+        copyable.map((s) => ({
           pitch_id: copy.id,
           section_name: s.section_name,
           data: s.data,
