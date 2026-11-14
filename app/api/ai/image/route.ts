@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { generateImage } from '@/lib/ai/image'
 import { getUserTier } from '@/lib/subscriptions/getTier'
 
@@ -51,7 +52,8 @@ export async function POST(request: NextRequest) {
     // Rate limiting — atomic check+increment via RPC to prevent TOCTOU race
     const today = new Date().toISOString().split('T')[0]
 
-    const { data: allowed, error: rpcError } = await supabase
+    // Service role only: the function trusts its p_user_id and p_limit arguments.
+    const { data: allowed, error: rpcError } = await createAdminClient()
       .rpc('try_increment_ai_usage', {
         p_user_id: user.id,
         p_date: today,

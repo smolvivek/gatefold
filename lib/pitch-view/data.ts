@@ -1,29 +1,26 @@
-import crypto from 'crypto'
 import { cookies } from 'next/headers'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { getFundingTotals } from '@/lib/funding/totals'
 import type { Pitch, PitchSection, MediaRecord } from '@/lib/types/pitch'
 import { OPTIONAL_SECTIONS } from '@/lib/sections'
+import { accessCookieName, verifyAccessToken } from './access'
 
-// Any route that serves pitch content (the public view, presentation mode, …)
-// must share this guard — a route that forgets it would fall back to a
-// predictable HMAC secret and let anyone bypass password-protected pitches.
-if (process.env.NODE_ENV === 'production' && !process.env.PITCH_ACCESS_SECRET) {
-  throw new Error('PITCH_ACCESS_SECRET must be set in production')
-}
-
-export function verifyAccessCookie(pitchId: string, token: string): boolean {
-  const secret = process.env.PITCH_ACCESS_SECRET ?? 'dev-insecure-secret'
-  const expected = crypto.createHmac('sha256', secret).update(pitchId).digest('hex')
-  return token === expected
-}
-
-/** True when the request carries a valid password-gate cookie for this pitch. */
+/** True when the request carries a valid, unexpired password-gate cookie for this pitch. */
 export async function isPasswordVerified(pitchId: string): Promise<boolean> {
   const cookieStore = await cookies()
-  const accessCookie = cookieStore.get(`pitch_access_${pitchId}`)
-  return !!accessCookie && verifyAccessCookie(pitchId, accessCookie.value)
+  const accessCookie = cookieStore.get(accessCookieName(pitchId))
+  if (!accessCookie) return false
+
+  const { data: shareLink } = await createAdminClient()
+    .from('share_links')
+    .select('password_hash')
+    .eq('pitch_id', pitchId)
+    .is('deleted_at', null)
+    .single()
+  if (!shareLink?.password_hash) return false
+
+  return verifyAccessToken(pitchId, shareLink.password_hash, accessCookie.value)
 }
 
 /**

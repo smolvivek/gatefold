@@ -1,17 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
-import crypto from 'crypto'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { rateLimit } from '@/lib/ratelimit'
-
-if (process.env.NODE_ENV === 'production' && !process.env.PITCH_ACCESS_SECRET) {
-  throw new Error('PITCH_ACCESS_SECRET must be set in production')
-}
-
-function makeAccessToken(pitchId: string): string {
-  const secret = process.env.PITCH_ACCESS_SECRET ?? 'dev-insecure-secret'
-  return crypto.createHmac('sha256', secret).update(pitchId).digest('hex')
-}
+import { ACCESS_TOKEN_TTL_SECONDS, accessCookieName, makeAccessToken } from '@/lib/pitch-view/access'
 
 const MAX_ATTEMPTS = 5
 const LOCKOUT_MS = 15 * 60 * 1000
@@ -77,12 +68,14 @@ export async function POST(
     // Successful — KV key expires naturally after the window
 
     const response = NextResponse.json({ verified: true })
-    response.cookies.set(`pitch_access_${pitchId}`, makeAccessToken(pitchId), {
+    response.cookies.set(accessCookieName(pitchId), makeAccessToken(pitchId, shareLink.password_hash), {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 86400, // 24 hours
-      path: `/p/${pitchId}`,
+      maxAge: ACCESS_TOKEN_TTL_SECONDS,
+      // Scoped to /p (not /p/<uuid>) so the same cookie is sent when the
+      // pitch is opened through its slug URL.
+      path: '/p',
     })
     return response
   } catch (error) {
