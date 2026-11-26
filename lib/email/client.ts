@@ -28,7 +28,7 @@ function subjectSafe(value: string): string {
   return value.replace(/[\r\n]+/g, ' ').trim()
 }
 
-const FROM = process.env.EMAIL_FROM ?? 'PitchCraft <noreply@pitchcraft.app>'
+const FROM = process.env.EMAIL_FROM ?? 'Gatefold <noreply@gatefold.app>'
 
 export async function sendDonorConfirmation({
   to,
@@ -60,10 +60,10 @@ export async function sendDonorConfirmation({
           <tr><td style="padding:8px 0;color:#666;font-size:14px">Amount</td><td style="padding:8px 0;font-size:14px;font-weight:600">${formatted}</td></tr>
           <tr><td style="padding:8px 0;color:#666;font-size:14px">Reference</td><td style="padding:8px 0;font-size:14px;font-family:monospace">${esc(paymentId)}</td></tr>
         </table>
-        <p style="font-size:14px;color:#666">Your payment was processed securely by Razorpay. PitchCraft never stores your card details.</p>
+        <p style="font-size:14px;color:#666">Your payment was processed securely by Razorpay. Gatefold never stores your card details.</p>
         <p style="font-size:14px;color:#666">Keep this email as your payment record.</p>
         <hr style="border:none;border-top:1px solid #eee;margin:24px 0"/>
-        <p style="font-size:12px;color:#999">PitchCraft · Secure payments by Razorpay (PCI-DSS Level 1)</p>
+        <p style="font-size:12px;color:#999">Gatefold · Secure payments by Razorpay (PCI-DSS Level 1)</p>
       </div>
     `,
   })
@@ -96,7 +96,7 @@ export async function sendViewNotification({
           <a href="${esc(pitchEditUrl)}" style="background:#0A0A0A;color:#F5F5F5;padding:10px 20px;text-decoration:none;font-size:13px;display:inline-block">Open project →</a>
         </p>
         <hr style="border:none;border-top:1px solid #eee;margin:24px 0"/>
-        <p style="font-size:11px;color:#999">Pitchcraft · You're receiving this because you have view notifications enabled (Pro/Studio).</p>
+        <p style="font-size:11px;color:#999">Gatefold · You're receiving this because you have view notifications enabled (Pro/Studio).</p>
       </div>
     `,
   })
@@ -140,7 +140,7 @@ export async function sendCreatorDonationAlert({
         </table>
         <p style="font-size:14px;color:#666">Payouts are processed within 7 business days to your registered bank account.</p>
         <hr style="border:none;border-top:1px solid #eee;margin:24px 0"/>
-        <p style="font-size:12px;color:#999">PitchCraft · Secure payments by Razorpay (PCI-DSS Level 1)</p>
+        <p style="font-size:12px;color:#999">Gatefold · Secure payments by Razorpay (PCI-DSS Level 1)</p>
       </div>
     `,
   })

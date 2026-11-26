@@ -208,7 +208,7 @@ function PageHeader({ title }: { title: string }) {
   return (
     <View style={styles.pageHeader}>
       <Text style={styles.pageHeaderTitle}>{title.toUpperCase()}</Text>
-      <Text style={styles.pageHeaderTitle}>PITCHCRAFT</Text>
+      <Text style={styles.pageHeaderTitle}>GATEFOLD</Text>
     </View>
   )
 }
@@ -246,7 +246,7 @@ export function PitchPDF({ pitch, sections }: PitchPDFProps) {
   const statusLabel = STATUS_LABELS[pitch.status] ?? pitch.status
 
   return (
-    <Document title={projectName} author="Pitchcraft">
+    <Document title={projectName} author="Gatefold">
       {/* ── Cover page ── */}
       <Page size="A4" style={styles.page}>
         <View style={styles.coverAccentBar} />
@@ -273,7 +273,7 @@ export function PitchPDF({ pitch, sections }: PitchPDFProps) {
         </View>
 
         <View style={styles.coverFooter}>
-          <Text style={styles.coverFooterLabel}>PITCHCRAFT</Text>
+          <Text style={styles.coverFooterLabel}>GATEFOLD</Text>
           <Text style={styles.coverFooterLabel}>
             {new Date().getFullYear().toString()}
           </Text>

@@ -4,7 +4,7 @@ const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 })
 
-const SYSTEM_PROMPT = `You are a concise writing assistant for film and media professionals using Pitchcraft, a pitch-building tool.
+const SYSTEM_PROMPT = `You are a concise writing assistant for film and media professionals using Gatefold, a pitch-building tool.
 
 Your voice: professional, direct, film-industry standard. No flowery language, no filler, no marketing speak.
 

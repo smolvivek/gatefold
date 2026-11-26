@@ -17,7 +17,7 @@ If a feature request conflicts with these constraints, the answer is no. Even if
 **Why:** 
 - This violates the "creator control" principle. Generated content is not the creator's intent.
 - It commodifies creative work and incentivizes speed over craft.
-- It positions Pitchcraft as a "content factory," not a tool for intentional creators.
+- It positions Gatefold as a "content factory," not a tool for intentional creators.
 
 **What we allow instead:**
 - AI image generation for *reference* visuals (pay-as-you-go, optional)
@@ -34,7 +34,7 @@ If a feature request conflicts with these constraints, the answer is no. Even if
 
 **Why:**
 - Ranking flattens diverse creative work into a single metric.
-- It turns Pitchcraft into a competition, not a tool.
+- It turns Gatefold into a competition, not a tool.
 - Creators start optimizing for the algorithm instead of the work.
 - It creates perverse incentives (popularity over quality, commercial appeal over artistic intent).
 
@@ -54,15 +54,15 @@ If a feature request conflicts with these constraints, the answer is no. Even if
 **Why:**
 - This creates a power imbalance (creators become inventory to be evaluated).
 - It encourages producers to cherry-pick based on algorithmic ranking or hype.
-- It positions Pitchcraft as a hiring/talent platform, not a pitch tool.
-- It incentivizes Pitchcraft to manipulate which pitches are visible.
+- It positions Gatefold as a hiring/talent platform, not a pitch tool.
+- It incentivizes Gatefold to manipulate which pitches are visible.
 
 **What we allow instead:**
 - Direct sharing (creator sends their link to specific people)
 - Opt-in discoverability (Phase 2+, creators choose if searchable)
 - Creator networking (Phase 2+, light—functional, not social)
 
-**Hard line:** Pitchcraft is not a job board, marketplace, or talent platform. Creators control who sees their pitch.
+**Hard line:** Gatefold is not a job board, marketplace, or talent platform. Creators control who sees their pitch.
 
 ---
 
@@ -74,7 +74,7 @@ If a feature request conflicts with these constraints, the answer is no. Even if
 - Surveillance erodes trust.
 - Analytics incentivize creators to optimize for engagement, not clarity.
 - It turns creator data into a product to monetize.
-- Creators should never wonder if Pitchcraft is profiling them.
+- Creators should never wonder if Gatefold is profiling them.
 
 **What we allow instead:**
 - Version history (creators see their own evolution)
@@ -112,7 +112,7 @@ If a feature request conflicts with these constraints, the answer is no. Even if
 **Why:**
 - Social features create engagement addiction.
 - They incentivize creators to post frequently and seek validation.
-- They turn Pitchcraft into a social network, not a tool.
+- They turn Gatefold into a social network, not a tool.
 - Network effects pressure creators into behaviors that aren't about pitching.
 
 **What we allow instead:**
@@ -150,7 +150,7 @@ If a feature request conflicts with these constraints, the answer is no. Even if
 **We will not:** Create a "freemium" model where free tier is intentionally gimped to pressure upgrades.
 
 **Why:**
-- Pitchcraft should serve creators first, not revenue goals.
+- Gatefold should serve creators first, not revenue goals.
 - Artificial limitations create resentment and distrust.
 - Creators should feel the product is fair and sustainable, not extractive.
 
@@ -190,7 +190,7 @@ If a feature request conflicts with these constraints, the answer is no. Even if
 **Why:**
 - Feature creep dilutes focus.
 - It introduces complexity that serves profit, not creators.
-- It turns Pitchcraft from a focused tool into a bloated platform.
+- It turns Gatefold from a focused tool into a bloated platform.
 
 **What we will do instead:**
 - Ship MVP (presentation + funding + versioning, nothing else)
@@ -212,8 +212,8 @@ If a feature request conflicts with these constraints, the answer is no. Even if
 
 **Why:**
 - Creator data is sacred.
-- If Pitchcraft ever changes hands, new owners shouldn't inherit creator profiles.
-- Pitchcraft's value comes from trust, not data leverage.
+- If Gatefold ever changes hands, new owners shouldn't inherit creator profiles.
+- Gatefold's value comes from trust, not data leverage.
 
 **What we allow instead:**
 - Aggregate, anonymized analytics (for our own product development only)
@@ -221,7 +221,7 @@ If a feature request conflicts with these constraints, the answer is no. Even if
 - Transparent data policies (creators know exactly what we collect)
 - Data portability (creators can export their pitch data)
 
-**Hard line:** Creator data belongs to creators. Pitchcraft is a steward, not an owner.
+**Hard line:** Creator data belongs to creators. Gatefold is a steward, not an owner.
 
 ---
 
@@ -233,7 +233,7 @@ If a feature request conflicts with these constraints, the answer is no. Even if
 - Algorithms are biased (often toward demographics, genres, styles that are algorithmically "popular").
 - They reduce creative work to metrics.
 - They discourage risk-taking and experimentation.
-- They position Pitchcraft as an evaluator, not a tool.
+- They position Gatefold as an evaluator, not a tool.
 
 **What we allow instead:**
 - Data about funding (if a pitch raised money, it shows in history)
@@ -247,28 +247,28 @@ If a feature request conflicts with these constraints, the answer is no. Even if
 
 ## Constraint 13: No Feature Bundling with Other Products
 
-**We will not:** Force creators to use other products or services to use Pitchcraft effectively.
+**We will not:** Force creators to use other products or services to use Gatefold effectively.
 
 **Why:**
-- Pitchcraft should stand alone.
+- Gatefold should stand alone.
 - Bundling creates lock-in and reduces choice.
 - Creators should never feel pressured to use tools they don't want.
 
 **What we allow instead:**
 - Optional integration with writing tools (Phase 2+, creator can opt-in)
 - AI assistance as an optional feature (not forced)
-- Clear separation of products (Pitchcraft works without anything else)
+- Clear separation of products (Gatefold works without anything else)
 
-**Hard line:** Pitchcraft MVP works standalone. No external product required. Full stop.
+**Hard line:** Gatefold MVP works standalone. No external product required. Full stop.
 
 ---
 
 ## Summary: The Principle
 
-These constraints protect Pitchcraft's core mission: **to serve creators, not extract value from them.**
+These constraints protect Gatefold's core mission: **to serve creators, not extract value from them.**
 
 If a feature or business model violates these constraints, it doesn't matter how profitable or "competitive" it is.
 
 The answer is no.
 
-Pitchcraft's moat is trust. These constraints are how we earn and keep it.
+Gatefold's moat is trust. These constraints are how we earn and keep it.

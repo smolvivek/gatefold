@@ -83,7 +83,7 @@ FLOWS.md thinks like a first-time user. Where CRITIC.md finds bugs in code, FLOW
 2. Pitch appears in PitchCard with "Edit" link
 3. User opens edit page
 4. In edit page: configures share settings (public / private / password-protected)
-5. Pitch link auto-generated: `pitchcraft.app/p/[id]`
+5. Pitch link auto-generated: `gatefold.app/p/[id]`
 6. User copies the link (copy button in dashboard card or edit page)
 7. Sends link to recipient
 

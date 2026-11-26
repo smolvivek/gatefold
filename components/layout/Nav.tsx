@@ -42,7 +42,7 @@ function Nav({ links = [], user = null, tier }: NavProps) {
         href="/"
         className="font-heading font-bold text-[20px] tracking-tighter uppercase text-text-primary"
       >
-        Pitchcraft
+        Gatefold
       </Link>
 
       {/* Desktop links */}

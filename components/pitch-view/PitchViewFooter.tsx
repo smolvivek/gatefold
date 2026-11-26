@@ -21,7 +21,7 @@ export function PitchViewFooter({ projectName }: PitchViewFooterProps) {
         href="/"
         className="font-mono text-[9px] uppercase tracking-[0.2em] text-text-disabled hover:text-text-secondary transition-colors duration-[200ms]"
       >
-        Made with Pitchcraft
+        Made with Gatefold
       </Link>
     </footer>
   )

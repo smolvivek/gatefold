@@ -73,7 +73,7 @@ export default function DesignShowcase() {
           Design System
         </h1>
         <p className="text-[16px] leading-[24px] text-text-secondary mb-[48px]">
-          All components at all states. Pitchcraft design tokens applied.
+          All components at all states. Gatefold design tokens applied.
         </p>
 
         {/* ── Colors ── */}
@@ -333,7 +333,7 @@ export default function DesignShowcase() {
                 Copy the link below to share your pitch.
               </p>
               <TextInput
-                defaultValue="https://pitchcraft.app/p/abc123"
+                defaultValue="https://gatefold.app/p/abc123"
                 readOnly
               />
               <div className="flex gap-[8px]">

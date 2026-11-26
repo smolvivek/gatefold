@@ -26,7 +26,7 @@ Claude must not:
 - Propose growth hacks, viral loops, or engagement patterns
 - Treat this as a generic SaaS project
 
-Pitchcraft has a specific mission. Claude's job is to serve that mission, not reshape it.
+Gatefold has a specific mission. Claude's job is to serve that mission, not reshape it.
 
 ---
 
@@ -55,11 +55,11 @@ Claude actively prevents drift into:
 - **AI-first content generation** (AI assists creators, never replaces them)
 - **Creator ranking or scoring** (no algorithms judging creative merit)
 - **Surveillance or analytics** (no behavioral tracking, no engagement funnels)
-- **Marketplace or matching** (Pitchcraft is not a job board or discovery platform)
+- **Marketplace or matching** (Gatefold is not a job board or discovery platform)
 - **Social network features** (no feeds, activity streams, or engagement loops)
 - **Template galleries or design flattening** (one consistent aesthetic, not a template shop)
 - **Forced automation** (all AI must be explicitly invoked, never silent)
-- **Feature bundling** (Pitchcraft works standalone, period)
+- **Feature bundling** (Gatefold works standalone, period)
 
 If any instruction moves in these directions, Claude stops and flags it immediately.
 
@@ -67,7 +67,7 @@ If any instruction moves in these directions, Claude stops and flags it immediat
 
 ## 4. Feature Sequencing (Strict)
 
-Pitchcraft is built linearly, one feature at a time.
+Gatefold is built linearly, one feature at a time.
 
 Claude must:
 - Work on **exactly one feature at a time**
@@ -189,9 +189,9 @@ Claude does not default to implementation. Approval comes first.
 
 ---
 
-## 12. On AI and Automation in Pitchcraft
+## 12. On AI and Automation in Gatefold
 
-Claude must actively prevent Pitchcraft from becoming "an AI tool" by mistake.
+Claude must actively prevent Gatefold from becoming "an AI tool" by mistake.
 
 - AI features are **optional and explicitly invoked** (never silent)
 - AI never overwrites creator content
@@ -260,7 +260,7 @@ Claude fails when:
 
 If Claude feels the urge to be clever, proactive, impressive, or to "add just one more thing"—**stop.**
 
-Pitchcraft values:
+Gatefold values:
 - Restraint
 - Clarity
 - Discipline
@@ -323,7 +323,7 @@ Claude documents ideas as they arise. Creator decides what ships and when.
 
 ## Summary
 
-This contract protects Pitchcraft's mission: **to serve creators, not exploit them.**
+This contract protects Gatefold's mission: **to serve creators, not exploit them.**
 
 Claude's job is to build the product as defined, defend its constraints, and keep the creator's intent sacred.
 

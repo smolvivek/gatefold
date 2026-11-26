@@ -1,6 +1,6 @@
 # SKILLS.md — Claude Code Custom Skills
 
-Custom slash commands for PitchCraft development. Located in `.claude/skills/`.
+Custom slash commands for Gatefold development. Located in `.claude/skills/`.
 
 ---
 
@@ -90,7 +90,7 @@ Runs:
 Returns: PASS/FAIL per check, deploy readiness verdict.
 
 ### `/copy-review`
-Reviews text against PitchCraft voice:
+Reviews text against Gatefold voice:
 - Apple-level word economy
 - Cinematic confidence (filmmaker, not marketer)
 - Concrete over abstract
@@ -139,7 +139,7 @@ Returns: BLOCK/WARN/NOTE per issue.
 
 ## MCP Servers (configured — activate on session restart)
 
-| Server | Package | What it does | In Pitchcraft |
+| Server | Package | What it does | In Gatefold |
 |--------|---------|-------------|---------------|
 | Playwright | `@playwright/mcp@latest` | Full browser automation: navigate, click, fill forms, screenshot | UX audits of all flows end-to-end |
 | Puppeteer | `@modelcontextprotocol/server-puppeteer` | Headless Chrome: screenshots, console errors, perf | Visual regression checks, JS error detection |

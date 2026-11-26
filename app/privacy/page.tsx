@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy — Pitchcraft',
-  description: 'Pitchcraft privacy policy. Your data belongs to you.',
+  title: 'Privacy Policy — Gatefold',
+  description: 'Gatefold privacy policy. Your data belongs to you.',
 }
 
 export default function PrivacyPage() {
@@ -19,7 +19,7 @@ export default function PrivacyPage() {
           </p>
 
           <p>
-            Pitchcraft is built on trust. This policy explains what data we collect, why, and what
+            Gatefold is built on trust. This policy explains what data we collect, why, and what
             we never do with it.
           </p>
 
@@ -118,7 +118,7 @@ export default function PrivacyPage() {
             </h2>
             <p>
               If you are in the EU/EEA, you have additional rights under GDPR including data portability
-              and the right to be forgotten. Contact us at hello@pitchcraft.app to exercise these rights.
+              and the right to be forgotten. Contact us at hello@gatefold.app to exercise these rights.
             </p>
           </section>
 
@@ -137,7 +137,7 @@ export default function PrivacyPage() {
               10. Contact
             </h2>
             <p>
-              Privacy questions? Email hello@pitchcraft.app.
+              Privacy questions? Email hello@gatefold.app.
             </p>
           </section>
         </div>

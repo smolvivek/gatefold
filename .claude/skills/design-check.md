@@ -1,6 +1,6 @@
 # /design-check
 
-Audit the specified component or file against PitchCraft's A24 dark design system.
+Audit the specified component or file against Gatefold's A24 dark design system.
 
 ## Steps
 

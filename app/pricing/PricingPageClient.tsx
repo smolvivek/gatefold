@@ -98,7 +98,7 @@ function TierCard({ name, usd, inr, description, cta, ctaHref, checkoutTier, hig
 const faqs = [
   {
     q: 'Are there payment processor fees on funding?',
-    a: "Yes. Payment processors charge their own fees (typically 2–3% per transaction) on top of Pitchcraft's commission. That goes to the processor, not us.",
+    a: "Yes. Payment processors charge their own fees (typically 2–3% per transaction) on top of Gatefold's commission. That goes to the processor, not us.",
   },
   {
     q: 'Can I change plans anytime?',
@@ -195,7 +195,7 @@ export function PricingPageClient({ defaultCurrency }: PricingPageClientProps) {
       {/* Minimal wordmark nav */}
       <header className="px-[24px] md:px-[48px] py-[20px] border-b border-border flex items-center justify-between">
         <Link href="/" className="font-heading font-bold text-[18px] tracking-tight text-text-primary hover:text-pop transition-colors duration-[200ms]">
-          Pitchcraft
+          Gatefold
         </Link>
         <Link href="/dashboard" className="font-mono text-[12px] text-text-secondary hover:text-text-primary transition-colors duration-[200ms]">
           Dashboard
@@ -280,7 +280,7 @@ export function PricingPageClient({ defaultCurrency }: PricingPageClientProps) {
               ))}
             </div>
             <p className="font-mono text-[11px] leading-[16px] text-text-disabled text-center mt-[12px]">
-              Payment processor fees are always separate from Pitchcraft&apos;s commission
+              Payment processor fees are always separate from Gatefold&apos;s commission
             </p>
           </div>
 
@@ -315,10 +315,10 @@ export function PricingPageClient({ defaultCurrency }: PricingPageClientProps) {
       {/* Footer */}
       <footer className="px-[24px] md:px-[48px] py-[24px] border-t border-border flex items-center justify-between">
         <Link href="/" className="font-mono text-[11px] text-text-disabled hover:text-text-secondary transition-colors duration-[200ms]">
-          ← Back to Pitchcraft
+          ← Back to Gatefold
         </Link>
         <span className="font-mono text-[11px] text-text-disabled">
-          © {new Date().getFullYear()} Pitchcraft
+          © {new Date().getFullYear()} Gatefold
         </span>
       </footer>
     </div>

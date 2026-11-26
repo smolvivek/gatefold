@@ -33,7 +33,7 @@ export default async function DashboardPage() {
   // Fetch subscription tier for nav
   const tier = await getUserTier(supabase, user.id)
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pitchcraft.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gatefold.app";
 
   // Fetch pitches first, then share links with actual IDs
   const { data: pitches } = await supabase

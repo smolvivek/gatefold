@@ -25,19 +25,19 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Pitchcraft — Present, fund, and version your creative work",
+  title: "Gatefold — Present, fund, and version your creative work",
   description:
     "One link for your entire project. Structure your pitch, share it with producers and collaborators, raise funding, and track versions — built for filmmakers, writers, and creators.",
   openGraph: {
-    title: "Pitchcraft",
+    title: "Gatefold",
     description:
       "One link for your entire project. Structure, share, fund, and version your creative work.",
     type: "website",
-    siteName: "Pitchcraft",
+    siteName: "Gatefold",
   },
   twitter: {
     card: "summary",
-    title: "Pitchcraft",
+    title: "Gatefold",
     description:
       "One link for your entire project. Structure, share, fund, and version your creative work.",
   },
@@ -51,8 +51,8 @@ export default function RootLayout({
   const orgJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Pitchcraft",
-    url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://pitchcraft.app",
+    name: "Gatefold",
+    url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://gatefold.app",
     description: "Present, fund, and evolve your creative work.",
   };
 

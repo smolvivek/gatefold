@@ -15,7 +15,7 @@ export function SoundToggle() {
     setEnabled(isSoundEnabled());
 
     // First-visit nudge: show "Sound: OFF" label for 3s if preference not yet set
-    if (localStorage.getItem("pitchcraft-sound") === null) {
+    if (localStorage.getItem("gatefold-sound") === null) {
       setShowLabel(true);
       const t = setTimeout(() => setShowLabel(false), 3000);
       return () => clearTimeout(t);

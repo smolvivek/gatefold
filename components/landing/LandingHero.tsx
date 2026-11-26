@@ -105,7 +105,7 @@ function HeroPitchDemo() {
         <span className="w-[7px] h-[7px] rounded-full bg-border" aria-hidden="true" />
         <span className="w-[7px] h-[7px] rounded-full bg-border" aria-hidden="true" />
         <span className="ml-[10px] flex-1 min-w-0 truncate bg-background px-[10px] py-[3px] font-mono text-[9px] text-text-disabled">
-          pitchcraft.app/p/{p.slug}
+          gatefold.app/p/{p.slug}
         </span>
       </div>
 
@@ -330,7 +330,7 @@ function ShareMock() {
       </div>
       <div className="flex items-stretch border border-border bg-background">
         <span className="flex-1 min-w-0 truncate px-[14px] py-[12px] font-mono text-[11px] text-text-primary">
-          pitchcraft.app/p/the-weight-of-water
+          gatefold.app/p/the-weight-of-water
         </span>
         <span className="flex items-center border-l border-border px-[14px] font-mono text-[9px] uppercase tracking-[0.15em] text-text-secondary">
           Copy
@@ -659,7 +659,7 @@ export function LandingHero() {
           <div className="max-w-[1200px] mx-auto">
             {/* Top rule + label */}
             <div className="flex items-center justify-end px-[24px] md:px-[48px] pt-[80px] pb-[64px]">
-              <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-text-disabled/40">pitchcraft.app/p/your-project</span>
+              <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-text-disabled/40">gatefold.app/p/your-project</span>
             </div>
 
             {/* Massive left headline, right column with action */}
@@ -698,7 +698,7 @@ export function LandingHero() {
           <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-end gap-[32px]">
             <div className="space-y-[8px]">
               <div className="font-heading font-bold text-[20px] uppercase tracking-tighter text-text-primary">
-                Pitchcraft
+                Gatefold
               </div>
               <p className="font-mono text-[9px] tracking-[0.2em] uppercase text-text-disabled/50">
                 © {new Date().getFullYear()} All rights reserved.

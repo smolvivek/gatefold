@@ -87,7 +87,7 @@ export function BudgetBreakdownClient({ defaultCurrency }: BudgetBreakdownClient
       {/* Minimal wordmark nav */}
       <header className="px-[24px] md:px-[48px] py-[20px] border-b border-border flex items-center justify-between">
         <Link href="/" className="font-heading font-bold text-[18px] tracking-tight text-text-primary hover:text-pop transition-colors duration-[200ms]">
-          Pitchcraft
+          Gatefold
         </Link>
         <Link href="/dashboard" className="font-mono text-[12px] text-text-secondary hover:text-text-primary transition-colors duration-[200ms]">
           Dashboard
@@ -189,10 +189,10 @@ export function BudgetBreakdownClient({ defaultCurrency }: BudgetBreakdownClient
       {/* Footer */}
       <footer className="px-[24px] md:px-[48px] py-[24px] border-t border-border flex items-center justify-between">
         <Link href="/" className="font-mono text-[11px] text-text-disabled hover:text-text-secondary transition-colors duration-[200ms]">
-          ← Back to Pitchcraft
+          ← Back to Gatefold
         </Link>
         <span className="font-mono text-[11px] text-text-disabled">
-          © {new Date().getFullYear()} Pitchcraft
+          © {new Date().getFullYear()} Gatefold
         </span>
       </footer>
     </div>

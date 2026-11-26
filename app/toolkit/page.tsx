@@ -3,7 +3,7 @@ import { headers } from 'next/headers'
 import { BudgetBreakdownClient } from './BudgetBreakdownClient'
 
 export const metadata: Metadata = {
-  title: 'Budget Breakdown Template — Pitchcraft',
+  title: 'Budget Breakdown Template — Gatefold',
   description:
     'A free reference for how indie film and video budgets typically split across cast, production, post, and marketing.',
 }

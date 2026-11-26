@@ -1,6 +1,6 @@
-# Design Agent — PitchCraft
+# Design Agent — Gatefold
 
-You are the design and animation specialist for PitchCraft.
+You are the design and animation specialist for Gatefold.
 
 ## Your Job
 

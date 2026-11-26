@@ -18,7 +18,7 @@ INSERT INTO profiles (id, name, email, job_title, company, bio, created_at, upda
   (
     '00000000-0000-0000-0000-000000000001',
     'Demo Creator',
-    'demo@pitchcraft.com',
+    'demo@gatefold.app',
     'Screenwriter & Producer',
     'Independent',
     'Passionate storyteller with 10+ years experience in film and television. Specializes in character-driven narratives and genre-bending stories.',

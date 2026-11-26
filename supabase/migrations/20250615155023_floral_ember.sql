@@ -1,5 +1,5 @@
 /*
-  # Initial Schema for PitchCraft
+  # Initial Schema for Gatefold
 
   1. New Tables
     - `profiles`

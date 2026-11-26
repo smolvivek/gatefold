@@ -21,7 +21,7 @@ Last updated: February 2026
 ### Key Observations
 
 - **NuPitch** is the closest direct competitor conceptually but unproven and early
-- **Slated** has real investor connections but algorithmically scores creative work (anti-PitchCraft philosophy)
+- **Slated** has real investor connections but algorithmically scores creative work (anti-Gatefold philosophy)
 - **Seed&Spark** handles funding well but campaigns are temporary, not permanent links
 - **Coverfly shutting down** left a gap in free writer-to-industry tools
 - **Every direct competitor** handles only one piece (presentation OR funding OR connections), never all three
@@ -43,7 +43,7 @@ Last updated: February 2026
 
 1. **Notion** — the biggest threat because it's free, flexible, and already embedded in filmmaker workflows
 2. **Canva** — the current default for visual pitch decks. Must be dramatically better at the specific job
-3. **Gamma** — growing fast but generic. PitchCraft wins by being purpose-built
+3. **Gamma** — growing fast but generic. Gatefold wins by being purpose-built
 
 ---
 
@@ -61,18 +61,18 @@ Notion              ~        ✗       ✗         ~          ✗          ✗
 NuPitch             ✓        ✗       ✗         ?          ?          ?
 Slated              ✗        ~       ✗         ✗          ✗          ~
 Pitch.com           ✓        ✗       ✗         ✓          ✗          ~
-PitchCraft          ✓        ✓       ✓         ✓          ✓          ✓
+Gatefold          ✓        ✓       ✓         ✓          ✓          ✓
 ```
 
 ---
 
-## Six Structural Gaps PitchCraft Fills
+## Six Structural Gaps Gatefold Fills
 
 ### 1. No Tool Combines Presentation + Funding + Versioning
-Every competitor handles one piece. PitchCraft integrates all three in a single product.
+Every competitor handles one piece. Gatefold integrates all three in a single product.
 
 ### 2. Visual Quality — Most Filmmaker Tools Look Like 2015 SaaS
-InkTip (2005), Stage 32 (2012), Slated (finance terminal), Seed&Spark (generic white startup). These are tools for visual storytellers that look worse than the work they represent. PitchCraft's A24 dark aesthetic is the first filmmaker tool that matches the quality of the films it serves.
+InkTip (2005), Stage 32 (2012), Slated (finance terminal), Seed&Spark (generic white startup). These are tools for visual storytellers that look worse than the work they represent. Gatefold's A24 dark aesthetic is the first filmmaker tool that matches the quality of the films it serves.
 
 ### 3. The "One Link" Problem
 Filmmakers currently assemble pitches across 4–6 tools: synopsis in Google Docs, mood boards in Canva, budget in Excel, deck in Keynote, bios on LinkedIn, funding on Kickstarter. Then they email PDFs or paste multiple links. No single URL represents a complete pitch.
@@ -81,10 +81,10 @@ Filmmakers currently assemble pitches across 4–6 tools: synopsis in Google Doc
 Filmmakers end up with "PitchDeck_v3_FINAL_REAL_v2.pdf." No tool in this space offers meaningful version history for evolving creative work.
 
 ### 5. Trust and Privacy
-Filmmakers are increasingly anxious about tools scanning uploaded content for AI training. Some companies "quietly change their terms of service to give themselves full access to project materials." PitchCraft's stance (no analytics, no surveillance, no AI training on content, creator owns everything) is a genuine differentiator.
+Filmmakers are increasingly anxious about tools scanning uploaded content for AI training. Some companies "quietly change their terms of service to give themselves full access to project materials." Gatefold's stance (no analytics, no surveillance, no AI training on content, creator owns everything) is a genuine differentiator.
 
 ### 6. Template Fatigue
-VCs and industry professionals recognize Canva templates and Gamma outputs. PitchCraft's single opinionated aesthetic (no template gallery) means every pitch looks premium by default.
+VCs and industry professionals recognize Canva templates and Gamma outputs. Gatefold's single opinionated aesthetic (no template gallery) means every pitch looks premium by default.
 
 ---
 
@@ -102,21 +102,21 @@ VCs and industry professionals recognize Canva templates and Gamma outputs. Pitc
 | Papermark Pro | $24/mo | Secure document sharing |
 | Slated Analysis | $495 one-time | Script/financial analysis |
 
-### PitchCraft Pricing Opportunity
+### Gatefold Pricing Opportunity
 
-A filmmaker currently paying Canva ($13) + Papermark ($24) + time assembling = $37+/month in tools and effort. PitchCraft replaces all of it.
+A filmmaker currently paying Canva ($13) + Papermark ($24) + time assembling = $37+/month in tools and effort. Gatefold replaces all of it.
 
-- **Free tier:** 1 pitch, basic features, PitchCraft branding on shared link
+- **Free tier:** 1 pitch, basic features, Gatefold branding on shared link
 - **Pro tier ($15–20/mo):** Unlimited pitches, password protection, funding integration, version history, no branding
 
 ---
 
 ## Positioning
 
-**One sentence:** PitchCraft is the only tool where a filmmaker can present, fund, and version their creative vision through a single, beautiful, shareable link.
+**One sentence:** Gatefold is the only tool where a filmmaker can present, fund, and version their creative vision through a single, beautiful, shareable link.
 
-**Why a filmmaker would choose PitchCraft over a Notion page:**
-1. It looks cinematic — sending a PitchCraft link says "I take my work seriously"
+**Why a filmmaker would choose Gatefold over a Notion page:**
+1. It looks cinematic — sending a Gatefold link says "I take my work seriously"
 2. It is structured for their exact workflow — logline, synopsis, vision, cast, budget, team
 3. It is one living link, not a dead PDF attachment
 4. Funding is built in — no separate Kickstarter campaign

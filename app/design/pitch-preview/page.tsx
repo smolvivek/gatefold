@@ -14,7 +14,7 @@ import { PitchViewFooter } from '@/components/pitch-view/PitchViewFooter'
 import { Button } from '@/components/ui/Button'
 
 export const metadata: Metadata = {
-  title: 'Pitch View Preview — Pitchcraft',
+  title: 'Pitch View Preview — Gatefold',
   robots: { index: false },
 }
 

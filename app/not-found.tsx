@@ -15,7 +15,7 @@ export default function NotFound() {
           The page you&apos;re looking for doesn&apos;t exist or has been moved.
         </p>
         <Link href="/">
-          <Button variant="primary">Back to Pitchcraft</Button>
+          <Button variant="primary">Back to Gatefold</Button>
         </Link>
       </div>
     </div>

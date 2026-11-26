@@ -65,7 +65,7 @@ Claude understands the product deeply and may spot opportunities the creator has
 **Solution:** Auto-save pitch versions on edit. Show visual diffs (highlight changed text). Free tier = 3 versions, paid = unlimited.
 **Impact:** Solves real creator pain (tracking feedback cycles). Natural paid tier upsell. Builds trust (we understand iteration workflow).
 **Implementation:** Snapshot pitch data on save, diff algorithm for text comparison, UI to browse versions.
-**Status:** Proposed
+**Status:** Shipped — `pitch_versions` table, `GET/POST /api/pitches/[id]/versions` + `GET /api/pitches/[id]/versions/[versionId]` (restore, see DEBT.md D-10). `components/ui/VersionDiff.tsx` + `lib/diff/text.ts` render text diffs in the edit page. Doc status was stale — this was already live.
 
 ---
 
@@ -83,7 +83,7 @@ Claude understands the product deeply and may spot opportunities the creator has
 **Type:** Feature + Revenue
 **Problem:** Creators share pitches with trusted collaborators (co-writers, producers, mentors) for feedback. Right now they have to use email/Slack/Google Docs comments separately.
 **Solution:** Allow pitch owner to invite specific people (via email) to leave inline comments on pitch sections. Comments are private, only visible to owner + invited collaborators. Free tier = 2 collaborators, paid = unlimited.
-**Impact:** Keeps feedback workflow inside Pitchcraft. Reduces tool-switching. Natural paid upsell. Builds trust (we understand creative collaboration).
+**Impact:** Keeps feedback workflow inside Gatefold. Reduces tool-switching. Natural paid upsell. Builds trust (we understand creative collaboration).
 **Implementation:** Invite system, comment threads per pitch section, RLS policies for access control.
 **Status:** Proposed
 
@@ -95,7 +95,7 @@ Claude understands the product deeply and may spot opportunities the creator has
 **Solution:** One-click "Export to PDF" that generates a clean, print-ready PDF of the pitch. Free tier = basic layout, paid tier = custom branding (logo, colors, fonts).
 **Impact:** Removes friction for traditional submission workflows. Shows we understand hybrid workflows (digital + print). Natural paid feature.
 **Implementation:** Server-side PDF generation (Puppeteer or similar), template system for layout, branding options.
-**Status:** Proposed
+**Status:** Shipped, differs from proposal — `POST /api/pitches/[id]/pdf` uses `@react-pdf/renderer`, `ExportPDFButton.tsx` wired into both `/p/[id]` and the new present view. Built as Pro/Studio-only (403 on free), not "free=basic, paid=branded" as originally proposed — no branding/logo customization layer exists, it's one template gated behind the paid tiers. Doc status was stale — this was already live.
 
 ---
 
@@ -105,17 +105,17 @@ Claude understands the product deeply and may spot opportunities the creator has
 **Solution:** Replace with warm, actionable empty state: "Your first pitch starts here" + subtle icon + "Create Pitch" button (even if non-functional yet). When pitches exist, show cards with thumbnails.
 **Impact:** Makes the product feel alive, even when empty. Sets expectations without feeling incomplete.
 **Implementation:** Design better empty state component, add to dashboard.
-**Status:** Proposed
+**Status:** Shipped — `app/dashboard/page.tsx:128-141` — "Nothing yet." + "Create your first project" CTA (approved copy, see docs/APPROVED_COPY.md safeguard). Pitches render as `PitchCard` list when present. Doc status was stale — this was already live.
 
 ---
 
 ### Pitch Link Customization
 **Type:** Feature + Revenue
-**Problem:** Default pitch URLs are random UUIDs: `pitchcraft.com/pitch/a3f9c8d2-...`. Not memorable, not brandable.
-**Solution:** Allow creators to set custom slugs: `pitchcraft.com/pitch/neon-ghost-film`. Free tier = random UUID, paid tier = custom slug.
-**Impact:** More professional, easier to share verbally ("Check out pitchcraft.com/pitch/my-project"), natural paid feature.
+**Problem:** Default pitch URLs are random UUIDs: `gatefold.app/pitch/a3f9c8d2-...`. Not memorable, not brandable.
+**Solution:** Allow creators to set custom slugs: `gatefold.app/pitch/neon-ghost-film`. Free tier = random UUID, paid tier = custom slug.
+**Impact:** More professional, easier to share verbally ("Check out gatefold.app/pitch/my-project"), natural paid feature.
 **Implementation:** Slug validation, uniqueness check, routing update.
-**Status:** Proposed
+**Status:** Shipped — `PATCH /api/pitches/[id]/route.ts` (Pro/Studio only, tier-gated), edit page slug field with local validation + uniqueness check (409 on conflict). `/p/[slug]` resolves via `resolveIdOrSlug`. Doc status was stale — this was already live.
 
 ---
 
@@ -139,13 +139,13 @@ Claude understands the product deeply and may spot opportunities the creator has
 
 ---
 
-### "Powered by Pitchcraft" Footer = Organic Growth
+### "Powered by Gatefold" Footer = Organic Growth
 **Type:** Strategy / Revenue
-**Problem:** Every public pitch has a `PitchViewFooter` that says "Made with Pitchcraft". It's not a link. Nobody clicks non-link footer text. It's a marketing touchpoint doing zero work.
-**Solution:** Make "Made with Pitchcraft" a link to the landing page for free-tier pitches. For Pro/Studio pitches, keep it as plain text (or remove it — removing the "badge" could be a Pro feature worth calling out). Every pitch viewed by a producer is a potential acquisition channel.
-**Impact:** Turns every shared pitch into passive acquisition. A producer opens 10 pitches and sees "Made with Pitchcraft" 10 times. On click 3, they might click through. This is how Canva grew.
+**Problem:** Every public pitch has a `PitchViewFooter` that says "Made with Gatefold". It's not a link. Nobody clicks non-link footer text. It's a marketing touchpoint doing zero work.
+**Solution:** Make "Made with Gatefold" a link to the landing page for free-tier pitches. For Pro/Studio pitches, keep it as plain text (or remove it — removing the "badge" could be a Pro feature worth calling out). Every pitch viewed by a producer is a potential acquisition channel.
+**Impact:** Turns every shared pitch into passive acquisition. A producer opens 10 pitches and sees "Made with Gatefold" 10 times. On click 3, they might click through. This is how Canva grew.
 **Implementation:** Make the text a `<Link>` to the homepage. Consider passing `tier` prop to `PitchViewFooter` — free = linked, paid = unlinked (or "Powered by" removed entirely as a Pro perk).
-**Status:** Shipped — "Made with Pitchcraft" is now a link to the homepage on all pitches. Tier-based distinction (free = linked, paid = plain) deferred to when version/tier info is passed to pitch view.
+**Status:** Shipped — "Made with Gatefold" is now a link to the homepage on all pitches. Tier-based distinction (free = linked, paid = plain) deferred to when version/tier info is passed to pitch view.
 
 ---
 
@@ -183,7 +183,7 @@ Claude understands the product deeply and may spot opportunities the creator has
 **Why:** The biggest single conversion unlock for the Indian market. At current global pricing, Pro costs ₹1,000/month — double what a reasonable INR-native price would be. More impactful than doubling ad spend.
 **How:** DodoPayments supports INR. Create INR-denominated price IDs. Detect locale (Accept-Language header or IP geolocation) on the pricing page. Show INR pricing to IN users, USD to everyone else.
 **Revenue impact:** Estimated 3–5x conversion rate improvement in India at ₹499 vs ₹1,000.
-**Status:** Proposed
+**Status:** Shipped (code) — `app/pricing/page.tsx` detects IN via `x-vercel-ip-country` and defaults to INR; `PricingPageClient.tsx` has a manual currency toggle; `/api/subscriptions/checkout` uses separate `DODO_PRODUCT_ID_*_INR` env vars with a USD fallback if unset. Unverified: whether the actual INR product IDs are configured in the DodoPayments dashboard/production env — that's an ops step outside the codebase, not something `tsc`/code review confirms. Doc status was stale — this was already live.
 
 ---
 
@@ -221,7 +221,7 @@ Claude understands the product deeply and may spot opportunities the creator has
 **Solution:** A `/toolkit` route with free creative utilities — Logline counter, Festival deadlines calendar, Budget breakdown template. Public, no login required.
 **Impact:** Drives organic search traffic ("festival deadlines 2026" / "indie film budget breakdown" / "logline word count"). Brings creatives to the brand without friction. SEO compounds over time.
 **Implementation:** Three new routes under `/toolkit/`, hand-curated data in JSON files, quarterly refresh cadence on festival data.
-**Status:** Approved for v1 (Design Overhaul interview, May 2026). Industry glossary deferred to v2.
+**Status:** Shipped, reduced scope (2026-08-11) — Logline counter and Festival deadlines cut, see HS-TOOLKIT-2 and HS-TOOLKIT-3. Toolkit v1 is Budget Breakdown only, served directly at `/toolkit` (no hub page, no other tools). Industry glossary deferred to v2.
 
 ---
 
@@ -232,7 +232,16 @@ Claude understands the product deeply and may spot opportunities the creator has
 **Solution:** Each festival in the toolkit has an "Add to your calendar" button that downloads a .ics file. Email reminders optional (opt-in only).
 **Impact:** Sticky engagement loop without violating constraints. Monthly return reason. Creator-controlled (they choose what to track).
 **Implementation:** Generate .ics on the fly with festival deadline + 14-day-prior reminder. Email reminders use existing Resend infra.
-**Status:** Approved for v1 (Design Overhaul interview, May 2026)
+**Status:** Rejected (2026-08-11) — creator will not ship festival deadline data unless it's accurate and verified against real sources; hand-curated dates from memory aren't good enough (wrong dates cause real missed submissions, not just a UI bug). Revisit only with a verified data source and a refresh process.
+
+---
+
+### HS-TOOLKIT-3: Logline Word/Character Counter
+
+**Type:** Feature
+**Problem:** Folded into the original HS-TOOLKIT-1 toolkit scope as a lightweight utility.
+**Solution:** N/A
+**Status:** Rejected (2026-08-11) — creator called it a terrible idea. Dropped from Toolkit scope entirely.
 
 ---
 
@@ -243,7 +252,7 @@ Claude understands the product deeply and may spot opportunities the creator has
 **Solution:** One subtle click sample, ≤5KB, played on Primary CTA submit and key actions (Publish, Save, Send Invite). Default OFF. Toggleable in nav.
 **Impact:** Adds analog-instrument character. Off by default so it never annoys; toggleable so creators who want it can have it.
 **Implementation:** Web Audio API, preloaded sample, localStorage preference persisted.
-**Status:** Approved (Design Overhaul interview, May 2026)
+**Status:** Shipped — `lib/sound/click.ts` synthesizes the click (no sample file), gated by `isSoundEnabled()` reading `localStorage`, default off. `components/ui/SoundToggle.tsx` provides the toggle.
 
 ---
 

@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   // Private links don't get OG metadata
   if (linkInfo.visibility === 'private') {
-    return { title: 'Private Project — Pitchcraft' }
+    return { title: 'Private Project — Gatefold' }
   }
 
   const data = await fetchPitchData(id)
@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { pitch } = data
 
   return {
-    title: `${pitch.project_name} — Pitchcraft`,
+    title: `${pitch.project_name} — Gatefold`,
     description: pitch.logline,
     openGraph: {
       title: pitch.project_name,
@@ -129,7 +129,7 @@ export default async function PitchViewPage({ params }: PageProps) {
             </>
           )}
           <p className="font-mono text-[11px] leading-[16px] text-text-disabled mt-[24px]">
-            Pitchcraft
+            Gatefold
           </p>
         </div>
       </div>
@@ -151,7 +151,7 @@ export default async function PitchViewPage({ params }: PageProps) {
             </p>
             <PitchViewPasswordGate pitchId={id} />
             <p className="font-mono text-[11px] leading-[16px] text-text-disabled mt-[24px]">
-              Pitchcraft
+              Gatefold
             </p>
           </div>
         </div>
@@ -186,7 +186,7 @@ export default async function PitchViewPage({ params }: PageProps) {
     sectionLabels,
   } = buildPitchViewModel(pitch, sections, media)
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pitchcraft.app'
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://gatefold.app'
   const creativeWorkJsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',

@@ -1,4 +1,4 @@
-# PRICING.md — PitchCraft Pricing Strategy
+# PRICING.md — Gatefold Pricing Strategy
 
 **Status:** Approved (Feb 2026)
 **Rule:** Claude does NOT change pricing without explicit creator approval.
@@ -22,7 +22,7 @@
 | Version history | **Current version only** (no history) |
 | Funding | **Yes — 8% commission** |
 | Pitch slug | Random UUID |
-| Branding | "Made with Pitchcraft" footer |
+| Branding | "Made with Gatefold" footer |
 | View notifications | None |
 | Collaborators | None |
 | PDF export | None |
@@ -33,10 +33,10 @@
 2. **Privacy** — can't send privately or password-protect
 3. **AI** — text assist and image generation buttons visible but locked
 4. **Custom slug** — UUID looks unprofessional when sharing verbally
-5. **Branding** — "Made with Pitchcraft" footer on a pitch sent to a studio exec
+5. **Branding** — "Made with Gatefold" footer on a pitch sent to a studio exec
 6. **Commission** — 8% vs 5% on funded amounts (saves $150 per $5K raised)
 
-**Cost to PitchCraft per free user: ~$0** (1 pitch, no AI, negligible)
+**Cost to Gatefold per free user: ~$0** (1 pitch, no AI, negligible)
 
 ---
 
@@ -53,8 +53,8 @@
 | AI image generation | **5/day** |
 | Version history | **Unlimited** |
 | Funding | **Yes — 5% commission** |
-| Pitch slug | **Custom** (`pitchcraft.app/p/my-film`) |
-| Branding | **None** (no Pitchcraft footer) |
+| Pitch slug | **Custom** (`gatefold.app/p/my-film`) |
+| Branding | **None** (no Gatefold footer) |
 | View notifications | **Basic** ("someone viewed your pitch") |
 | Collaborators | **5 per pitch** |
 | PDF export | **Clean layout** |

@@ -187,7 +187,7 @@ This document defines every key term used across the codebase and intent files. 
 - Stretch goals (optional)
 - End date (optional)
 - Donate button (one button, no tiers)
-**Commission:** Pitchcraft takes 5%, creator receives 95% (after Stripe fees)
+**Commission:** Gatefold takes 5%, creator receives 95% (after Stripe fees)
 **Related:** Fundraising, Donations, Supporter Platform
 
 ---
@@ -382,7 +382,7 @@ This document defines every key term used across the codebase and intent files. 
 | **Version** | Immutable snapshot of pitch state | Auto-created on save, v1, v2, v3... |
 | **Share Link** | URL allowing others to view pitch | Public/Private visibility options |
 | **Transparency** | Creator's choice to show version history | Default: hidden (privacy-first) |
-| **Support This Project** | Optional donation feature | 5% commission to Pitchcraft |
+| **Support This Project** | Optional donation feature | 5% commission to Gatefold |
 | **GDPR** | EU data protection rules | Consent, deletion, export rights |
 | **Claude** | Single Claude instance as engineering collaborator | One feature at a time, follows CLAUDE.md |
 | **Blocker** | Something preventing progress | Report immediately, resolve synchronously |

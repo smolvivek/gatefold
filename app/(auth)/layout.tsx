@@ -7,10 +7,10 @@ export default function AuthLayout({
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-[24px] py-[40px] relative overflow-hidden">
 
-      {/* Bottom-right: Pitchcraft wordmark */}
+      {/* Bottom-right: Gatefold wordmark */}
       <div className="absolute bottom-[32px] right-[32px]" aria-hidden="true">
         <span className="font-heading italic font-bold text-[13px] tracking-tighter text-text-disabled uppercase">
-          Pitchcraft
+          Gatefold
         </span>
       </div>
 

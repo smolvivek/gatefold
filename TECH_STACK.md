@@ -18,16 +18,16 @@
 
 ### 1. Next.js (Not React + Vite)
 
-The previous codebase used React 18 + Vite (client-side SPA). This doesn't work for Pitchcraft.
+The previous codebase used React 18 + Vite (client-side SPA). This doesn't work for Gatefold.
 
-**Why:** Pitchcraft's core feature is a shareable pitch link. When a creator shares their link on Twitter, LinkedIn, or WhatsApp, the page must render server-side for:
+**Why:** Gatefold's core feature is a shareable pitch link. When a creator shares their link on Twitter, LinkedIn, or WhatsApp, the page must render server-side for:
 - Open Graph meta tags (title, description, image preview)
 - Fast first load for non-authenticated viewers (producers, funders)
 - SEO indexing for public pitches
 
 A React SPA renders an empty `<div>` on the server. Social crawlers see nothing. No preview, no title, no image. For a product built around one shareable link, this is a fundamental limitation.
 
-Next.js provides server-side rendering, static generation, and API routes in one codebase. Same language (TypeScript), same React components, but with the server rendering that Pitchcraft requires.
+Next.js provides server-side rendering, static generation, and API routes in one codebase. Same language (TypeScript), same React components, but with the server rendering that Gatefold requires.
 
 **Tradeoff:** The existing React + Vite components cannot be reused directly. Framework change requires restructuring all pages and routing.
 
@@ -71,7 +71,7 @@ Already in the codebase. Works with Next.js. Design system (DESIGN.md) maps dire
 
 ### 4. Stripe (Payments)
 
-Non-negotiable for funding integration. Handles PCI compliance. GDPR-safe. ACID transactions for payments. Creator receives funds minus Pitchcraft commission.
+Non-negotiable for funding integration. Handles PCI compliance. GDPR-safe. ACID transactions for payments. Creator receives funds minus Gatefold commission.
 
 ---
 

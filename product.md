@@ -7,16 +7,16 @@
 
 ---
 
-## What Pitchcraft Is
+## What Gatefold Is
 
-Pitchcraft is a presentation and funding platform for creative professionals (filmmakers, writers, ad creators, content creators) that helps them:
+Gatefold is a presentation and funding platform for creative professionals (filmmakers, writers, ad creators, content creators) that helps them:
 
 - structure creative work clearly
 - present ideas to collaborators, funders, and producers
 - raise money through a professional funding link
 - evolve projects across versions over time
 
-Pitchcraft is **not** a pitch deck generator, not an AI writing tool, and not a marketplace.
+Gatefold is **not** a pitch deck generator, not an AI writing tool, and not a marketplace.
 
 It is a system for making creative work intelligible without flattening the creator's intent.
 
@@ -38,9 +38,9 @@ Creators may fill all fields comprehensively or be selective about what they sha
 
 ## Product Universe
 
-Pitchcraft exists as a standalone product.
+Gatefold exists as a standalone product.
 
-**Future:** A companion writing tool may exist in the same universe (Phase 2+), but is not part of MVP. Pitchcraft works without it.
+**Future:** A companion writing tool may exist in the same universe (Phase 2+), but is not part of MVP. Gatefold works without it.
 
 ---
 
@@ -321,7 +321,7 @@ Optional feature. Creators can enable or disable.
 
 ### Payment Processing:
 - Razorpay (implemented — order creation + HMAC verification + idempotent donation recording)
-- Pitchcraft takes commission: 8% free / 5% Pro / 3% Studio
+- Gatefold takes commission: 8% free / 5% Pro / 3% Studio
 - Creators receive remainder
 - All transactions transparent
 
@@ -333,7 +333,7 @@ Optional feature. Creators can enable or disable.
 
 ## Versions & Persistence
 
-Pitchcraft assumes real creative timelines:
+Gatefold assumes real creative timelines:
 - Weeks or months between reviews
 - Stakeholders joining late
 - Feedback and evolution over time
@@ -342,7 +342,7 @@ Therefore:
 - All versions persist
 - Feedback (Phase 2+) carries forward meaningfully
 - Creators see what changed and why
-- Pitchcraft becomes more valuable over time as project evolves
+- Gatefold becomes more valuable over time as project evolves
 
 ---
 
@@ -365,7 +365,7 @@ Creators control exactly who sees their pitch:
 
 ---
 
-## AI in Pitchcraft
+## AI in Gatefold
 
 AI assists, never dictates.
 
@@ -432,7 +432,7 @@ Creators remain the priority. All features serve creator intent first.
 
 ## Non-Goals
 
-Pitchcraft is **not:**
+Gatefold is **not:**
 - A social network
 - A marketplace (no creator discovery, no ranking)
 - A script judging algorithm
@@ -441,7 +441,7 @@ Pitchcraft is **not:**
 - An analytics or surveillance tool
 - A collaboration platform (Phase 2+)
 
-Pitchcraft does **not:**
+Gatefold does **not:**
 - Rank projects or creators
 - Tell creators what to make
 - Optimize creativity into sameness
@@ -500,7 +500,7 @@ Trust is a core feature.
 
 ## Final Principle
 
-Pitchcraft exists to make creative work intelligible without flattening it.
+Gatefold exists to make creative work intelligible without flattening it.
 
 If a feature violates this principle, it does not ship.
 

@@ -405,7 +405,7 @@ export default function CreatePitchPage() {
   const [loading, setLoading] = useState(false)
 
   // ─── Draft save (localStorage) — survives session expiry ───
-  const DRAFT_KEY = 'pitchcraft_create_draft'
+  const DRAFT_KEY = 'gatefold_create_draft'
   const [draftRestored, setDraftRestored] = useState(false)
 
   // Load draft on mount

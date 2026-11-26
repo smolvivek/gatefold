@@ -137,7 +137,7 @@ export function PitchViewFunding({ pitchId, projectName }: PitchViewFundingProps
         order_id,
         amount: orderAmount,
         currency,
-        name: 'PitchCraft',
+        name: 'Gatefold',
         description: `Support: ${projectName}`,
         prefill: { name, email },
         notes: { project: projectName },
@@ -305,7 +305,7 @@ export function PitchViewFunding({ pitchId, projectName }: PitchViewFundingProps
             </span>
             <span className="text-border hidden sm:inline">·</span>
             <span className="font-mono text-[11px] leading-[16px] text-text-disabled">
-              Your card details are never stored by PitchCraft
+              Your card details are never stored by Gatefold
             </span>
           </div>
 
@@ -383,7 +383,7 @@ export function PitchViewFunding({ pitchId, projectName }: PitchViewFundingProps
               </div>
 
               <p className="font-mono text-[11px] leading-[16px] text-text-disabled">
-                You will be taken to Razorpay&apos;s secure checkout. PitchCraft does not see your card details.
+                You will be taken to Razorpay&apos;s secure checkout. Gatefold does not see your card details.
               </p>
             </div>
           )}

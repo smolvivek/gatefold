@@ -1,6 +1,6 @@
 # /copy-review
 
-Review UI text and marketing copy against PitchCraft's voice: precise, cinematic, zero waste.
+Review UI text and marketing copy against Gatefold's voice: precise, cinematic, zero waste.
 
 ## Voice Principles
 

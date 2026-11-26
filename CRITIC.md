@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This file is the internal critic. Claude periodically audits PitchCraft against best-in-class SaaS products and tools, identifies weaknesses, and suggests improvements across:
+This file is the internal critic. Claude periodically audits Gatefold against best-in-class SaaS products and tools, identifies weaknesses, and suggests improvements across:
 
 - **Functionality** — features that are missing, broken, or underbuilt
 - **UX/Design** — friction points, confusing flows, visual issues
@@ -38,7 +38,7 @@ This file is the internal critic. Claude periodically audits PitchCraft against 
 ### 1. No Onboarding Flow — Users Land on an Empty Dashboard
 **Area:** UX
 **Severity:** Critical
-**What's wrong:** After signup, a creator sees an empty dashboard with a "Create Pitch" button and nothing else. No guidance on what PitchCraft does, how to structure their pitch, or what a finished pitch looks like. First-time users have to figure it out themselves.
+**What's wrong:** After signup, a creator sees an empty dashboard with a "Create Pitch" button and nothing else. No guidance on what Gatefold does, how to structure their pitch, or what a finished pitch looks like. First-time users have to figure it out themselves.
 **What competitors do better:** Gamma shows an interactive wizard ("What do you want to create?"). Canva offers guided templates. Notion has a "Getting Started" page pre-loaded. Even Beautiful.ai walks you through your first slide.
 **Recommended fix:** Add a 3-step onboarding after first login: (1) "Here's what a finished pitch looks like" — show the LandingPreview example pitch, (2) "Pick your project type" — film, documentary, commercial, game, other, (3) "Start with the essentials" — pre-expand the 8 required fields with brief placeholder hints. No template, no AI generation — just orientation.
 **Impact if ignored:** High bounce rate. Creators sign up, see empty screen, leave. They never experience the product's value.
@@ -63,7 +63,7 @@ This file is the internal critic. Claude periodically audits PitchCraft against 
 **What's wrong:** Creators can lose work if they navigate away, close the tab, or if the browser crashes. There's no indication of save state. The editor relies on explicit "Save" actions.
 **What competitors do better:** Notion, Google Docs, Gamma, Canva — all auto-save continuously. Users expect it in 2026. Manual save feels 2010.
 **Recommended fix:** Debounced auto-save (save 2 seconds after last edit). Add a subtle save indicator in the header ("Saved" / "Saving..." / "Unsaved changes"). Keep manual save button as fallback.
-**Impact if ignored:** Creators lose work. They blame PitchCraft. They leave. Trust erosion — directly contradicts the product's trust-first positioning.
+**Impact if ignored:** Creators lose work. They blame Gatefold. They leave. Trust erosion — directly contradicts the product's trust-first positioning.
 **Status:** Fixed — Added debounced auto-save (2s after last edit) with save indicator ("Saved"/"Saving..."/"Unsaved changes") in editor header.
 
 ---
@@ -96,7 +96,7 @@ This file is the internal critic. Claude periodically audits PitchCraft against 
 **What's wrong:** The pitch editor and dashboard are designed desktop-first. Unknown how they render on mobile. The shared pitch link (`/p/[id]`) should be mobile-perfect since producers often open links on their phones.
 **What competitors do better:** Gamma, Canva, NuPitch — all mobile-responsive by default. NuPitch is specifically mobile-first.
 **Recommended fix:** Full mobile responsiveness audit of: (1) shared pitch link `/p/[id]` — this is customer-facing and must be perfect, (2) dashboard — functional but can be basic on mobile, (3) pitch editor — complex, may need "desktop recommended" notice.
-**Impact if ignored:** A producer opens a pitch link on their iPhone and it's broken or cramped. First impression destroyed. The creator looks unprofessional — the opposite of PitchCraft's promise.
+**Impact if ignored:** A producer opens a pitch link on their iPhone and it's broken or cramped. First impression destroyed. The creator looks unprofessional — the opposite of Gatefold's promise.
 **Status:** Fixed — Added responsive breakpoints to all flagged grids (locations, images, cast/team, budget segments, funding commission). Flow beats padding reduced on mobile.
 
 ---
@@ -118,7 +118,7 @@ This file is the internal critic. Claude periodically audits PitchCraft against 
 **What's wrong:** The "Support This Project" funding section shows a progress bar and supporter count, but no trust signals. A stranger is being asked to give money through an unfamiliar platform. There's no SSL badge, no "Powered by Stripe" mention, no refund policy visible.
 **What competitors do better:** Seed&Spark shows Stripe badge + clear fee disclosure. Kickstarter shows backer guarantees. Patreon shows payment processor logos.
 **Recommended fix:** Add: (1) "Payments secured by Stripe" text with Stripe logo, (2) visible fee disclosure ("X% goes to the creator"), (3) link to refund/dispute policy. These are trust signals, not marketing — they directly increase funding conversion.
-**Impact if ignored:** Potential supporters hesitate. Funding conversion rate stays low. Creators blame PitchCraft for not raising enough.
+**Impact if ignored:** Potential supporters hesitate. Funding conversion rate stays low. Creators blame Gatefold for not raising enough.
 **Status:** Fixed — Added "Payments secured by Stripe · Funds go directly to the creator" trust signal to PitchViewFunding.
 
 ---
@@ -148,7 +148,7 @@ This file is the internal critic. Claude periodically audits PitchCraft against 
 ### 11. No Terms of Service or Privacy Policy Pages
 **Area:** Profitability / Legal
 **Severity:** High
-**What's wrong:** The footer links to `/terms` and `/privacy` but these pages likely don't exist. PitchCraft handles payments (Stripe), user data, and media uploads — legal pages are required before accepting money.
+**What's wrong:** The footer links to `/terms` and `/privacy` but these pages likely don't exist. Gatefold handles payments (Stripe), user data, and media uploads — legal pages are required before accepting money.
 **What competitors do better:** Every SaaS product shipping payments has these. This is table stakes.
 **Recommended fix:** Create basic `/terms` and `/privacy` pages. Doesn't need a lawyer for MVP — use clear, plain-language policies covering: data ownership (creator owns everything), payment processing (Stripe handles), no AI training on content, GDPR basics. Upgrade to lawyer-reviewed before scaling.
 **Impact if ignored:** Legal liability. App stores and Stripe may flag the account. Creators concerned about IP won't trust a platform without a privacy policy.
@@ -160,7 +160,7 @@ This file is the internal critic. Claude periodically audits PitchCraft against 
 **Area:** UX / Design
 **Severity:** High
 **What's wrong:** The 3-column comparison grid with checkmarks and generic CTAs ("Start Pro", "Start Studio") are copied from every SaaS pricing page on the internet. A filmmaker opening this page sees Notion's pricing, not a tool built for creative work.
-**What competitors do better:** This isn't a competitor problem — Pitchcraft is supposed to look *unlike* competitors. The pricing page is the most generic page on the site.
+**What competitors do better:** This isn't a competitor problem — Gatefold is supposed to look *unlike* competitors. The pricing page is the most generic page on the site.
 **Recommended fix:** CTAs should speak to actual value ("Go Pro", "Get Studio"). Consider a layout that doesn't feel like a feature matrix. The table-of-checkboxes format is pure SaaS.
 **Impact if ignored:** The first revenue-generating page feels like it was generated from a template. Creators here for the aesthetic will feel the dissonance immediately.
 **Status:** Fixed — Pricing page rewritten as client component with billing toggle, clear CTAs (Go Pro/Get Studio), no template patterns. — "Most popular" badge removed. CTAs and layout still need work.
@@ -178,21 +178,21 @@ This file is the internal critic. Claude periodically audits PitchCraft against 
 
 ---
 
-### 14. "No Pitchcraft Branding" Frames the Product as a Burden
+### 14. "No Gatefold Branding" Frames the Product as a Burden
 **Area:** UX / Profitability
 **Severity:** Medium
-**What's wrong:** Listing "No Pitchcraft branding" as a Pro feature implies the Pitchcraft brand is something creators want to escape. It positions free-tier branding as embarrassing rather than as a trust signal. A creator sending a pitch to a studio exec sees "Made with Pitchcraft" and reads it as "this person couldn't afford the real product."
+**What's wrong:** Listing "No Gatefold branding" as a Pro feature implies the Gatefold brand is something creators want to escape. It positions free-tier branding as embarrassing rather than as a trust signal. A creator sending a pitch to a studio exec sees "Made with Gatefold" and reads it as "this person couldn't afford the real product."
 **What competitors do better:** Notion doesn't call it "No Notion branding." They frame the free tier branding as part of the product, and paid tiers as "custom domain" — a positive feature, not removal of a negative.
-**Recommended fix:** Reframe free-tier branding as a feature of its own ("Powered by Pitchcraft — shows provenance") and remove "No Pitchcraft branding" from the Pro feature list entirely. Instead list a positive: "Your pitch, your identity" or just omit the branding mention. Or: keep the "Made with Pitchcraft" footer on free but make it tasteful enough that it's not shameful.
-**Impact if ignored:** Every free user who reads the pricing page learns that the Pitchcraft brand on their pitch is a liability. That's not the message you want.
-**Status:** Fixed — No Pitchcraft Branding language removed from pricing page. Free tier features list no longer mentions branding.
+**Recommended fix:** Reframe free-tier branding as a feature of its own ("Powered by Gatefold — shows provenance") and remove "No Gatefold branding" from the Pro feature list entirely. Instead list a positive: "Your pitch, your identity" or just omit the branding mention. Or: keep the "Made with Gatefold" footer on free but make it tasteful enough that it's not shameful.
+**Impact if ignored:** Every free user who reads the pricing page learns that the Gatefold brand on their pitch is a liability. That's not the message you want.
+**Status:** Fixed — No Gatefold Branding language removed from pricing page. Free tier features list no longer mentions branding.
 
 ---
 
 ### 15. "Clean PDF Export" Communicates Nothing
 **Area:** UX / Copy
 **Severity:** Low
-**What's wrong:** "Clean PDF export" in the Pro feature list is meaningless. Clean compared to what? It doesn't describe the actual value (a print-ready version of the pitch, without UI chrome or "Made with Pitchcraft" footer).
+**What's wrong:** "Clean PDF export" in the Pro feature list is meaningless. Clean compared to what? It doesn't describe the actual value (a print-ready version of the pitch, without UI chrome or "Made with Gatefold" footer).
 **What competitors do better:** Gamma: "Export to PDF." Canva: "Download in PDF Print." Papermark: "PDF export." Simple nouns, not adjectives.
 **Recommended fix:** "PDF export" (Pro) and "Branded PDF export" (Studio). Or "Print-ready PDF" for Pro if you want to communicate something specific. Drop "clean."
 **Impact if ignored:** Minor copy issue, but on a pricing page every word matters. "Clean" is lazy language and doesn't hold up under scrutiny.
@@ -307,7 +307,7 @@ This file is the internal critic. Claude periodically audits PitchCraft against 
 **What's wrong:** `generateMetadata()` in `/app/p/[id]/page.tsx` sets `og:image` to a Supabase signed URL with `3600` second expiry. Social platforms (LinkedIn, Twitter, Slack) crawl and cache these previews. If a platform re-fetches the image after 1 hour, it gets a 403 from Supabase. The pitch link then shows a broken preview image everywhere it was shared.
 **Recommended fix:** For OG images, either: (a) use a public Supabase storage bucket for poster images (no signed URL needed), or (b) serve media through a Next.js API route that re-generates the signed URL on request, or (c) generate a static OG card via `next/og` using pitch metadata (no image required). Option (c) is cleanest.
 **Impact if ignored:** Every shared pitch link has a broken image after 1 hour. Creators look unprofessional. The A24 aesthetic that works in the browser completely disappears in social previews.
-**Status:** Fixed — Created `/app/p/[id]/opengraph-image.tsx` using Next.js `ImageResponse` (edge runtime). Generates a permanent A24-dark OG card: project name, logline, genre, orange accent bar, Pitchcraft branding. Never expires. Removed expiring signed URL from `generateMetadata`.
+**Status:** Fixed — Created `/app/p/[id]/opengraph-image.tsx` using Next.js `ImageResponse` (edge runtime). Generates a permanent A24-dark OG card: project name, logline, genre, orange accent bar, Gatefold branding. Never expires. Removed expiring signed URL from `generateMetadata`.
 
 ---
 
@@ -603,7 +603,7 @@ This file is the internal critic. Claude periodically audits PitchCraft against 
 ### 55. `next.config.ts` Allows All `*.supabase.co` Image Hostnames — Overly Permissive
 **Area:** Security / Technical
 **Severity:** Low
-**What's wrong:** If `next.config.ts` uses a wildcard hostname pattern for Supabase (`*.supabase.co`), it allows Next.js `<Image>` optimization for any Supabase project's storage — not just this one. An attacker who knows the hostname pattern could proxy external Supabase images through PitchCraft's image optimization, wasting bandwidth.
+**What's wrong:** If `next.config.ts` uses a wildcard hostname pattern for Supabase (`*.supabase.co`), it allows Next.js `<Image>` optimization for any Supabase project's storage — not just this one. An attacker who knows the hostname pattern could proxy external Supabase images through Gatefold's image optimization, wasting bandwidth.
 **Recommended fix:** Restrict to the specific project hostname: `your-project-ref.supabase.co` instead of a wildcard. Use the `NEXT_PUBLIC_SUPABASE_URL` env var to derive the hostname dynamically.
 **Impact if ignored:** Minor bandwidth/cost risk. Not a critical vulnerability.
 **Status:** Fixed — next.config.ts already uses specific hostname wfhwluugiilvsgtllphf.supabase.co, not a wildcard.
@@ -790,7 +790,7 @@ This file is the internal critic. Claude periodically audits PitchCraft against 
 ### 75. Custom Pitch Slug Advertised as Pro Feature but Never Implemented
 **Area:** Functionality / Profitability
 **Severity:** High
-**What's wrong:** Pro and Studio tiers list "Custom slug (pitchcraft.app/p/my-film)" as a feature. No `slug` column exists in the pitches schema, no `/p/[slug]` route exists, and no slug input exists in the editor. The feature is pure marketing text with no implementation.
+**What's wrong:** Pro and Studio tiers list "Custom slug (gatefold.app/p/my-film)" as a feature. No `slug` column exists in the pitches schema, no `/p/[slug]` route exists, and no slug input exists in the editor. The feature is pure marketing text with no implementation.
 **Recommended fix:** Either implement slug routing (`/p/[slug]` page that resolves slug → pitch ID, slug field in DB and editor), or remove it from the pricing page feature list entirely.
 **Status:** Fixed — Custom slug feature removed from pricing page copy (Free and Pro tier feature lists). No implementation exists; removing the promise is the honest fix until the feature is built.
 
@@ -891,7 +891,7 @@ Full audit across auth, dashboard, editor, public pitch view, landing, pricing, 
 **Severity:** High
 **What's wrong:** `Sidebar.tsx` has no responsive behaviour. On mobile viewports, the sidebar is likely off-screen or overlapping content. The editor is unusable on mobile.
 **Recommended fix:** Add a slide-in drawer for mobile: hamburger opens the sidebar, tap outside closes it. The editor doesn't need to be fully featured on mobile — but it needs to not be broken.
-**Impact if ignored:** Any creator accessing PitchCraft on a phone or tablet hits a broken layout and leaves.
+**Impact if ignored:** Any creator accessing Gatefold on a phone or tablet hits a broken layout and leaves.
 **Status:** Fixed — `edit/page.tsx` now hides sidebar off-screen on mobile (`-translate-x-full md:translate-x-0`). Hamburger button in editor header toggles it. Backdrop overlay closes it. Main content uses `md:ml-[240px]` so it's full-width on mobile.
 
 ---
@@ -899,7 +899,7 @@ Full audit across auth, dashboard, editor, public pitch view, landing, pricing, 
 ### 30. In-App Cancellation Requires Emailing Support
 **Area:** UX / Profitability
 **Severity:** High
-**What's wrong:** `account/page.tsx:132` tells users to email support@pitchcraft.app to cancel. No in-app flow exists. High friction, breeds resentment, directly contradicts the trust positioning.
+**What's wrong:** `account/page.tsx:132` tells users to email support@gatefold.app to cancel. No in-app flow exists. High friction, breeds resentment, directly contradicts the trust positioning.
 **What competitors do better:** Every credible SaaS has one-click cancellation in the account page. Hiding it behind email support is a pattern associated with dark patterns and erodes confidence.
 **Recommended fix:** Add a "Cancel subscription" button in the account page that calls the DodoPayments cancellation API. Confirm with a modal. Inform user their access continues until period end.
 **Impact if ignored:** Subscription cancellations become support tickets. Users feel trapped. Review bombs.
@@ -951,9 +951,9 @@ Full audit across auth, dashboard, editor, public pitch view, landing, pricing, 
 **Area:** UX / Correctness
 **Severity:** Medium
 **What's wrong:** `WelcomeOnboarding.tsx:82` uses a single localStorage key for all users on a device. If a second user logs in on the same browser, they never see onboarding. If a user logs out and back in, onboarding is already dismissed.
-**Recommended fix:** Key the localStorage entry by user ID: `pitchcraft_onboarding_dismissed_${userId}`. Requires passing user ID to the component.
+**Recommended fix:** Key the localStorage entry by user ID: `gatefold_onboarding_dismissed_${userId}`. Requires passing user ID to the component.
 **Impact if ignored:** New users on shared devices skip onboarding entirely. First-run experience is lost.
-**Status:** Fixed — `WelcomeOnboarding` now accepts `userId` prop and keys localStorage as `pitchcraft-onboarding-done-{userId}`. Dashboard passes `profile.id`.
+**Status:** Fixed — `WelcomeOnboarding` now accepts `userId` prop and keys localStorage as `gatefold-onboarding-done-{userId}`. Dashboard passes `profile.id`.
 
 ---
 

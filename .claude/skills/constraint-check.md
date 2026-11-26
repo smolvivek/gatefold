@@ -1,6 +1,6 @@
 # /constraint-check
 
-Verify that a proposed feature, change, or PR does not violate any of PitchCraft's 13 hard constraints.
+Verify that a proposed feature, change, or PR does not violate any of Gatefold's 13 hard constraints.
 
 ## Steps
 

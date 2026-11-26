@@ -26,9 +26,9 @@ Worse: Existing tools treat all pitches the same way. They optimize for *perfect
 
 ---
 
-## What Pitchcraft Solves
+## What Gatefold Solves
 
-Pitchcraft is the first tool built specifically for creative pitching. It:
+Gatefold is the first tool built specifically for creative pitching. It:
 
 1. **Structures creative work without flattening it**
    - 8 required fields ensure clarity
@@ -44,7 +44,7 @@ Pitchcraft is the first tool built specifically for creative pitching. It:
 3. **Enables funding without leaving the platform**
    - Creators can ask for support directly in the pitch
    - Stripe/Patreon integration handles money
-   - Pitchcraft takes commission, creators keep the rest
+   - Gatefold takes commission, creators keep the rest
    - Professional, transparent, credible
 
 4. **Respects creative control**
@@ -87,30 +87,30 @@ But creators come first. Every feature serves creator intent.
 - Can see version history and understand what changed
 - Feel confident showing their pitch to producers, funders, collaborators
 
-### For Pitchcraft:
+### For Gatefold:
 - Creators come back to update pitches as projects evolve
 - Creators use "Support this Project" to raise real money
 - Commission revenue from successful fundraising
-- Creators recommend Pitchcraft to other creators
+- Creators recommend Gatefold to other creators
 - Becomes the default standard for creative pitch presentation (in indie/professional circles)
 
 ### For the Market:
-- No existing tool does what Pitchcraft does
+- No existing tool does what Gatefold does
 - Fill the gap between generic presentation software and industry-specific platforms
 - Build a moat through *trust* (creators own their data, control their presentation)
 
 ---
 
-## What Pitchcraft Is NOT
+## What Gatefold Is NOT
 
-Pitchcraft is **not** a replacement for:
+Gatefold is **not** a replacement for:
 - Screenwriting software
 - Shooting schedule software
 - Budget management tools
 - Collaboration platforms
 - Pitch deck generators or generic presentation tools
 
-Pitchcraft is **specifically** a presentation + funding + versioning tool for creative work.
+Gatefold is **specifically** a presentation + funding + versioning tool for creative work.
 
 It lives *downstream* of script development and *upstream* of production planning.
 
@@ -118,7 +118,7 @@ It lives *downstream* of script development and *upstream* of production plannin
 
 ## The Competitive Advantage
 
-**Why Pitchcraft wins:**
+**Why Gatefold wins:**
 
 1. **Built for creatives, not generic users**
    - Understands production vocabulary
@@ -150,7 +150,7 @@ It lives *downstream* of script development and *upstream* of production plannin
 
 ## The Worldview
 
-Pitchcraft represents a specific worldview about creative work:
+Gatefold represents a specific worldview about creative work:
 
 - **Creators should control their presentation.** Not algorithms, not templates, not "best practices." The creator decides.
 - **Structure clarifies, it doesn't constrain.** The 8 requireds ensure every pitch is intelligible. Everything else is optional.
@@ -162,7 +162,7 @@ Pitchcraft represents a specific worldview about creative work:
 
 ## Long-Term Vision (Not in MVP)
 
-In Phase 2 and beyond, Pitchcraft could evolve into:
+In Phase 2 and beyond, Gatefold could evolve into:
 - A feedback system where producers/funders comment directly on sections
 - Integration with writing tools for seamless pitch building
 - Light creator networking (not social, but functional)
@@ -177,7 +177,7 @@ But Phase 1 is ruthlessly focused: **Presentation + Funding + Versioning. That's
 
 A filmmaker pitches a short film.
 
-They build the pitch in Pitchcraft in 20 minutes:
+They build the pitch in Gatefold in 20 minutes:
 - Logline, synopsis, vision, cast, budget, production status, team
 - Add locations, costumes, stunts (relevant sections)
 - Upload reference images
@@ -196,7 +196,7 @@ Feedback comes through later (Phase 2). All in one place.
 
 The film gets made. They update the pitch with behind-the-scenes photos, production timeline, finished trailer.
 
-Six months later, they start a new project. They already trust Pitchcraft. They build the next pitch in 15 minutes.
+Six months later, they start a new project. They already trust Gatefold. They build the next pitch in 15 minutes.
 
 **That's success.**
 
@@ -204,7 +204,7 @@ Six months later, they start a new project. They already trust Pitchcraft. They 
 
 ## Final Principle
 
-Pitchcraft exists because creative professionals deserve better infrastructure.
+Gatefold exists because creative professionals deserve better infrastructure.
 
 Not to optimize creativity. Not to rank creators. Not to extract data.
 

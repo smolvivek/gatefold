@@ -13,7 +13,7 @@ COPY.md thinks like a copy director doing a QA pass: not looking for beautiful w
 
 1. **Reference exact files and line numbers.** Vague copy notes are useless.
 2. **Every violation gets a fix.** Don't flag without prescribing.
-3. **The standard is the voice, not the aesthetics.** Copy must sound like Pitchcraft, not look cinematic on screen.
+3. **The standard is the voice, not the aesthetics.** Copy must sound like Gatefold, not look cinematic on screen.
 4. **Revisit after every new page or flow.**
 
 ---
@@ -124,7 +124,7 @@ These are the correct versions. Use them verbatim.
 ### CP-01. Auth Pages: "Enter the Suite" — Enterprise Software Register
 **Severity:** Critical
 **File:** `app/(auth)/login/page.tsx:58`, `app/(auth)/signup/page.tsx:181`
-**What's wrong:** "Suite" is Adobe Creative Suite. Microsoft Office Suite. Oracle Business Suite. In every user's memory, "Suite" = a collection of enterprise tools sold as a bundle. Pitchcraft is a filmmaker tool. Telling a director to "Enter the Suite" positions the product in entirely the wrong company.
+**What's wrong:** "Suite" is Adobe Creative Suite. Microsoft Office Suite. Oracle Business Suite. In every user's memory, "Suite" = a collection of enterprise tools sold as a bundle. Gatefold is a filmmaker tool. Telling a director to "Enter the Suite" positions the product in entirely the wrong company.
 **Current copy:** `Enter the Suite`
 **Approved fix:** `Log in` (login page) / `Sign up` (signup page). Or if you want something more editorial: `Begin` or `Enter` alone — the object does not need to be named. The word "Suite" must go.
 **Status:** Fixed
@@ -174,7 +174,7 @@ These are the correct versions. Use them verbatim.
 ### CP-06. Auth Signup: "Request Membership" Section Label
 **Severity:** Medium
 **File:** `app/(auth)/signup/page.tsx:24`
-**What's wrong:** Same register problem as CP-03. "Membership" implies dues, a committee, an application. Pitchcraft is not a club. It's a tool.
+**What's wrong:** Same register problem as CP-03. "Membership" implies dues, a committee, an application. Gatefold is not a club. It's a tool.
 **Current copy:** `Request Membership`
 **Approved fix:** Removed entirely — the signup form needs no section label.
 **Status:** Fixed
@@ -184,7 +184,7 @@ These are the correct versions. Use them verbatim.
 ### CP-07. Auth Signup: "Join the Cut" Heading
 **Severity:** Medium
 **File:** `app/(auth)/signup/page.tsx:30`
-**What's wrong:** "The Cut" is a film editing term — the edit, the timeline, the final assembly. As a brand motif it has potential. But "Join the Cut" reads as joining something that already exists (a film, a team, a project). Signing up for Pitchcraft is starting your own work, not joining someone else's. The copy points in the wrong direction.
+**What's wrong:** "The Cut" is a film editing term — the edit, the timeline, the final assembly. As a brand motif it has potential. But "Join the Cut" reads as joining something that already exists (a film, a team, a project). Signing up for Gatefold is starting your own work, not joining someone else's. The copy points in the wrong direction.
 **Current copy:** `Join / the Cut` (two-line heading)
 **Approved fix:** `Start building` — direct, action-oriented, tells you exactly what you're here to do. Or: `Your work / starts here.` — two lines, simple, no film jargon that can misfire.
 **Status:** Fixed
@@ -204,7 +204,7 @@ These are the correct versions. Use them verbatim.
 ### CP-09. Auth Signup: "Director Name" Field Label
 **Severity:** Low
 **File:** `app/(auth)/signup/page.tsx:71`
-**What's wrong:** The field label "Director Name" assumes the user is a director. Writers, producers, and cinematographers also use Pitchcraft. "Name" is the correct label — it's clear, accurate, and doesn't gate the product behind one job title.
+**What's wrong:** The field label "Director Name" assumes the user is a director. Writers, producers, and cinematographers also use Gatefold. "Name" is the correct label — it's clear, accurate, and doesn't gate the product behind one job title.
 **Current copy:** `Director Name`
 **Approved fix:** `Name`
 **Status:** Fixed
@@ -235,9 +235,9 @@ The current hero copy is:
 The tool for those
 who see the work.
 ```
-The old copy was action-oriented and specific: three things Pitchcraft lets you do, in three tight lines. The new copy is a brand statement — poetic, correct in register, but abstract. It doesn't tell a first-time visitor what Pitchcraft does. "The tool for those who see the work" could describe a camera, a lighting kit, or a film school. It's not wrong — it's just less useful than what it replaced.
-**The question:** Is the landing page a brand statement or a product explanation? If it's the entry point for cold traffic (people who don't know Pitchcraft), it needs to explain what it does. If it's for warm traffic (people referred by word of mouth), a brand statement works.
-**Recommended fix:** New heading: "The pitch is / the first frame." Subtitle: "Pitchcraft builds editorial pitch pages for filmmakers. Logline, vision, cast, budget — one link, built to be read."
+The old copy was action-oriented and specific: three things Gatefold lets you do, in three tight lines. The new copy is a brand statement — poetic, correct in register, but abstract. It doesn't tell a first-time visitor what Gatefold does. "The tool for those who see the work" could describe a camera, a lighting kit, or a film school. It's not wrong — it's just less useful than what it replaced.
+**The question:** Is the landing page a brand statement or a product explanation? If it's the entry point for cold traffic (people who don't know Gatefold), it needs to explain what it does. If it's for warm traffic (people referred by word of mouth), a brand statement works.
+**Recommended fix:** New heading: "The pitch is / the first frame." Subtitle: "Gatefold builds editorial pitch pages for filmmakers. Logline, vision, cast, budget — one link, built to be read."
 **Status:** Fixed
 
 ---
@@ -277,7 +277,7 @@ The old copy was action-oriented and specific: three things Pitchcraft lets you 
 **File:** `app/(auth)/layout.tsx` (removed March 2026)
 **What's wrong:** "Build: 0.8.4" is a version number. It belongs in release notes, not a login screen. Showing it to a filmmaker logging in says nothing — or worse, says "this is a developer tool." "Encryption: Active" edges into the sci-fi/security register the voice standard explicitly prohibits. Both imply a technical dashboard the user hasn't asked for.
 **Root cause:** The corner metadata was designed to create cinematic atmosphere. Atmosphere is legitimate. But these specific labels borrowed from a tech-ops register that conflicts with the filmmaker voice.
-**Status:** Fixed — all corner metadata removed. Only Pitchcraft wordmark remains.
+**Status:** Fixed — all corner metadata removed. Only Gatefold wordmark remains.
 
 ---
 
@@ -298,7 +298,7 @@ The old copy was action-oriented and specific: three things Pitchcraft lets you 
 **File:** `components/landing/LandingHero.tsx` (features section heading)
 **What's wrong:** This headline could appear verbatim on Adobe Creative Suite, Final Cut Pro, Notion, or Canva. It contains no specific claim, no benefit, and no voice. It is the platonic ideal of generic SaaS copy — a feature section heading that exists because something had to go there.
 **Voice test:** "A seasoned filmmaker reading this would skip past it immediately." The words are placeholders masquerading as headlines.
-**Approved fix:** Remove the section heading entirely, or replace it with a single specific claim that only Pitchcraft can make. Candidate: *"One link. The whole project."* or just eliminate it — the feature rows speak for themselves.
+**Approved fix:** Remove the section heading entirely, or replace it with a single specific claim that only Gatefold can make. Candidate: *"One link. The whole project."* or just eliminate it — the feature rows speak for themselves.
 **Status:** Open
 
 ---

@@ -49,11 +49,11 @@ export function UpgradeBanner() {
 
     // First pitch banner — show once after first successful pitch creation
     if (searchParams.get('firstpitch') === 'true') {
-      const seen = typeof window !== 'undefined' && localStorage.getItem('pitchcraft_firstpitch_seen')
+      const seen = typeof window !== 'undefined' && localStorage.getItem('gatefold_firstpitch_seen')
       if (!seen) {
         setFirstPitchVisible(true)
         router.replace(pathname, { scroll: false })
-        localStorage.setItem('pitchcraft_firstpitch_seen', '1')
+        localStorage.setItem('gatefold_firstpitch_seen', '1')
         const dismiss = setTimeout(() => setFirstPitchVisible(false), 12000)
         return () => clearTimeout(dismiss)
       }

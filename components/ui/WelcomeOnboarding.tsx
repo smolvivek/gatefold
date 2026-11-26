@@ -30,13 +30,13 @@ export function WelcomeOnboarding({ userId }: { userId?: string }) {
 
   const dismiss = useCallback(() => {
     setVisible(false)
-    const key = userId ? `pitchcraft-onboarding-done-${userId}` : 'pitchcraft-onboarding-done'
+    const key = userId ? `gatefold-onboarding-done-${userId}` : 'gatefold-onboarding-done'
     localStorage.setItem(key, '1')
   }, [userId])
 
   useEffect(() => {
     if (pathname?.startsWith('/dashboard/pitches/create')) return
-    const key = userId ? `pitchcraft-onboarding-done-${userId}` : 'pitchcraft-onboarding-done'
+    const key = userId ? `gatefold-onboarding-done-${userId}` : 'gatefold-onboarding-done'
     const dismissed = localStorage.getItem(key)
     if (!dismissed) {
       // localStorage is unavailable during SSR, so this can't be a lazy
@@ -107,7 +107,7 @@ export function WelcomeOnboarding({ userId }: { userId?: string }) {
         className="max-w-[460px] w-full"
       >
         <p className="font-mono text-[10px] leading-[16px] tracking-[0.12em] uppercase text-text-disabled mb-[32px]">
-          Pitchcraft
+          Gatefold
         </p>
         <h2 id="onboarding-title" className="font-heading text-[28px] font-bold leading-[36px] tracking-[-0.02em] text-text-primary mb-[32px]">
           Your work.<br />One link.

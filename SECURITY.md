@@ -162,7 +162,7 @@ In Settings → Privacy:
 
 **Supabase Auth handles password hashing, storage, and validation.**
 
-Pitchcraft does not implement custom password hashing. Supabase Auth uses bcrypt internally and manages the full password lifecycle: hashing, storage, verification, and reset.
+Gatefold does not implement custom password hashing. Supabase Auth uses bcrypt internally and manages the full password lifecycle: hashing, storage, verification, and reset.
 
 **Requirements:**
 - Minimum 8 characters (enforced client-side before signup)
@@ -296,7 +296,7 @@ export const config = {
 
 **Supabase Auth handles password reset flow.**
 
-Supabase generates a secure, one-time reset token, sends the email, and handles the password update. Pitchcraft does not implement custom token generation or email sending for password resets.
+Supabase generates a secure, one-time reset token, sends the email, and handles the password update. Gatefold does not implement custom token generation or email sending for password resets.
 
 **Requirements:**
 - Creator requests reset via email
@@ -528,7 +528,7 @@ React (used by Next.js) escapes all rendered content by default, which prevents 
 - Never render raw HTML from user-submitted content
 - Never construct HTML strings from user data
 
-**Where XSS risk exists in Pitchcraft:**
+**Where XSS risk exists in Gatefold:**
 - Pitch content fields (logline, synopsis, vision) — always rendered as text, never as HTML
 - Custom section names — validate and escape
 - Embedded video links — validate URL format, only allow YouTube/Vimeo domains
@@ -673,7 +673,7 @@ export async function POST(request: Request) {
 
 ## Supabase Row Level Security (RLS)
 
-**RLS is Pitchcraft's primary access control mechanism.**
+**RLS is Gatefold's primary access control mechanism.**
 
 Row Level Security is enforced at the database level in PostgreSQL. Even if application code has a bug, RLS ensures that creators can only access their own data. Every table that stores creator data must have RLS enabled with appropriate policies.
 

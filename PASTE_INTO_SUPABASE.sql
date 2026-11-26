@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════
--- PITCHCRAFT — FULL DATABASE SETUP
+-- GATEFOLD — FULL DATABASE SETUP
 -- Paste this entire block into Supabase SQL Editor and run it.
 -- Safe to re-run: uses IF NOT EXISTS / IF EXISTS checks.
 -- ═══════════════════════════════════════════════════════════

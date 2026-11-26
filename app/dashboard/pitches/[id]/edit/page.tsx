@@ -1437,7 +1437,7 @@ export default function EditPitchPage({ params }: { params: Promise<{ id: string
                           <div className="flex flex-col gap-[6px]">
                             <div className="flex items-center gap-[0px] border border-border rounded-none overflow-hidden focus-within:border-border-hover">
                               <span className="px-[10px] py-[8px] font-mono text-[12px] text-text-disabled bg-surface whitespace-nowrap border-r border-border select-none">
-                                pitchcraft.app/p/
+                                gatefold.app/p/
                               </span>
                               <input
                                 type="text"
@@ -1596,7 +1596,7 @@ export default function EditPitchPage({ params }: { params: Promise<{ id: string
                     {showPayoutForm && !payoutConfigured && (
                       <div className="flex flex-col gap-[10px] mt-[12px] pt-[12px] border-t border-border">
                         <p className="font-mono text-[11px] leading-[16px] text-text-disabled">
-                          Your bank details are encrypted and sent directly to Razorpay (PCI-DSS Level 1). PitchCraft does not store your account number or PAN.
+                          Your bank details are encrypted and sent directly to Razorpay (PCI-DSS Level 1). Gatefold does not store your account number or PAN.
                         </p>
                         <TextInput
                           label="Account holder name"

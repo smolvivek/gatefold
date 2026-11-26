@@ -91,7 +91,7 @@ export async function recordView({
       to: ownerProfile.email,
       projectName: pitchMeta?.project_name ?? 'Your project',
       country: country ?? null,
-      pitchEditUrl: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pitchcraft.app'}/dashboard/pitches/${pitchId}/edit`,
+      pitchEditUrl: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://gatefold.app'}/dashboard/pitches/${pitchId}/edit`,
     }).catch((err) => console.error('View notification email failed:', err))
   } catch (err) {
     // Never let view tracking crash the page

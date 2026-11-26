@@ -1,4 +1,4 @@
-const STORAGE_KEY = "pitchcraft-sound";
+const STORAGE_KEY = "gatefold-sound";
 
 let audioCtx: AudioContext | null = null;
 

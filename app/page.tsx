@@ -24,11 +24,11 @@ export default async function Home() {
     // Supabase unreachable — render as logged-out
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pitchcraft.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gatefold.app";
   const webAppJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    name: "Pitchcraft",
+    name: "Gatefold",
     url: siteUrl,
     description: "Present, fund, and evolve your creative work.",
     applicationCategory: "BusinessApplication",
@@ -52,7 +52,7 @@ export default async function Home() {
           href="/"
           className="font-heading text-[20px] font-bold uppercase tracking-tighter text-text-primary"
         >
-          Pitchcraft
+          Gatefold
         </Link>
         <div className="flex items-center gap-[16px] md:gap-[32px]">
           <Link

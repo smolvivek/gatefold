@@ -80,7 +80,7 @@ export default async function OGImage({ params }: { params: Promise<{ id: string
           </p>
         )}
 
-        {/* Pitchcraft branding */}
+        {/* Gatefold branding */}
         <div
           style={{
             position: 'absolute',
@@ -92,7 +92,7 @@ export default async function OGImage({ params }: { params: Promise<{ id: string
             textTransform: 'uppercase',
           }}
         >
-          Pitchcraft
+          Gatefold
         </div>
 
         {/* Orange accent bar */}
