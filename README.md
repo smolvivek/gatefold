@@ -1,7 +1,5 @@
 # Gatefold
 
-*(formerly PitchCraft)*
-
 A presentation and funding tool for creative professionals. Turn a film, game, ad campaign, or any creative project into one structured, shareable pitch — without flattening it into a generic deck.
 
 ## The problem
